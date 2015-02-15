@@ -1,7 +1,11 @@
 #pragma once
 #include "Card.h"
+#include "CardScore.h"
+#include <array>
 #include <vector>
 #include <string>
+
+#include <iostream>
 
 /**
  * One euchre trick.
@@ -23,6 +27,8 @@ public:
     std::vector<Card> getCards();
 
     void addCard(Card card);
+    void removeLastCard();
+
     int getWinner();
     Card getWinningCard();
 
@@ -30,11 +36,6 @@ public:
 
 private:
     int trump;
-    int winner;
+    std::array<int, NUM_CARDS> winner;
     std::vector<Card> cards;
-
-    const static int MIN_TRUMP_SCORE = 6;
-    int rankings[4][60];    //max hash value is 59
-    void initRankings();
 };
-

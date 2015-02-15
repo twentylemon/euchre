@@ -65,11 +65,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
+    <ClInclude Include="CardScore.h" />
+    <ClInclude Include="Deck.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Trick.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
+    <ClCompile Include="CardScore.cpp" />
+    <ClCompile Include="dbgen.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Trick.cpp" />
   </ItemGroup>

@@ -7,19 +7,26 @@
  */
 int main(int argc, char** argv){
     Trick trick(Card::Spades);
-    Card card1(9, Card::Clubs);
-    Card card2(10, Card::Clubs);
-    Card card3(Card::King, Card::Hearts);
-    Card card4(Card::King, Card::Clubs);
     
-    trick.addCard(card1);
+    /*trick.addCard(Card(9, Card::Clubs));
     std::cout << trick.toString()<< std::endl;
-    trick.addCard(card2);
+
+    trick.addCard(Card(Card::King, Card::Clubs));
     std::cout << trick.toString()<< std::endl;
-    trick.addCard(card3);
+
+    trick.addCard(Card(Card::Jack, Card::Clubs));
     std::cout << trick.toString()<< std::endl;
-    trick.addCard(card4);
+
+    trick.addCard(Card(Card::Jack, Card::Spades));
     std::cout << trick.toString()<< std::endl;
+
+    trick.removeLastCard();
+    std::cout << trick.toString()<< std::endl;
+
+    trick.addCard(Card(Card::King, Card::Hearts));
+    std::cout << trick.toString()<< std::endl;*/
+
+    evaluateTricks();
 
     system("pause");
 }
