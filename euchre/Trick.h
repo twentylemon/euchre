@@ -32,9 +32,12 @@ public:
     int getWinner();
     Card getWinningCard();
 
+    int hashCode();
+
     std::string toString();
 
 private:
+    int hash;
     int trump;
     std::array<int, NUM_CARDS> winner;
     std::vector<Card> cards;

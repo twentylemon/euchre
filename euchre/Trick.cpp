@@ -5,8 +5,9 @@
  * @param trump the suit that is trump
  */
 Trick::Trick(){
-    clear();
     CardScore::initRankings();
+    trump = Card::Spades;
+    clear();
 }
 
 
@@ -15,9 +16,9 @@ Trick::Trick(){
  * @param trump the suit that is trump
  */
 Trick::Trick(int trump){
-    clear();
     CardScore::initRankings();
     setTrump(trump);
+    clear();
 }
 
 
@@ -25,6 +26,7 @@ Trick::Trick(int trump){
  * clears the list of cards in this trick
  */
 void Trick::clear(){
+    hash = trump;
     cards.clear();
     std::fill(winner.begin(), winner.end(), 0);
 }
@@ -71,6 +73,7 @@ void Trick::addCard(Card card){
         }
     }
     cards.push_back(card);
+    hash = (hash << Card::HASHBITS) | card.hashCode();  //this hash states order is important
 }
 
 
@@ -79,6 +82,7 @@ void Trick::addCard(Card card){
  */
 void Trick::removeLastCard(){
     cards.pop_back();
+    hash = hash >> Card::HASHBITS;
     //winner update will be handled by addCard(Card)
 }
 
@@ -96,6 +100,14 @@ int Trick::getWinner(){
  */
 Card Trick::getWinningCard(){
     return cards[getWinner()];
+}
+
+
+/**
+ * @return a hash code for this trick
+ */
+int Trick::hashCode(){
+    return hash;
 }
 
 

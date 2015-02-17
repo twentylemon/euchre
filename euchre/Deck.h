@@ -10,7 +10,7 @@
 class Deck
 {
 public:
-    static const int SIZE = 24;
+    static const int SIZE = Card::NUM_RANKS * Card::NUM_SUITS;
 
     Deck();
 
@@ -34,4 +34,3 @@ private:
 
     void updatePositions();
 };
-

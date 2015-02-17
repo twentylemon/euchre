@@ -49,11 +49,10 @@ void CardScore::initRankings(){
     if (calculated){
         return;
     }
-    calculated = true;
-
+    
     for (int trump : Card::SUITS){
-        for (Card card : Card::ALL_CARDS){ //I won't ask how it knows what to do
-            if (card.getRank() == Card::Rank::Jack && card.getSuit() == (trump+2)%4){
+        for (Card card : Card::ALL_CARDS){
+            if (card.getRank() == Card::Rank::Jack && card.getSuit() == Card::otherSuit(trump)){
                 rankings[trump][card.hashCode()] = LEFT_BOWER;
             }
             else if (card.getSuit() == trump){
@@ -64,4 +63,5 @@ void CardScore::initRankings(){
             }
         }
     }
+    calculated = true;
 }

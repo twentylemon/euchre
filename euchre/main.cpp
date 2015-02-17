@@ -5,28 +5,22 @@
  * @param argc the number of command line arguments
  * @param argv the command line arguments
  */
-int main(int argc, char** argv){
-    Trick trick(Card::Spades);
-    
-    /*trick.addCard(Card(9, Card::Clubs));
-    std::cout << trick.toString()<< std::endl;
+int main(int argc, char** argv){    
+    ULONGLONG start = GetTickCount64();
 
-    trick.addCard(Card(Card::King, Card::Clubs));
-    std::cout << trick.toString()<< std::endl;
+    std::array<std::array<int, Card::NUM_SUITS>, Card::MAX_CARD> wins = evaluateTricks();
 
-    trick.addCard(Card(Card::Jack, Card::Clubs));
-    std::cout << trick.toString()<< std::endl;
+    std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;
 
-    trick.addCard(Card(Card::Jack, Card::Spades));
-    std::cout << trick.toString()<< std::endl;
-
-    trick.removeLastCard();
-    std::cout << trick.toString()<< std::endl;
-
-    trick.addCard(Card(Card::King, Card::Hearts));
-    std::cout << trick.toString()<< std::endl;*/
-
-    evaluateTricks();
+    for (Card card : Card::ALL_CARDS){
+        std::cout << card.toString() << "\t";
+        int total = 0;
+        for (int w : wins[card.hashCode()]){
+            std::cout << w << "\t";
+            total += w;
+        }
+        printf("\t%s: %5d\n", card.toString().c_str(), total);
+    }
 
     system("pause");
 }

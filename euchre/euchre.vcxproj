@@ -67,6 +67,7 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardScore.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="Hand.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Trick.h" />
   </ItemGroup>
@@ -75,6 +76,7 @@
     <ClCompile Include="CardScore.cpp" />
     <ClCompile Include="dbgen.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Hand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Trick.cpp" />
   </ItemGroup>

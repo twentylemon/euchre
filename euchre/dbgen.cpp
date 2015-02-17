@@ -7,13 +7,16 @@
  *
  * on second though - this going so fast. no need to store it
  */
-void evaluateTricks(){
+std::array<std::array<int, Card::NUM_SUITS>, Card::MAX_CARD> evaluateTricks(){
     Trick trick(Card::Spades);
     Card cards[4];
     Deck deck;
     int numTricks = 0;
-    std::array<int, Card::MAX_CARD> wins;
-    std::fill(wins.begin(), wins.end(), 0);
+
+    std::array<std::array<int, Card::NUM_SUITS>, Card::MAX_CARD> wins;
+    for (int hash : Card::ALL_CARDS){
+        std::fill(wins[hash].begin(), wins[hash].end(), 0);
+    }
 
     for (int i = 0; i < Deck::SIZE; i++){
         cards[0] = deck.getCard(i);
@@ -34,25 +37,52 @@ void evaluateTricks(){
                     cards[3] = deck.getCard(l);
                     trick.addCard(cards[3]);
 
-                    wins[trick.getWinningCard().hashCode()]++;
+                    wins[trick.getWinningCard().hashCode()][trick.getWinner()]++;
                     numTricks++;
 
                     trick.removeLastCard();
                 }
-
                 trick.removeLastCard();
             }
-
             trick.removeLastCard();
         }
-
         trick.removeLastCard();
     }
+    return wins;
+}
 
-    int highest = *std::max_element(wins.begin(), wins.end());
 
-    for (int i = Card::MIN_CARD; i < Card::MAX_CARD; i++){
-        std::cout << Card(i).toString() << "\t" << wins[i] << "\t" <<
-            100*((float)wins[i] / (float)highest) << "%" << std::endl;
+/**
+ * @return map of all tricks where spades is trump
+ */
+std::map<int, Trick> getAllTricks(){
+    std::map<int, Trick> tricks;
+    Card cards[4];
+    Deck deck;
+
+    for (int i = 0; i < Deck::SIZE; i++){
+        cards[0] = deck.getCard(i);
+
+        for (int j = 0; j < Deck::SIZE; j++){
+            if (i == j){ continue; }
+            cards[1] = deck.getCard(j);
+
+            for (int k = 0; k < Deck::SIZE; k++){
+                if (i == k || j == k){ continue; }
+                cards[2] = deck.getCard(k);
+
+                for (int l = 0; l < Deck::SIZE; l++){
+                    if (i == l || j == l || k == l){ continue; }
+                    cards[3] = deck.getCard(l);
+                    Trick trick(Card::Spades);
+                    trick.addCard(cards[0]);
+                    trick.addCard(cards[1]);
+                    trick.addCard(cards[2]);
+                    trick.addCard(cards[3]);
+                    tricks.insert(tricks.end(), std::pair<int, Trick>(trick.hashCode(), trick));
+                }
+            }
+        }
     }
+    return tricks;
 }

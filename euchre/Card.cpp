@@ -3,17 +3,17 @@
 /**
  * the symbols for each rank of card
  */
-const std::string Card::RANK_SYMBOLS[] = { "?", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+const std::string Card::RANK_SYMBOLS[] = { "?", "A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A" };
 
 /**
  * the symbols for each suit of card
  */
-const std::string Card::SUIT_SYMBOLS[] = { "S", "H", "C", "D" };
+const std::string Card::SUIT_SYMBOLS[] = { "S", "H", "D", "C" };
 
 /**
- * list of all suits, in order so that (suit+2)%4 = other suit of same colour
+ * list of all suits, in order so that (suit^0x3) = other suit of same colour
  */
-const std::array<int, Card::NUM_SUITS> Card::SUITS = { Card::Spades, Card::Hearts, Card::Clubs, Card::Diamonds };
+const std::array<int, Card::NUM_SUITS> Card::SUITS = { Card::Spades, Card::Hearts, Card::Diamonds, Card::Clubs };
 
 /**
  * list of all ranks in order
@@ -31,8 +31,8 @@ const std::array<int, Card::NUM_SUITS*Card::NUM_RANKS> Card::ALL_CARDS = { 36,37
  * @param rank the rank of this card
  * @param suit the suit of this card
  */
-Card::Card(int data){
-    setData(data);
+Card::Card(int hash){
+    setHashCode(hash);
 }
 
 /**
@@ -45,12 +45,12 @@ Card::Card(int rank, int suit){
 }
 
 /**
- * @param data the data code to set this card to
+ * @param hash the hash code to set this card to
  */
-void Card::setData(int data){
-    this->data = data;
-    suit = data & 0x03;         //first 2 bits on, rest off
-    rank = (data & 0x3C) >> 2;  //all bits on expect first 2
+void Card::setHashCode(int hash){
+    this->hash = hash;
+    suit = hash & 0x03;         //first 2 bits on, rest off
+    rank = (hash & 0x3C) >> 2;  //all bits on expect first 2
 }
 
 /**
@@ -58,9 +58,16 @@ void Card::setData(int data){
  * @param suit the suit to set this card to
  */
 void Card::setRankSuit(int rank, int suit){
-    data = (rank << 2) | suit;
-    this->suit = suit;
-    this->rank = rank;
+    setHashCode((rank << 2) | suit);
+}
+
+
+/**
+ * @param suit the suit to get the other suit of the same colour
+ * @return the other suit of the same colour as the given suit
+ */
+int Card::otherSuit(int suit){
+    return suit ^ 0x03;
 }
 
 
@@ -84,7 +91,7 @@ int Card::getRank(){
  * @return a hashcode for this card
  */
 int Card::hashCode(){
-    return data;
+    return hash;
 }
 
 
@@ -101,6 +108,5 @@ std::string Card::toString(){
  * @return true if the Card sent has the same rank and suit as this card
  */
 bool Card::operator==(Card card){
-    //return data == card.data;
-    return suit == card.suit && rank == card.rank && data == card.data;
+    return hash == card.hash;
 }

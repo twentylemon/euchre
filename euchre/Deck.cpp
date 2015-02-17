@@ -6,12 +6,6 @@
 Deck::Deck(){
     //copy() just somehow knows to call the Card(int) constructor?
     std::copy(Card::ALL_CARDS.begin(), Card::ALL_CARDS.end(), cards.begin());
-    /*for (int hash : Card::ALL_CARDS){
-        cards[hash - Card::MIN_CARD] = Card(hash);
-    }*/
-    /*for (int i = 0; i < SIZE; i++){
-        cards[i] = Card(i + Card::MIN_CARD);
-    }*/
     std::fill(used.begin(), used.end(), false);
     updatePositions();
 }

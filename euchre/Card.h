@@ -10,10 +10,10 @@ class Card
 {
 public:
     Card(){}
-    Card(int data);
+    Card(int hash);
     Card(int rank, int suit);
 
-    static enum Suit { Spades = 0, Hearts = 1, Clubs = 2, Diamonds = 3 };   //other suit: (s+2)%4
+    static enum Suit { Spades = 0, Hearts = 1, Diamonds = 2, Clubs = 3 };   //other suit: xor 0x3
     static enum Rank { Jack = 11, Queen = 12, King = 13, Ace = 14 };
 
     static const int NUM_SUITS = 4;
@@ -24,9 +24,12 @@ public:
 
     static const int MIN_CARD = 36;
     static const int MAX_CARD = 60;
+    static const int HASHBITS = 6;
 
     static const std::string RANK_SYMBOLS[];
     static const std::string SUIT_SYMBOLS[];
+
+    static int otherSuit(int suit);
 
     int getSuit();
     int getRank();
@@ -37,10 +40,10 @@ public:
     bool operator==(Card card);
 
 private:
-    int data;
+    int hash;
     int suit;
     int rank;
 
-    void setData(int data);
+    void setHashCode(int hash);
     void setRankSuit(int rank, int suit);
 };
