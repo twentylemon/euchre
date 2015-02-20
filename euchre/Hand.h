@@ -1,12 +1,12 @@
 
 #pragma once
 #include "Card.h"
+#include <array>
+#include <string>
+#include <bitset>
 
 /**
  * a player hand
- * @todo remove nth card
- * @todo red hands with the same ranked cards should be considered equal
- *      maybe we can use the trick statistics to check card equivalences?
  */
 class Hand
 {
@@ -16,16 +16,29 @@ public:
     static const int NUM_CARDS = 5;
 
     void addCard(Card card);
+    void addCard(int hash);
 
-    bool contains(Card card);
-    bool contains(int hash);
+    int getCard(int idx);
 
-    int getCard(int n);
+    int removeCard(int idx);
+    int removeCard(Card card);
+    int removeLastCard();
 
-    void removeLastCard();
+    int getNumCards();
 
-    bool operator==(Hand hand);
+    void clear();
+
+    std::bitset<Card::NUM_CARDS> getBitset();
+
+    std::string toString();
+
+    void addSet(int bits);
+    int getSet();
+    int intersects(Hand hand);
 
 private:
-    int hand;
+    int numCards;
+    int set;
+    std::bitset<Card::NUM_CARDS> bits;
+    std::array<int, NUM_CARDS> hand;
 };

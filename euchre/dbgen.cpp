@@ -1,5 +1,5 @@
 
-#include "main.h"
+#include "euchre.h"
 
 /**
  * Enumerates all possible tricks and stores the number of times each Card won
@@ -7,15 +7,15 @@
  *
  * on second though - this going so fast. no need to store it
  */
-std::array<std::array<int, Card::NUM_SUITS>, Card::MAX_CARD> evaluateTricks(){
+std::array<std::array<int, 4>, Card::MAX_CARD> evaluateTricks(){
     Trick trick(Card::Spades);
     Card cards[4];
     Deck deck;
     int numTricks = 0;
 
-    std::array<std::array<int, Card::NUM_SUITS>, Card::MAX_CARD> wins;
+    std::array<std::array<int, 4>, Card::MAX_CARD> wins = {{{ 0 }}};
     for (int hash : Card::ALL_CARDS){
-        std::fill(wins[hash].begin(), wins[hash].end(), 0);
+        wins[hash].fill(0);
     }
 
     for (int i = 0; i < Deck::SIZE; i++){
@@ -49,6 +49,24 @@ std::array<std::array<int, Card::NUM_SUITS>, Card::MAX_CARD> evaluateTricks(){
         trick.removeLastCard();
     }
     return wins;
+}
+
+
+/**
+ * @return list of cards and the number of tricks they win overall when spades is trump
+ */
+std::array<int, Card::MAX_CARD> trickWins(){
+    std::array<std::array<int, Card::NUM_SUITS>, Card::MAX_CARD> wins = evaluateTricks();
+
+    std::array<int, Card::MAX_CARD> tricks;
+    tricks.fill(0);
+
+    for (Card card : Card::ALL_CARDS){
+        for (int w : wins[card.hashCode()]){
+            tricks[card.hashCode()] += w;
+        }
+    }
+    return tricks;
 }
 
 

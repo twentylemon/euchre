@@ -5,8 +5,7 @@
  * @param trump the suit that is trump
  */
 Trick::Trick(){
-    CardScore::initRankings();
-    trump = Card::Spades;
+    setTrump(Card::Spades);
     clear();
 }
 
@@ -16,7 +15,6 @@ Trick::Trick(){
  * @param trump the suit that is trump
  */
 Trick::Trick(int trump){
-    CardScore::initRankings();
     setTrump(trump);
     clear();
 }
@@ -28,7 +26,7 @@ Trick::Trick(int trump){
 void Trick::clear(){
     hash = trump;
     cards.clear();
-    std::fill(winner.begin(), winner.end(), 0);
+    winner.fill(0);
 }
 
 
@@ -108,6 +106,21 @@ Card Trick::getWinningCard(){
  */
 int Trick::hashCode(){
     return hash;
+}
+
+
+/**
+ * @return a hashcode for the given cards if they were a trick
+ */
+int Trick::hashCode(int card1, int card2, int card3, int card4){
+    return (card1 << 4*Card::HASHBITS) | (card2 << 3*Card::HASHBITS) | (card3 << 2*Card::HASHBITS) | card4;
+}
+
+/**
+ * @return a hashcode for the given cards if they were a trick
+ */
+int Trick::hashCode(Card card1, Card card2, Card card3, Card card4){
+    return hashCode(card1.hashCode(), card2.hashCode(), card3.hashCode(), card4.hashCode());
 }
 
 

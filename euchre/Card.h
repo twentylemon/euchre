@@ -18,13 +18,15 @@ public:
 
     static const int NUM_SUITS = 4;
     static const int NUM_RANKS = 6;
+    static const int NUM_CARDS = NUM_SUITS * NUM_RANKS;
+    static const int MIN_CARD = 36; //min hashcode
+    static const int MAX_CARD = 60; //max hashcode
+    static const int HASHBITS = 6;  //number of bits in each hashcode
+
     static const std::array<int, NUM_SUITS> SUITS;
     static const std::array<int, NUM_RANKS> RANKS;
-    static const std::array<int, NUM_SUITS*NUM_RANKS> ALL_CARDS;
-
-    static const int MIN_CARD = 36;
-    static const int MAX_CARD = 60;
-    static const int HASHBITS = 6;
+    static const std::array<int, NUM_CARDS> ALL_CARDS;
+    static const std::array<int, MAX_CARD> HASH_IDX;
 
     static const std::string RANK_SYMBOLS[];
     static const std::string SUIT_SYMBOLS[];

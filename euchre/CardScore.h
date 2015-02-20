@@ -1,5 +1,7 @@
+
 #pragma once
 #include "Card.h"
+#include <iostream>
 
 /**
  * calculates and retrieves card scorings by trump suit, higher scores are better
@@ -20,7 +22,10 @@ public:
     const static int TRUMP_SCORE[6];
     const static int OFF_SCORE[6];
 
+    const static int RANKINGS[Card::NUM_SUITS][Card::MAX_CARD];
+
     static void initRankings();
+    static void display();
 
 private:
     static bool calculated;

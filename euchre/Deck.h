@@ -2,6 +2,8 @@
 #include "Card.h"
 #include <array>
 #include <algorithm>
+#include <bitset>
+#include <string>
 
 /**
  * The euchre deck.
@@ -15,21 +17,25 @@ public:
     Deck();
 
     void shuffle();
+    Card pop();
 
     int indexOf(Card card);
+    int indexOf(int hash);
 
     bool isUsed(Card card);
     bool isUsed(int idx);
     void setUsed(Card card, bool used);
     void setUsed(int idx, bool used);
-
-    int getNextIdx(int idx);
+    std::bitset<Card::NUM_CARDS> getBitset();
 
     Card getCard(int idx);
 
+    std::string toString();
+
 private:
     std::array<Card, SIZE> cards;
-    std::array<bool, SIZE> used;
+    std::bitset<Card::NUM_CARDS> used;
+    int top;
     std::array<int, Card::MAX_CARD> positions;
 
     void updatePositions();

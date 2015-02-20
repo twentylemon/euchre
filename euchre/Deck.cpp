@@ -4,9 +4,9 @@
  * constructs a new unshuffled deck
  */
 Deck::Deck(){
-    //copy() just somehow knows to call the Card(int) constructor?
     std::copy(Card::ALL_CARDS.begin(), Card::ALL_CARDS.end(), cards.begin());
-    std::fill(used.begin(), used.end(), false);
+    used.reset();
+    top = 0;
     updatePositions();
 }
 
@@ -15,28 +15,45 @@ Deck::Deck(){
  * updates the array that keeps track of where every card is in the deck
  */
 void Deck::updatePositions(){
-    std::fill(positions.begin(), positions.end(), -1);
     for (int i = 0; i < SIZE; i++){
-        positions[cards[i].hashCode()] = i;
+        positions[getCard(i).hashCode()] = i;
     }
 }
 
 
 /**
- * shuffles the deck
+ * shuffles the deck, sets all cards to not used
  */
 void Deck::shuffle(){
+    used.reset();
+    top = 0;
     std::random_shuffle(cards.begin(), cards.end());
     updatePositions();
 }
 
 
 /**
+ * @return the top card of the deck, which is also set to be `used`
+ */
+Card Deck::pop(){
+    setUsed(top, true);
+    return getCard(top++);
+}
+
+/**
  * @param card the card to get the index of
  * @return the index of the Card in the deck
  */
 int Deck::indexOf(Card card){
-    return positions[card.hashCode()];
+    return indexOf(card.hashCode());
+}
+
+/**
+ * @param hash the hashcode of the card to get the index of
+ * @return the index of the card in the deck
+ */
+int Deck::indexOf(int hash){
+    return positions[hash];
 }
 
 
@@ -53,7 +70,7 @@ bool Deck::isUsed(Card card){
  * @return true if the card is used, ie in play
  */
 bool Deck::isUsed(int idx){
-    return used[idx];
+    return used[Card::HASH_IDX[getCard(idx).hashCode()]];
 }
 
 /**
@@ -69,7 +86,15 @@ void Deck::setUsed(Card card, bool used){
  * @param used what to set the flag to
  */
 void Deck::setUsed(int idx, bool used){
-    this->used[idx] = used;
+    this->used.set(Card::HASH_IDX[getCard(idx).hashCode()], used);
+}
+
+
+/**
+ * @return the bitset of hands in this hand
+ */
+std::bitset<Card::NUM_CARDS> Deck::getBitset(){
+    return used;
 }
 
 
@@ -83,11 +108,21 @@ Card Deck::getCard(int idx){
 
 
 /**
- * @param idx the idx to return the next unplayed card after
- * @return the index of the next unplayed card in the deck after idx
- * @todo fix this
+ * @return a string representation of this deck
  */
-int Deck::getNextIdx(int idx){
-    while (used[++idx]);
-    return idx;
+std::string Deck::toString(){
+    std::string str = "";
+    for (int i = 0; i < SIZE; i++){
+        str += getCard(i).toString();
+    }
+    str += "\n";
+    for (int i = 0; i < SIZE; i++){
+        if (isUsed(i)){
+            str += "--";
+        }
+        else {
+            str += "  ";
+        }
+    }
+    return str + "\n" + used.to_string();
 }

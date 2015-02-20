@@ -5,8 +5,6 @@
 #include <vector>
 #include <string>
 
-#include <iostream>
-
 /**
  * One euchre trick.
  * @author Taras Mychaskiw
@@ -33,6 +31,8 @@ public:
     Card getWinningCard();
 
     int hashCode();
+    static int hashCode(Card card1, Card card2, Card card3, Card card4);
+    static int hashCode(int card1, int card2, int card3, int card4);
 
     std::string toString();
 

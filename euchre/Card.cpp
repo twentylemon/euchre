@@ -23,8 +23,14 @@ const std::array<int, Card::NUM_RANKS> Card::RANKS = { 9, 10, Card::Jack, Card::
 /**
  * list of all cards by hash code
  */
-const std::array<int, Card::NUM_SUITS*Card::NUM_RANKS> Card::ALL_CARDS = { 36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59 };
+const std::array<int, Card::NUM_CARDS> Card::ALL_CARDS = { 36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59 };
 
+/**
+ * converts card hash code to an index in Card::ALL_CARDS
+ */
+const std::array<int, Card::MAX_CARD> Card::HASH_IDX = {
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 };
 
 /**
  * initializes this card using the rank and suit
