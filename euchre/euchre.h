@@ -7,19 +7,25 @@
 #include <string>
 #include <bitset>
 
-#include <ctime>
-#include <cstdlib>
+#include <new>
 #include <iostream>
 #include <algorithm>
 #include <Windows.h>
 
+#include "Random.h"
+
 #include "Card.h"
 #include "CardScore.h"
 #include "Deck.h"
-#include "Trick.h"
 #include "Hand.h"
+#include "Trick.h"
+
 #include "Player.h"
 #include "AIPlayer.h"
+#include "RandomPlayer.h"
+
+#include "EuchreGame.h"
+#include "HumanEuchreGame.h"
 
 #define ulong unsigned long long
 

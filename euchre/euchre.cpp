@@ -13,38 +13,12 @@
  * @param argv the command line arguments
  */
 int main(int argc, char** argv){
-    std::srand((unsigned)std::time(nullptr));
-    
-    Deck deck;
-    Hand hand;
-    AIPlayer ai;
+#ifndef _DEBUG
+    Random::initSeed();
+#endif
 
-    std::cout << deck.toString() << std::endl;
-    deck.shuffle();
-    
-    ai.addCard(deck.pop());
-    ai.addCard(deck.pop());
-    ai.addCard(deck.pop());
-    ai.addCard(deck.pop());
-    ai.addCard(deck.pop());
-    
-    ai.seenCard(deck.pop());
-    ai.seenCard(deck.pop());
-    ai.seenCard(deck.pop());
-    ai.seenCard(deck.pop());
-    ai.seenCard(deck.pop());
-    
-    std::cout << deck.toString() << std::endl;
-    std::cout << ai.toString() << std::endl;
-
-    hand = ai.getHand();
-    std::cout << hand.toString() << std::endl;
-    hand.removeCard(0);
-    std::cout << hand.toString() << std::endl;
-    hand.removeCard(1);
-    std::cout << hand.toString() << std::endl;
-
-    
+    HumanEuchreGame game;
+    game.play();
 
 #ifdef EVAL
     ULONGLONG start1 = GetTickCount64();

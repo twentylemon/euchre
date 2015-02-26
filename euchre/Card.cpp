@@ -8,7 +8,8 @@ const std::string Card::RANK_SYMBOLS[] = { "?", "A", "2", "3", "4", "5", "6", "7
 /**
  * the symbols for each suit of card
  */
-const std::string Card::SUIT_SYMBOLS[] = { "S", "H", "D", "C" };
+//const std::string Card::SUIT_SYMBOLS[] = { "S", "H", "D", "C" };
+const std::string Card::SUIT_SYMBOLS[] = { "\x6", "\x3", "\x4", "\x5" };
 
 /**
  * list of all suits, in order so that (suit^0x3) = other suit of same colour

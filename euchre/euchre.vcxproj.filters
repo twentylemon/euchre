@@ -13,63 +13,114 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\players">
+      <UniqueIdentifier>{0fdb0d76-6e6e-4ba2-954d-a455ade85a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\euchre">
+      <UniqueIdentifier>{1395eae0-505d-4554-9261-23027c73cfab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\euchre">
+      <UniqueIdentifier>{fdb73ed6-217a-482a-9115-ab0deaee8bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\players">
+      <UniqueIdentifier>{9c3ed1c4-90d4-4357-acf0-1b29d7daa455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main">
+      <UniqueIdentifier>{029d6fdd-7ce5-4581-b728-d85237c226b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{11c68f92-cb7e-456c-b730-1087f952405a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{79f6dcd0-ed35-47c9-8731-9fb9b37e67fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\games">
+      <UniqueIdentifier>{797d0461-d74f-4c78-92d4-b81488b6c09d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\games">
+      <UniqueIdentifier>{c3b71482-a42d-4919-bf40-58860841c8e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Trick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Deck.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CardScore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AIPlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="euchre.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AIPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Header Files\euchre</Filter>
+    </ClInclude>
+    <ClInclude Include="Deck.h">
+      <Filter>Header Files\euchre</Filter>
+    </ClInclude>
+    <ClInclude Include="Hand.h">
+      <Filter>Header Files\euchre</Filter>
+    </ClInclude>
+    <ClInclude Include="Trick.h">
+      <Filter>Header Files\euchre</Filter>
+    </ClInclude>
+    <ClInclude Include="CardScore.h">
+      <Filter>Header Files\euchre</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanEuchreGame.h">
+      <Filter>Header Files\games</Filter>
+    </ClInclude>
+    <ClInclude Include="EuchreGame.h">
+      <Filter>Header Files\games</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
     <ClCompile Include="Card.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Trick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dbgen.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\euchre</Filter>
     </ClCompile>
     <ClCompile Include="Deck.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CardScore.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\euchre</Filter>
     </ClCompile>
     <ClCompile Include="Hand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="eval.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AIPlayer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\euchre</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="Trick.cpp">
+      <Filter>Source Files\euchre</Filter>
+    </ClCompile>
+    <ClCompile Include="dbgen.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="CardScore.cpp">
+      <Filter>Source Files\euchre</Filter>
+    </ClCompile>
+    <ClCompile Include="eval.cpp">
+      <Filter>Source Files\main</Filter>
     </ClCompile>
     <ClCompile Include="euchre.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanEuchreGame.cpp">
+      <Filter>Source Files\games</Filter>
+    </ClCompile>
+    <ClCompile Include="EuchreGame.cpp">
+      <Filter>Source Files\games</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

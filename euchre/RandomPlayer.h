@@ -1,29 +1,21 @@
 
 #pragma once
+#include "Random.h"
 #include "Card.h"
 #include "Hand.h"
 #include "Trick.h"
 #include "Player.h"
-#include <string>
-#include <bitset>
 #include <utility>
 
 /**
- * an ai player
+ * a euchre agent. this agent just plays a random legal card from their hand
  * @author Taras Mychaskiw
  */
-class AIPlayer : public Player
+class RandomPlayer : public Player
 {
 public:
-    AIPlayer();
-    AIPlayer(std::string name);
-
-    void startNewHand() override;
-
-    void addCard(Card card) override;
-    void seenCard(Card card);
-
-    std::string toString() override;
+    RandomPlayer();
+    RandomPlayer(std::string name);
 
     std::pair<int,bool> orderUp(Card top, bool yourTeam) override;
     std::pair<int,bool> pickItUp(Card top) override;
@@ -32,9 +24,4 @@ public:
     std::pair<int,bool> stickTrump(int badSuit) override;
 
     Card playCard(Trick &trick) override;
-
-    std::bitset<Card::NUM_CARDS> getKnownCards();
-
-private:
-    std::bitset<Card::NUM_CARDS> knownCards;
 };

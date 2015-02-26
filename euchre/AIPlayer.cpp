@@ -9,6 +9,12 @@
 AIPlayer::AIPlayer() : Player(){
 }
 
+/**
+ * @param name the name of this player
+ */
+AIPlayer::AIPlayer(std::string name) : Player(name){
+}
+
 
 /**
  * preps the ai player for a new hand.
@@ -57,11 +63,12 @@ std::string AIPlayer::toString(){
 
 /**
  * @param top the card that would be ordered up
+ * @param yourTeam true if you would be ordering up your partner
  * @return the action the player is taking, ordering up or passing
  * @todo this
  */
-int AIPlayer::orderUp(Card top){
-    return Pass;
+std::pair<int,bool> AIPlayer::orderUp(Card top, bool yourTeam){
+    return std::make_pair(Pass, false);
 }
 
 
@@ -70,8 +77,16 @@ int AIPlayer::orderUp(Card top){
  * @return the action the player is taking, picking up or turning down
  * @todo this
  */
-int AIPlayer::pickItUp(Card top){
-    return Pass;
+std::pair<int,bool> AIPlayer::pickItUp(Card top){
+    return std::make_pair(Pass, false);
+}
+
+
+/**
+ * @param top the card that is coming into your hand, replacing another card
+ * @todo this
+ */
+void AIPlayer::replaceCard(Card top){
 }
 
 
@@ -80,8 +95,8 @@ int AIPlayer::pickItUp(Card top){
  * @return the action the player is taking, calling trump or passing
  * @todo this
  */
-int AIPlayer::callTrump(int badSuit){
-    return Pass;
+std::pair<int,bool> AIPlayer::callTrump(int badSuit){
+    return std::make_pair(Pass, false);
 }
 
 
@@ -90,8 +105,8 @@ int AIPlayer::callTrump(int badSuit){
  * @return the action the player is taking, calling trump must occur
  * @todo this
  */
-int AIPlayer::stickTrump(int badSuit){
-    return Pass;
+std::pair<int,bool> AIPlayer::stickTrump(int badSuit){
+    return std::make_pair(Card::Spades, false);
 }
 
 
@@ -101,5 +116,5 @@ int AIPlayer::stickTrump(int badSuit){
  * @todo this
  */
 Card AIPlayer::playCard(Trick &trick){
-    return hand.getCard(0);
+    return Card(hand.removeCard(0));
 }

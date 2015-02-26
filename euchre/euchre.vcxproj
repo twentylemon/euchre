@@ -74,9 +74,13 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardScore.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="EuchreGame.h" />
+    <ClInclude Include="HumanEuchreGame.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="euchre.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="RandomPlayer.h" />
     <ClInclude Include="Trick.h" />
   </ItemGroup>
   <ItemGroup>
@@ -85,10 +89,14 @@
     <ClCompile Include="CardScore.cpp" />
     <ClCompile Include="dbgen.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="EuchreGame.cpp" />
+    <ClCompile Include="HumanEuchreGame.cpp" />
     <ClCompile Include="eval.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="euchre.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="RandomPlayer.cpp" />
     <ClCompile Include="Trick.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

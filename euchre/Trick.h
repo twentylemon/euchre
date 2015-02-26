@@ -20,6 +20,9 @@ public:
 
     int getTrump();
     void setTrump(int trump);
+
+    int getLeadSuit();
+
     void clear();
 
     std::vector<Card> getCards();

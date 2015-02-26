@@ -7,6 +7,30 @@
  */
 Player::Player(){
     startNewHand();
+    setName("default");
+}
+
+/**
+ * @param name the name of this player
+ */
+Player::Player(std::string name){
+    startNewHand();
+    setName(name);
+}
+
+
+/**
+ * @return the name of this player
+ */
+std::string Player::getName(){
+    return name;
+}
+
+/**
+ * @param name the name of this player
+ */
+void Player::setName(std::string name){
+    this->name = name;
 }
 
 
@@ -43,49 +67,39 @@ std::string Player::toString(){
 
 
 /**
- * @param suit the suit to maybe call
- * @param action 'y' for call, 'a' for alone, otherwise for pass
- * @return the action to take
- */
-int Player::responseToAction(int suit, char action){
-    if (action == 'y'){
-        return suit;
-    }
-    else if (action == 'a'){
-        return suit + Alone;
-    }
-    else {
-        return Pass;
-    }
-}
-
-
-/**
  * @param top the card that would be ordered up
+ * @param yourTeam true if you would be ordering up your partner
  * @return the action the player is taking, ordering up or passing
  */
-int Player::orderUp(Card top){
+std::pair<int,bool> Player::orderUp(Card top, bool yourTeam){
     char response = '\0';
     std::cout << "do you want to order up " << top.toString() << " ([y]es/[n]o/[a]lone)? ";
     do {
         std::cin >> response;
     } while (response != 'y' && response != 'a' && response != 'n');
-    return responseToAction(top.getSuit(), response);
+    return std::make_pair(response == 'n' ? Pass : top.getSuit(), response == 'a');
 }
 
 
 /**
  * @param top the card that would be picked up
  * @return the action the player is taking, picking up or turning down
- * @todo place card in hand, discard another card
  */
-int Player::pickItUp(Card top){
+std::pair<int,bool> Player::pickItUp(Card top){
     char response = '\0';
     std::cout << "do you want to pick up " << top.toString() << " ([y]es/[n]o/[a]lone)? ";
     do {
         std::cin >> response;
     } while (response != 'y' && response != 'a' && response != 'n');
-    return responseToAction(top.getSuit(), response);
+    return std::make_pair(response == 'n' ? Pass : top.getSuit(), response == 'a');
+}
+
+
+/**
+ * @param top the card that is coming into your hand, replacing another card
+ * @todo this
+ */
+void Player::replaceCard(Card top){
 }
 
 
@@ -94,8 +108,8 @@ int Player::pickItUp(Card top){
  * @return the action the player is taking, calling trump or passing
  * @todo this
  */
-int Player::callTrump(int badSuit){
-    return Pass;
+std::pair<int,bool> Player::callTrump(int badSuit){
+    return std::make_pair(Pass, false);
 }
 
 
@@ -104,8 +118,8 @@ int Player::callTrump(int badSuit){
  * @return the action the player is taking, calling trump must occur
  * @todo this
  */
-int Player::stickTrump(int badSuit){
-    return Pass;
+std::pair<int,bool> Player::stickTrump(int badSuit){
+    return std::make_pair(Card::Spades, false);
 }
 
 
@@ -115,5 +129,5 @@ int Player::stickTrump(int badSuit){
  * @todo this
  */
 Card Player::playCard(Trick &trick){
-    return hand.getCard(0);
+    return Card(hand.removeCard(0));
 }

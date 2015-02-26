@@ -5,7 +5,6 @@
  * @param trump the suit that is trump
  */
 Trick::Trick(){
-    setTrump(Card::Spades);
     clear();
 }
 
@@ -15,8 +14,8 @@ Trick::Trick(){
  * @param trump the suit that is trump
  */
 Trick::Trick(int trump){
-    setTrump(trump);
     clear();
+    setTrump(trump);
 }
 
 
@@ -24,7 +23,7 @@ Trick::Trick(int trump){
  * clears the list of cards in this trick
  */
 void Trick::clear(){
-    hash = trump;
+    trump = -1;
     cards.clear();
     winner.fill(0);
 }
@@ -43,6 +42,18 @@ int Trick::getTrump(){
  */
 void Trick::setTrump(int trump){
     this->trump = trump;
+    hash = trump;
+}
+
+
+/**
+ * @return the suit of the card that led, or -1 if no cards have been played so far
+ */
+int Trick::getLeadSuit(){
+    if (cards.empty()){
+        return -1;
+    }
+    return cards[0].getSuit();
 }
 
 
