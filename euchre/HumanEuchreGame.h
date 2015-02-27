@@ -28,10 +28,6 @@ public:
 
     HumanEuchreGame();
 
-    virtual void startNewHand() override;
-
-    virtual void postCardTrickUpdate(Card card) override;
-
     virtual void draw() override;
 
 private:

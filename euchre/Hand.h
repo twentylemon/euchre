@@ -1,9 +1,11 @@
 
 #pragma once
 #include "Card.h"
+#include "BitString.h"
 #include <array>
 #include <string>
 #include <bitset>
+#include <vector>
 
 /**
  * a player hand
@@ -12,6 +14,7 @@ class Hand
 {
 public:
     Hand();
+    Hand(std::bitset<Card::NUM_CARDS> bits);
 
     static const int NUM_CARDS = 5;
 
@@ -31,14 +34,16 @@ public:
     std::bitset<Card::NUM_CARDS> getBitset();
 
     std::string toString();
+    
+    void addSet(unsigned int bits);
+    void addSet(std::bitset<Card::NUM_CARDS> bits);
+    bool intersects(Hand hand);
+    bool intersects(std::bitset<Card::NUM_CARDS> bits);
 
-    void addSet(int bits);
-    int getSet();
-    int intersects(Hand hand);
+    static const std::array<std::vector<Hand>, NUM_CARDS+1> ALL_HANDS;
 
 private:
     int numCards;
-    int set;
     std::bitset<Card::NUM_CARDS> bits;
     std::array<int, NUM_CARDS> hand;
 };

@@ -62,7 +62,7 @@ Hand Player::getHand(){
  * @return string representation of this player
  */
 std::string Player::toString(){
-    return hand.toString();
+    return name + ": " + hand.toString();
 }
 
 

@@ -54,9 +54,7 @@ std::bitset<Card::NUM_CARDS> AIPlayer::getKnownCards(){
  * @return a string representation of this ai player
  */
 std::string AIPlayer::toString(){
-    std::string str = "hand: " + getHand().toString() + "\n";
-    str += "knownCards: " + getKnownCards().to_string() + "\n";
-    return str;
+    return Player::toString() + ", " + getKnownCards().to_string();
 }
 
 
@@ -116,5 +114,12 @@ std::pair<int,bool> AIPlayer::stickTrump(int badSuit){
  * @todo this
  */
 Card AIPlayer::playCard(Trick &trick){
+    int total = 0;
+    for (Hand otherHand : Hand::ALL_HANDS[hand.getNumCards()]){
+        if (!otherHand.intersects(knownCards)){
+            total++;
+        }
+    }
+    std::cout << total << " hands processed" << std::endl;
     return Card(hand.removeCard(0));
 }

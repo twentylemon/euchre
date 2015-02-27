@@ -2,6 +2,27 @@
 #include "Hand.h"
 
 /**
+ * @return all possible hands per size
+ */
+std::array<std::vector<Hand>, Hand::NUM_CARDS+1> allHands(){
+    std::array<std::vector<Hand>, Hand::NUM_CARDS+1> hands;
+    for (int size = 1; size <= Hand::NUM_CARDS; size++){
+        int start = BitString::first(size);
+        int finish = BitString::last(size, Card::NUM_CARDS);
+        for (int bits = start; bits <= finish; bits = BitString::next(bits)){
+            hands[size].push_back(Hand(std::bitset<Card::NUM_CARDS>(bits)));
+        }
+        hands[size].shrink_to_fit();
+    }
+    return hands;
+}
+
+/**
+ * all possible euchre hands
+ */
+const std::array<std::vector<Hand>, Hand::NUM_CARDS+1> Hand::ALL_HANDS = allHands();
+
+/**
  * constructor sets up an empty hand
  */
 Hand::Hand(){
@@ -9,11 +30,19 @@ Hand::Hand(){
 }
 
 /**
+ * @param bits the cards to add to this hand
+ */
+Hand::Hand(std::bitset<Card::NUM_CARDS> bits){
+    clear();
+    addSet(bits);
+}
+
+
+/**
  * clears all cards from this hand
  */
 void Hand::clear(){
     numCards = 0;
-    set = 0;
     bits.reset();
 }
 
@@ -50,6 +79,7 @@ int Hand::getCard(int idx){
  */
 int Hand::removeCard(int idx){
     int card = getCard(idx);
+    bits.set(Card::HASH_IDX[card], false);
     numCards--;
     for (int i = idx; i < numCards; i++){
         hand[i] = hand[i+1];    //shift the other cards down
@@ -75,7 +105,7 @@ int Hand::removeCard(Card card){
  * @return the last card added to this card, which is also removed from this hand
  */
 int Hand::removeLastCard(){
-    return hand[--numCards];
+    return removeCard(numCards - 1);
 }
 
 
@@ -110,29 +140,36 @@ std::string Hand::toString(){
 /**
  * @param bits bitstring of cards to add to this hand
  */
-void Hand::addSet(int bits){
-    int idx = 0;
-    set = bits;
-    while (bits > 0){
-        if (bits & 1){
-            addCard(Card::ALL_CARDS[idx]);
+void Hand::addSet(unsigned int bits){
+    addSet(std::bitset<Card::NUM_CARDS>(bits));
+}
+
+
+/**
+ * @param bits the bitset of cards to add to this hand
+ */
+void Hand::addSet(std::bitset<Card::NUM_CARDS> bits){
+    for (int i = 0; bits.any(); i++){
+        if (bits[i]){
+            bits.set(i, false);
+            addCard(Card::ALL_CARDS[i]);
         }
-        idx++;
-        bits = bits >> 1;
     }
 }
 
+
 /**
- * @return the bitset of cards in this hand
+ * @param hand the hand to test for an intersection of cards
+ * @return true if the two hands have common cards
  */
-int Hand::getSet(){
-    return set;
+bool Hand::intersects(Hand hand){
+    return intersects(hand.getBitset());
 }
 
 /**
- * @param hand bitset hand to test for an intersection of cards
- * @return true if the two hands have common cards
+ * @param bits a bitset of cards to check if this hand intersects it
+ * @return true if this hand intersects the bitset of cards given
  */
-int Hand::intersects(Hand hand){
-    return set & hand.getSet();
+bool Hand::intersects(std::bitset<Card::NUM_CARDS> bits){
+    return (getBitset() & bits).any();
 }

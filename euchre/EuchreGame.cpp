@@ -34,6 +34,7 @@ void EuchreGame::startNewGame(){
     score.fill(0);
     setTeamName(UP_TEAM, "up/down team");
     setTeamName(LEFT_TEAM, "left/right team");
+    setPublicKnowledgeCallback([](Card card){});
 }
 
 
@@ -108,6 +109,7 @@ void EuchreGame::startNewHand(){
     deal();                             //and deal
     top = deck.pop();                   //flip over the top card
     inTop = true;                       //we are in the top card phase
+    publicKnowledgeCallback(top);       //top is public knowledge
 }
 
 
@@ -322,6 +324,14 @@ void EuchreGame::draw(){
 
 
 /**
+ * @param fn the function to set as the callback when a card is made public
+ */
+void EuchreGame::setPublicKnowledgeCallback(std::function<void(Card)> fn){
+    publicKnowledgeCallback = fn;
+}
+
+
+/**
  * @param playerIDX the player making the trump call
  * @param response the response from Player::*
  * @return the trump suit
@@ -385,14 +395,6 @@ int EuchreGame::callPhase(int unavailableSuit){
 
 
 /**
- * for overriding, called after each card is played during a trick
- * @param card the card that was most recently played
- */
-void EuchreGame::postCardTrickUpdate(Card card){
-}
-
-
-/**
  * plays the tricks phase of the game
  * @param trump the trump suit
  * @param startPlayer the starting player for the trick
@@ -405,7 +407,7 @@ int EuchreGame::trickPhase(int trump, int startPlayerIDX){
     for (int i = startPlayerIDX, first = 1; i != startPlayerIDX || first; i = nextPlayer(i), first = 0){
         trickCards[i] = getPlayer(i)->playCard(trick);
         trick.addCard(trickCards[i]);
-        postCardTrickUpdate(trickCards[i]);
+        publicKnowledgeCallback(trickCards[i]);
         draw();
     }
     return trick.getWinner();

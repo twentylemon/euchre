@@ -13,6 +13,7 @@
 #include <Windows.h>
 
 #include "Random.h"
+#include "BitString.h"
 
 #include "Card.h"
 #include "CardScore.h"

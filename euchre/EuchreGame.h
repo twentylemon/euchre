@@ -84,12 +84,13 @@ public:
     virtual std::string trkCard(int playerIDX);
     virtual void draw();
 
+    void setPublicKnowledgeCallback(std::function<void(Card)> fn);
+
     virtual void play();
     virtual int updateCall(int playerIDX, std::pair<int,bool> response);
     virtual int topCardPhase();
     virtual int callPhase(int unavailableSuit);
     virtual int trickPhase(int trump, int startPlayerIDX);
-    virtual void postCardTrickUpdate(Card playedCard);
     virtual void scorePhase(std::array<int, NUM_TEAMS> trickWins);
 
 protected:
@@ -107,4 +108,7 @@ protected:
     bool inTop;
     int dealer;
     std::pair<int, bool> call;
+
+private:
+    std::function<void(Card)> publicKnowledgeCallback;
 };
