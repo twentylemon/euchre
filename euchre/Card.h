@@ -22,20 +22,21 @@ public:
     static const int MIN_CARD = 36; //min hashcode
     static const int MAX_CARD = 60; //max hashcode
     static const int HASHBITS = 6;  //number of bits in each hashcode
-
+    
     static const std::array<int, NUM_SUITS> SUITS;
     static const std::array<int, NUM_RANKS> RANKS;
     static const std::array<int, NUM_CARDS> ALL_CARDS;
     static const std::array<int, MAX_CARD> HASH_IDX;
-
-    static const std::string RANK_SYMBOLS[];
-    static const std::string SUIT_SYMBOLS[];
+    static const std::array<std::string, Ace+1> RANK_SYMBOLS;
+    static const std::array<std::string, NUM_SUITS> SUIT_SYMBOLS;
 
     static int otherSuit(int suit);
 
     int getSuit();
     int getRank();
     int hashCode();
+
+    int getEffectiveSuit(int trump);
 
     std::string toString();
 

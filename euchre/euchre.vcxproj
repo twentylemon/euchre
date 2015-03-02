@@ -47,21 +47,21 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <StackReserveSize>
-      </StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <FloatingPointModel>Precise</FloatingPointModel>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -89,7 +89,6 @@
     <ClCompile Include="BitString.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="CardScore.cpp" />
-    <ClCompile Include="dbgen.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="EuchreGame.cpp" />
     <ClCompile Include="HumanEuchreGame.cpp" />

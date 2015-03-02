@@ -12,7 +12,7 @@
 class Deck
 {
 public:
-    static const int SIZE = Card::NUM_RANKS * Card::NUM_SUITS;
+    static const int SIZE = Card::NUM_CARDS;
 
     Deck();
 

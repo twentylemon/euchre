@@ -4,9 +4,12 @@
 #include "Hand.h"
 #include "Trick.h"
 #include "Player.h"
+#include <ppl.h>
+#include <atomic>
 #include <string>
 #include <bitset>
 #include <utility>
+
 
 /**
  * an ai player

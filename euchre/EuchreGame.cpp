@@ -39,6 +39,16 @@ void EuchreGame::startNewGame(){
 
 
 /**
+ * @param upScore the score to give the up/down team
+ * @param leftScore the score to give the left/right team
+ */
+void EuchreGame::setScore(int upScore, int leftScore){
+    score[UP_TEAM] = upScore;
+    score[LEFT_TEAM] = leftScore;
+}
+
+
+/**
  * @param playerIDX the index of the player, UP, DOWN, LEFT or RIGHT
  * @return the player
  */
@@ -98,12 +108,11 @@ void EuchreGame::setDealer(int dealer){
  * sets up a new hand
  */
 void EuchreGame::startNewHand(){
-    trickCards.fill(Card(0));           //empty the trick cards
+    clearTrick();                       //empty the trick
     isPlaying.fill(true);               //everyone is playing
     for (Player* player : players){
         player->startNewHand();         //reset all players
     }
-    trick.clear();                      //empty the trick
     setDealer(nextPlayer(getDealer())); //rotate the dealer
     deck.shuffle();                     //shuffle up
     deal();                             //and deal
@@ -276,6 +285,14 @@ void EuchreGame::setPlaying(int playerIDX, bool playing){
 
 
 /**
+ * clears the trick to prep for a new one
+ */
+void EuchreGame::clearTrick(){
+    trickCards.fill(Card(0));
+    trick.clear();
+}
+
+/**
  * @param playerIDX the player index of the card to get
  * @return the card the player played in the current trick
  */
@@ -401,9 +418,8 @@ int EuchreGame::callPhase(int unavailableSuit){
  * @return the winner of the trick, relative to who started the trick
  */
 int EuchreGame::trickPhase(int trump, int startPlayerIDX){
-    trick.clear();
+    clearTrick();
     trick.setTrump(trump);
-    trickCards.fill(Card(0));
     for (int i = startPlayerIDX, first = 1; i != startPlayerIDX || first; i = nextPlayer(i), first = 0){
         trickCards[i] = getPlayer(i)->playCard(trick);
         trick.addCard(trickCards[i]);

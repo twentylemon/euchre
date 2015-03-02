@@ -80,5 +80,9 @@ std::pair<int,bool> RandomPlayer::stickTrump(int badSuit){
  * @todo this
  */
 Card RandomPlayer::playCard(Trick &trick){
-    return Card(hand.removeCard(0));
+    std::vector<int> legalCards = getHand().getLegalCards(trick);
+    if (legalCards.empty()){
+        return hand.removeCard(Random::nextInt(hand.getNumCards()));
+    }
+    return hand.removeCard(Card(legalCards[Random::nextInt(legalCards.size())]));
 }

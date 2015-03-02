@@ -114,12 +114,47 @@ std::pair<int,bool> AIPlayer::stickTrump(int badSuit){
  * @todo this
  */
 Card AIPlayer::playCard(Trick &trick){
-    int total = 0;
-    for (Hand otherHand : Hand::ALL_HANDS[hand.getNumCards()]){
-        if (!otherHand.intersects(knownCards)){
-            total++;
-        }
+    std::atomic<int> total = 0;
+    int numCards = getHand().getNumCards();
+    if (knownCards.count() >= 15){
+        concurrency::parallel_for_each(Hand::ALL_HANDS[numCards].begin(), Hand::ALL_HANDS[numCards].end(), [&](Hand left){
+            if (left.intersects(knownCards)){ return; }
+            for (Hand across : Hand::ALL_HANDS[numCards]){
+                if (across.intersects(knownCards)|| across.intersects(left)){ continue; }
+                for (Hand right : Hand::ALL_HANDS[numCards]){
+                    if (right.intersects(knownCards)|| right.intersects(left)|| right.intersects(across)){ continue; }
+                    total++;
+                }
+            }
+        });
     }
-    std::cout << total << " hands processed" << std::endl;
+    std::cout << "know about " << knownCards.count() << " cards, counted " << total << " hands[size=" << numCards << "]" << std::endl;
     return Card(hand.removeCard(0));
 }
+/**
+ know about 6  cards, counted 617,512,896 hands[size=5]
+ know about 7  cards, counted 102,918,816 hands[size=5]
+ know about 8  cards, counted  12,108,096 hands[size=5]
+ know about 9  cards, counted     756,756 hands[size=5]
+ 
+ know about 9  cards, counted  15,765,750 hands[size=4]
+ know about 10 cards, counted   3,153,150 hands[size=4]
+ know about 11 cards, counted     450,450 hands[size=4]
+ know about 12 cards, counted      34,650 hands[size=4]
+ 
+ know about 12 cards, counted     369,600 hands[size=3]
+ know about 13 cards, counted      92,400 hands[size=3]
+ know about 14 cards, counted      16,800 hands[size=3]
+ know about 15 cards, counted       1,680 hands[size=3]
+ 
+ know about 15 cards, counted       7,560 hands[size=2]
+ know about 16 cards, counted       2,520 hands[size=2]
+ know about 17 cards, counted         630 hands[size=2]
+ know about 18 cards, counted          90 hands[size=2]
+ 
+ know about 18 cards, counted         120 hands[size=1]
+ know about 19 cards, counted          60 hands[size=1]
+ know about 20 cards, counted          24 hands[size=1]
+ know about 21 cards, counted           6 hands[size=1]
+**/
+

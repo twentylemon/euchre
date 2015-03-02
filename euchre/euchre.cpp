@@ -17,8 +17,19 @@ int main(int argc, char** argv){
     Random::initSeed();
 #endif
 
-    HumanEuchreGame game;
+    //HumanEuchreGame game;
+    EuchreGame game(new AIPlayer(), new AIPlayer(), new AIPlayer(), new AIPlayer());
+    //EuchreGame game(new RandomPlayer(), new RandomPlayer(), new RandomPlayer(), new RandomPlayer());
+    game.setScore(9, 9);
+    game.setPublicKnowledgeCallback([&](Card card){
+        ((AIPlayer*)game.getPlayer(EuchreGame::UP))->seenCard(card);
+        ((AIPlayer*)game.getPlayer(EuchreGame::DOWN))->seenCard(card);
+        ((AIPlayer*)game.getPlayer(EuchreGame::LEFT))->seenCard(card);
+        ((AIPlayer*)game.getPlayer(EuchreGame::RIGHT))->seenCard(card);
+    });
+    ULONGLONG start = GetTickCount64();
     game.play();
+    std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;
 
 #ifdef EVAL
     ULONGLONG start1 = GetTickCount64();

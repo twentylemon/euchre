@@ -57,6 +57,7 @@ public:
 
     virtual void startNewHand();
     virtual void deal();
+    virtual void setScore(int upScore, int leftScore);
 
     virtual bool isGameOver();
     virtual int getTeamScore(int team);
@@ -78,6 +79,7 @@ public:
     virtual bool isPlayingThisHand(int playerIDX);
     virtual void setPlaying(int playerIDX, bool playing);
     
+    virtual void clearTrick();
     virtual Card getCard(int playerIDX);
     virtual bool playedCard(int playerIDX);
     virtual std::string topCard(int playerIDX);

@@ -30,11 +30,11 @@
 
 #define ulong unsigned long long
 
+//#define EVAL
+#ifdef EVAL
 extern std::array<std::array<int, 4>, Card::MAX_CARD> evaluateTricks();
 extern std::array<int, Card::MAX_CARD> trickWins();
 extern std::map<int, Trick> getAllTricks();
 
-//#define EVAL
-#ifdef EVAL
 extern void eval(int n);
 #endif

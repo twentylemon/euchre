@@ -3,13 +3,13 @@
 /**
  * the symbols for each rank of card
  */
-const std::string Card::RANK_SYMBOLS[] = { "?", "A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A" };
+const std::array<std::string, Card::Ace+1> Card::RANK_SYMBOLS = { "?", "A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A" };
 
 /**
  * the symbols for each suit of card
  */
-//const std::string Card::SUIT_SYMBOLS[] = { "S", "H", "D", "C" };
-const std::string Card::SUIT_SYMBOLS[] = { "\x6", "\x3", "\x4", "\x5" };
+//const std::array<std::string, Card::NUM_SUITS> Card::SUIT_SYMBOLS = { "S", "H", "D", "C" };
+const std::array<std::string, Card::NUM_SUITS> Card::SUIT_SYMBOLS = { "\x6", "\x3", "\x4", "\x5" };
 
 /**
  * list of all suits, in order so that (suit^0x3) = other suit of same colour
@@ -77,8 +77,6 @@ int Card::otherSuit(int suit){
     return suit ^ 0x03;
 }
 
-
-
 /**
  * @return the suit of this card
  */
@@ -94,11 +92,24 @@ int Card::getRank(){
     return rank;
 }
 
+
 /**
  * @return a hashcode for this card
  */
 int Card::hashCode(){
     return hash;
+}
+
+
+/**
+ * @param trump the trump suit
+ * @return the suit of this card given the suit that is trump
+ */
+int Card::getEffectiveSuit(int trump){
+    if (getRank() == Jack && getSuit() == otherSuit(trump)){
+        return trump;
+    }
+    return getSuit();
 }
 
 

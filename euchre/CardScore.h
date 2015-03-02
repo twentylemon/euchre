@@ -8,7 +8,7 @@
  * equal scores need to be checked for lead suit etc, higher means they have a chance to be a better card
  * @author Taras Mychaskiw
  */
-class CardScore
+const class CardScore
 {
 public:
     CardScore();

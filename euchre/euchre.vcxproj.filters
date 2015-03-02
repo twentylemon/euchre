@@ -101,9 +101,6 @@
     <ClCompile Include="Trick.cpp">
       <Filter>Source Files\euchre</Filter>
     </ClCompile>
-    <ClCompile Include="dbgen.cpp">
-      <Filter>Source Files\main</Filter>
-    </ClCompile>
     <ClCompile Include="CardScore.cpp">
       <Filter>Source Files\euchre</Filter>
     </ClCompile>

@@ -1,6 +1,7 @@
 
 #pragma once
 #include "Card.h"
+#include "Trick.h"
 #include "BitString.h"
 #include <array>
 #include <string>
@@ -29,15 +30,19 @@ public:
 
     int getNumCards();
 
+    std::vector<int> getLegalCards(Trick &trick);
+
     void clear();
 
     std::bitset<Card::NUM_CARDS> getBitset();
+    int hashCode();
 
     std::string toString();
     
     void addSet(unsigned int bits);
     void addSet(std::bitset<Card::NUM_CARDS> bits);
     bool intersects(Hand hand);
+    bool intersects(unsigned int bits);
     bool intersects(std::bitset<Card::NUM_CARDS> bits);
 
     static const std::array<std::vector<Hand>, NUM_CARDS+1> ALL_HANDS;

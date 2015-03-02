@@ -1,4 +1,23 @@
+
 #include "Trick.h"
+
+/**
+ * @return the effectives suits of every card per trump value
+ */
+std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> effSuits(){
+    std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> suits;
+    for (int trump : Card::SUITS){
+        for (Card card : Card::ALL_CARDS){
+            suits[trump][card.hashCode()] = card.getEffectiveSuit(trump);
+        }
+    }
+    return suits;
+}
+
+/**
+ * effective suits per trump
+ */
+const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> Trick::EFF_SUITS = effSuits();
 
 /**
  * initializes this trick to be empty.
@@ -6,6 +25,7 @@
  */
 Trick::Trick(){
     clear();
+    setTrump(-1);
 }
 
 
@@ -23,7 +43,6 @@ Trick::Trick(int trump){
  * clears the list of cards in this trick
  */
 void Trick::clear(){
-    trump = -1;
     cards.clear();
     winner.fill(0);
 }
@@ -42,18 +61,25 @@ int Trick::getTrump(){
  */
 void Trick::setTrump(int trump){
     this->trump = trump;
+#ifdef TRICK_INCLUDE_HASH
     hash = trump;
+#endif
 }
 
 
 /**
- * @return the suit of the card that led, or -1 if no cards have been played so far
+ * @return the suit of the card that led, and will crash if no cards have been played so far
  */
 int Trick::getLeadSuit(){
-    if (cards.empty()){
-        return -1;
-    }
-    return cards[0].getSuit();
+    return leadSuit;
+}
+
+/**
+ * @param card a card to see if it is legal to play that card in this trick
+ * @return true if card is a legal card to play
+ */
+bool Trick::isLegal(Card card){
+    return cards.empty() || getLeadSuit() == EFF_SUITS[getTrump()][card.hashCode()];
 }
 
 
@@ -62,6 +88,13 @@ int Trick::getLeadSuit(){
  */
 std::vector<Card> Trick::getCards(){
     return cards;
+}
+
+/**
+ * @return the number of cards in the trick
+ */
+int Trick::getNumCards(){
+    return (int)cards.size();
 }
 
 
@@ -76,13 +109,18 @@ void Trick::addCard(Card card){
         winner[cards.size()] = winner[cards.size() - 1];    //winner is previous winning card unless
         if (thisScore > curBest){                           //this card is possibly better
             if (thisScore >= CardScore::MIN_TRUMP_SCORE ||  //they played a better trump card, or trumped the trick
-                card.getSuit() == cards[0].getSuit()){      //they followed lead suit and played a better card
+                card.getSuit() == getLeadSuit()){           //they followed lead suit and played a better card
                     winner[cards.size()] = cards.size();    //this card is winning the trick
             }
         }
     }
+    else {
+        leadSuit = EFF_SUITS[getTrump()][card.hashCode()];
+    }
     cards.push_back(card);
+#ifdef TRICK_INCLUDE_HASH
     hash = (hash << Card::HASHBITS) | card.hashCode();  //this hash states order is important
+#endif
 }
 
 
@@ -91,8 +129,9 @@ void Trick::addCard(Card card){
  */
 void Trick::removeLastCard(){
     cards.pop_back();
+#ifdef TRICK_INCLUDE_HASH
     hash = hash >> Card::HASHBITS;
-    //winner update will be handled by addCard(Card)
+#endif
 }
 
 
@@ -112,6 +151,7 @@ Card Trick::getWinningCard(){
 }
 
 
+#ifdef TRICK_INCLUDE_HASH
 /**
  * @return a hash code for this trick
  */
@@ -119,20 +159,20 @@ int Trick::hashCode(){
     return hash;
 }
 
-
 /**
  * @return a hashcode for the given cards if they were a trick
  */
-int Trick::hashCode(int card1, int card2, int card3, int card4){
-    return (card1 << 4*Card::HASHBITS) | (card2 << 3*Card::HASHBITS) | (card3 << 2*Card::HASHBITS) | card4;
+int Trick::hashCode(int trump, int card1, int card2, int card3, int card4){
+    return (trump << (4*Card::HASHBITS+2)) | (card1 << (4*Card::HASHBITS)) | (card2 << (3*Card::HASHBITS)) | (card3 << (2*Card::HASHBITS)) | card4;
 }
 
 /**
  * @return a hashcode for the given cards if they were a trick
  */
-int Trick::hashCode(Card card1, Card card2, Card card3, Card card4){
-    return hashCode(card1.hashCode(), card2.hashCode(), card3.hashCode(), card4.hashCode());
+int Trick::hashCode(int trump, Card card1, Card card2, Card card3, Card card4){
+    return hashCode(trump, card1.hashCode(), card2.hashCode(), card3.hashCode(), card4.hashCode());
 }
+#endif
 
 
 /**
@@ -143,5 +183,5 @@ std::string Trick::toString(){
     for (std::vector<Card>::iterator it = cards.begin(), end = cards.end(); it != end; it++){
         str += " " + it->toString();
     }
-    return str + "  W: " + getWinningCard().toString();
+    return str + "  W: " + (cards.empty() ? "N/A" : getWinningCard().toString());
 }

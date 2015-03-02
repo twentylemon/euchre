@@ -22,6 +22,7 @@ std::array<std::vector<Hand>, Hand::NUM_CARDS+1> allHands(){
  */
 const std::array<std::vector<Hand>, Hand::NUM_CARDS+1> Hand::ALL_HANDS = allHands();
 
+
 /**
  * constructor sets up an empty hand
  */
@@ -126,6 +127,29 @@ std::bitset<Card::NUM_CARDS> Hand::getBitset(){
 
 
 /**
+ * @param trick the trick that we are playing into
+ * @return list of legal cards from this hand
+ */
+std::vector<int> Hand::getLegalCards(Trick &trick){
+    std::vector<int> legalCards;
+    for (int i = 0; i < getNumCards(); i++){
+        if (trick.isLegal(Card(getCard(i)))){
+            legalCards.push_back(getCard(i));
+        }
+    }
+    return legalCards;
+}
+
+
+/**
+ * @return a hashcode of this hand
+ */
+int Hand::hashCode(){
+    return bits.to_ulong();
+}
+
+
+/**
  * @return a string representation of this hand
  */
 std::string Hand::toString(){
@@ -164,6 +188,14 @@ void Hand::addSet(std::bitset<Card::NUM_CARDS> bits){
  */
 bool Hand::intersects(Hand hand){
     return intersects(hand.getBitset());
+}
+
+/**
+ * @param bits a bitset of cards to check if this hand intersects it
+ * @return true if the two hands have common cards
+ */
+bool Hand::intersects(unsigned int bits){
+    return (getBitset().to_ulong() & bits) != 0;
 }
 
 /**
