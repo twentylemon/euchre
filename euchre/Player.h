@@ -15,28 +15,28 @@ public:
 
     static enum Action { Pass = -1, OrderUp = 0, Alone = 4 };
 
-    std::string getName();
+    std::string getName() const;
     void setName(std::string name);
 
-    Hand getHand();
-    int getNumCards();
+    const Hand& getHand() const;
+    int getNumCards() const;
 
-    int getPosition();
+    int getPosition() const;
     void setPosition(int position);
  
     virtual void startNewHand();
 
     virtual void addCard(Card card);
 
-    virtual std::string toString();
+    virtual std::string toString() const;
 
-    virtual std::pair<int,bool> orderUp(Card top, bool yourTeam);
-    virtual std::pair<int,bool> pickItUp(Card top);
-    virtual void replaceCard(Card top);
-    virtual std::pair<int,bool> callTrump(int badSuit);
-    virtual std::pair<int,bool> stickTrump(int badSuit);
+    virtual std::pair<int,bool> orderUp(const Card& top, bool yourTeam) const;
+    virtual std::pair<int,bool> pickItUp(const Card& top) const;
+    virtual void replaceCard(const Card& top);
+    virtual std::pair<int,bool> callTrump(int badSuit) const;
+    virtual std::pair<int,bool> stickTrump(int badSuit) const;
 
-    virtual Card playCard(Trick &trick);
+    virtual Card playCard(const Trick& trick);
 
 protected:
     int position;

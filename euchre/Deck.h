@@ -17,20 +17,21 @@ public:
     Deck();
 
     void shuffle();
-    Card pop();
+    const Card& pop();
 
-    int indexOf(Card card);
-    int indexOf(int hash);
+    int indexOf(const Card& card) const;
+    int indexOf(int hash) const;
 
-    bool isUsed(Card card);
-    bool isUsed(int idx);
-    void setUsed(Card card, bool used);
+    bool isUsed(const Card& card) const;
+    bool isUsed(int idx) const;
+    void setUsed(const Card& card, bool used);
     void setUsed(int idx, bool used);
-    std::bitset<Card::NUM_CARDS> getBitset();
+    std::bitset<Card::NUM_CARDS> getBitset() const;
+    
+    const Card& getCard(int idx);
+    const Card& getCard(int idx) const;
 
-    Card getCard(int idx);
-
-    std::string toString();
+    std::string toString() const;
 
 private:
     std::array<Card, SIZE> cards;

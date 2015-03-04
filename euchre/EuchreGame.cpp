@@ -5,7 +5,7 @@
 /**
  * sets up a euchre game
  */
-EuchreGame::EuchreGame(){
+EuchreGame::EuchreGame() {
     players.fill(nullptr);
     init();
     startNewGame();
@@ -18,7 +18,7 @@ EuchreGame::EuchreGame(){
  * @param left the left player
  * @param right the right player
  */
-EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right){
+EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right) {
     setPlayer(UP, up);
     setPlayer(DOWN, down);
     setPlayer(LEFT, left);
@@ -30,17 +30,17 @@ EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right){
 /**
  * sets default values for team names and the callback function
  */
-void EuchreGame::init(){
+void EuchreGame::init() {
     setTeamName(UP_TEAM, "up/down team");
     setTeamName(LEFT_TEAM, "left/right team");
-    setPublicKnowledgeCallback([](Card card, int playerIDX){});
+    setPublicKnowledgeCallback([](const Card& card, int playerIDX) {});
 }
 
 
 /**
  * resets the scores and randomly picks a new dealer
  */
-void EuchreGame::startNewGame(){
+void EuchreGame::startNewGame() {
     setDealer(Random::nextInt(NUM_PLAYERS));
     score.fill(0);
 }
@@ -50,7 +50,7 @@ void EuchreGame::startNewGame(){
  * @param upScore the score to give the up/down team
  * @param leftScore the score to give the left/right team
  */
-void EuchreGame::setScore(int upScore, int leftScore){
+void EuchreGame::setScore(int upScore, int leftScore) {
     score[UP_TEAM] = upScore;
     score[LEFT_TEAM] = leftScore;
 }
@@ -60,7 +60,7 @@ void EuchreGame::setScore(int upScore, int leftScore){
  * @param playerIDX the index of the player, UP, DOWN, LEFT or RIGHT
  * @return the player
  */
-Player* EuchreGame::getPlayer(int playerIDX){
+Player* EuchreGame::getPlayer(int playerIDX) const {
     return players[playerIDX];
 }
 
@@ -68,7 +68,7 @@ Player* EuchreGame::getPlayer(int playerIDX){
  * @param playerIDX the player idx to set
  * @param player the player to set
  */
-void EuchreGame::setPlayer(int playerIDX, Player* player){
+void EuchreGame::setPlayer(int playerIDX, Player* player) {
     players[playerIDX] = player;
     players[playerIDX]->setPosition(playerIDX);
 }
@@ -77,7 +77,7 @@ void EuchreGame::setPlayer(int playerIDX, Player* player){
  * @param team the team to set the name of
  * @param name the name to give the team
  */
-void EuchreGame::setTeamName(int team, std::string name){
+void EuchreGame::setTeamName(int team, std::string name) {
     teamNames[team] = name;
 }
 
@@ -85,7 +85,7 @@ void EuchreGame::setTeamName(int team, std::string name){
  * @param team the team to get the name of
  * @return the name of the team
  */
-std::string EuchreGame::getTeamName(int team){
+std::string EuchreGame::getTeamName(int team) const {
     return teamNames[team];
 }
 
@@ -93,7 +93,7 @@ std::string EuchreGame::getTeamName(int team){
 /**
  * @return the player index of the dealer
  */
-int EuchreGame::getDealer(){
+int EuchreGame::getDealer() const {
     return dealer;
 }
 
@@ -101,14 +101,14 @@ int EuchreGame::getDealer(){
  * @param playerIDX the player index to test if they are the dealer
  * @return true if the player is the index given
  */
-bool EuchreGame::isDealer(int playerIDX){
+bool EuchreGame::isDealer(int playerIDX) const {
     return getDealer() == playerIDX;
 }
 
 /**
  * @param dealer the player index to change the dealer to
  */
-void EuchreGame::setDealer(int dealer){
+void EuchreGame::setDealer(int dealer) {
     this->dealer = dealer;
 }
 
@@ -116,10 +116,10 @@ void EuchreGame::setDealer(int dealer){
 /**
  * sets up a new hand
  */
-void EuchreGame::startNewHand(){
+void EuchreGame::startNewHand() {
     clearTrick();                       //empty the trick
     isPlaying.fill(true);               //everyone is playing
-    for (Player* player : players){
+    for (Player* player : players) {
         player->startNewHand();         //reset all players
     }
     setDealer(nextPlayer(getDealer())); //rotate the dealer
@@ -134,9 +134,9 @@ void EuchreGame::startNewHand(){
 /**
  * deals Hand::NUM_CARDS cards to each player, does not check hand sizes/deck cards so may segfault
  */
-void EuchreGame::deal(){
-    for (int i = 0; i < Hand::NUM_CARDS; i++){
-        for (Player* player : players){
+void EuchreGame::deal() {
+    for (int i = 0; i < Hand::NUM_CARDS; i++) {
+        for (Player* player : players) {
             player->addCard(deck.pop());
         }
     }
@@ -146,7 +146,7 @@ void EuchreGame::deal(){
 /**
  * @return true if the game is over, any team has MAX_SCORE or more points
  */
-bool EuchreGame::isGameOver(){
+bool EuchreGame::isGameOver() const {
     return getTeamScore(UP_TEAM) >= MAX_SCORE || getTeamScore(LEFT_TEAM) >= MAX_SCORE;
 }
 
@@ -154,7 +154,7 @@ bool EuchreGame::isGameOver(){
  * @param team the team to get the score of
  * @return the score that the team has
  */
-int EuchreGame::getTeamScore(int team){
+int EuchreGame::getTeamScore(int team) const {
     return score[team];
 }
 
@@ -162,11 +162,11 @@ int EuchreGame::getTeamScore(int team){
 /**
  * @return the team that is winning, or DRAW if there is a tie
  */
-int EuchreGame::getWinningTeam(){
-    if (getTeamScore(UP_TEAM) > getTeamScore(LEFT_TEAM)){
+int EuchreGame::getWinningTeam() const {
+    if (getTeamScore(UP_TEAM) > getTeamScore(LEFT_TEAM)) {
         return UP_TEAM;
     }
-    else if (getTeamScore(UP_TEAM) < getTeamScore(LEFT_TEAM)){
+    else if (getTeamScore(UP_TEAM) < getTeamScore(LEFT_TEAM)) {
         return LEFT_TEAM;
     }
     return DRAW;
@@ -177,9 +177,9 @@ int EuchreGame::getWinningTeam(){
  * @param playerIDX the player index to get the next player of
  * @return the player index after playerIDX, skipping players who are not playing
  */
-int EuchreGame::nextPlayer(int playerIDX){
+int EuchreGame::nextPlayer(int playerIDX) const {
     int next = (playerIDX + 1) % NUM_PLAYERS;
-    while (!isPlaying[next]){
+    while (!isPlaying[next]) {
         next = (next + 1) % NUM_PLAYERS;
     }
     return next;
@@ -190,7 +190,7 @@ int EuchreGame::nextPlayer(int playerIDX){
  * @param playerIDX the player to get the index of the other player on their team
  * @return the player index of the other player on the same team as playerIDX
  */
-int EuchreGame::getOtherPlayerOnTeam(int playerIDX){
+int EuchreGame::getOtherPlayerOnTeam(int playerIDX) const {
     return (playerIDX + (NUM_PLAYERS / NUM_TEAMS)) % NUM_PLAYERS;
 }
 
@@ -199,8 +199,8 @@ int EuchreGame::getOtherPlayerOnTeam(int playerIDX){
  * @param playerIDX the player index to get the team of
  * @return the team of the player
  */
-int EuchreGame::getPlayerTeam(int playerIDX){
-    if (playerIDX == UP || playerIDX == DOWN){
+int EuchreGame::getPlayerTeam(int playerIDX) const {
+    if (playerIDX == UP || playerIDX == DOWN) {
         return UP_TEAM;
     }
     return LEFT_TEAM;
@@ -212,9 +212,8 @@ int EuchreGame::getPlayerTeam(int playerIDX){
  * @param player2 another player index, not equal to player1
  * @return true if the two players are on the same team (and are different players)
  */
-bool EuchreGame::isSameTeam(int player1, int player2){
+bool EuchreGame::isSameTeam(int player1, int player2) const {
     return getOtherPlayerOnTeam(player1) == player2;
-    //return getPlayerTeam(player1) == getPlayerTeam(player2);  //true when player1==player2
 }
 
 
@@ -222,10 +221,10 @@ bool EuchreGame::isSameTeam(int player1, int player2){
  * @param team the team to get the other team
  * @return the other team
  */
-int EuchreGame::getOtherTeam(int team){
+int EuchreGame::getOtherTeam(int team) const {
     return team ^ 0x1;  //0^1 = 1, 1^1 = 0
     /*
-    if (team == UP_TEAM){
+    if (team == UP_TEAM) {
         return LEFT_TEAM;
     }
     return UP_TEAM;
@@ -236,28 +235,28 @@ int EuchreGame::getOtherTeam(int team){
 /**
  * @return the top card
  */
-Card EuchreGame::getTopCard(){
+const Card& EuchreGame::getTopCard() const {
     return top;
 }
 
 /**
  * removes the top card from play, causes inTopCardPhase() to return false, getTopCard() is still working
  */
-void EuchreGame::turnDownTopCard(){
+void EuchreGame::turnDownTopCard() {
     inTop = false;
 }
 
 /**
  * @param top the new top card to set
  */
-void EuchreGame::setTopCard(Card top){
+void EuchreGame::setTopCard(const Card& top) {
     this->top = top;
 }
 
 /**
  * @return true if the top card is still up
  */
-bool EuchreGame::inTopCardPhase(){
+bool EuchreGame::inTopCardPhase() const {
     return inTop;
 }
 
@@ -265,14 +264,14 @@ bool EuchreGame::inTopCardPhase(){
 /**
  * @return the calling team
  */
-int EuchreGame::getCallingTeam(){
+int EuchreGame::getCallingTeam() const {
     return call.first;
 }
 
 /**
  * @return true if the calling team went alone this hand
  */
-bool EuchreGame::wentAlone(){
+bool EuchreGame::wentAlone() const {
     return call.second;
 }
 
@@ -280,7 +279,7 @@ bool EuchreGame::wentAlone(){
  * @param playerIDX the player index to test if they are playing
  * @return true if the player is in the game this hand
  */
-bool EuchreGame::isPlayingThisHand(int playerIDX){
+bool EuchreGame::isPlayingThisHand(int playerIDX) const {
     return isPlaying[playerIDX];
 }
 
@@ -288,7 +287,7 @@ bool EuchreGame::isPlayingThisHand(int playerIDX){
  * @param playerIDX the player index to set they are playing or not
  * @param playing if they are playing this hand or not
  */
-void EuchreGame::setPlaying(int playerIDX, bool playing){
+void EuchreGame::setPlaying(int playerIDX, bool playing) {
     isPlaying[playerIDX] = playing;
 }
 
@@ -296,7 +295,7 @@ void EuchreGame::setPlaying(int playerIDX, bool playing){
 /**
  * clears the trick to prep for a new one
  */
-void EuchreGame::clearTrick(){
+void EuchreGame::clearTrick() {
     trickCards.fill(Card(0));
     trick.clear();
 }
@@ -305,7 +304,7 @@ void EuchreGame::clearTrick(){
  * @param playerIDX the player index of the card to get
  * @return the card the player played in the current trick
  */
-Card EuchreGame::getCard(int playerIDX){
+const Card& EuchreGame::getCard(int playerIDX) const {
     return trickCards[playerIDX];
 }
 
@@ -313,7 +312,7 @@ Card EuchreGame::getCard(int playerIDX){
  * @param playerIDX the player index to check
  * @return true if the player has played a card in the current trick
  */
-bool EuchreGame::playedCard(int playerIDX){
+bool EuchreGame::playedCard(int playerIDX) const {
     return trickCards[playerIDX].hashCode() != 0;
 }
 
@@ -322,7 +321,7 @@ bool EuchreGame::playedCard(int playerIDX){
  * @param playerIDX the player index
  * @return the string to display for the top card
  */
-std::string EuchreGame::topCard(int playerIDX){
+std::string EuchreGame::topCard(int playerIDX) const {
     return isDealer(playerIDX) && inTopCardPhase() ? getTopCard().toString() : "  ";
 }
 
@@ -330,14 +329,14 @@ std::string EuchreGame::topCard(int playerIDX){
  * @param playerIDX the player index
  * @return the string to display for their trick card
  */
-std::string EuchreGame::trkCard(int playerIDX){
+std::string EuchreGame::trkCard(int playerIDX) const {
     return playedCard(playerIDX) ? getCard(playerIDX).toString() : "  ";
 }
 
 /**
  * displays the game
  */
-void EuchreGame::draw(){
+void EuchreGame::draw() const {
     std::cout
         << "\t+------------+" << std::endl
         << "\t|   " << topCard(UP) << trkCard(UP) << "     |" << std::endl
@@ -355,7 +354,7 @@ void EuchreGame::draw(){
  *  @param card the card that was made public knowledge
  *  @param playerIDX the player that played it, or -1 for the deck
  */
-void EuchreGame::setPublicKnowledgeCallback(std::function<void(Card,int)> fn){
+void EuchreGame::setPublicKnowledgeCallback(std::function<void(const Card&,int)> fn) {
     publicKnowledgeCallback = fn;
 }
 
@@ -365,12 +364,12 @@ void EuchreGame::setPublicKnowledgeCallback(std::function<void(Card,int)> fn){
  * @param response the response from Player::*
  * @return the trump suit
  */
-int EuchreGame::updateCall(int playerIDX, std::pair<int ,bool> response){
+int EuchreGame::updateCall(int playerIDX, std::pair<int ,bool> response) {
     call = std::make_pair(getPlayerTeam(playerIDX), response.second);
-    if (wentAlone()){
+    if (wentAlone()) {
         setPlaying(getOtherPlayerOnTeam(playerIDX), false); //they went alone
     }
-    if (inTopCardPhase() && isPlayingThisHand(getDealer())){
+    if (inTopCardPhase() && isPlayingThisHand(getDealer())) {
         getPlayer(getDealer())->replaceCard(getTopCard());  //replace dealer card if they are still playing
     }
     return response.first;
@@ -381,11 +380,11 @@ int EuchreGame::updateCall(int playerIDX, std::pair<int ,bool> response){
  * plays the phase of the game where the up card is available
  * @return the suit that was picked up, or Player::Pass if it was turned down
  */
-int EuchreGame::topCardPhase(){
+int EuchreGame::topCardPhase() {
     std::pair<int,bool> response;
-    for (int i = nextPlayer(getDealer()); i != getDealer(); i = nextPlayer(i)){
+    for (int i = nextPlayer(getDealer()); i != getDealer(); i = nextPlayer(i)) {
         response = getPlayer(i)->orderUp(getTopCard(), isSameTeam(i, getDealer()));
-        if (response.first != Player::Pass){
+        if (response.first != Player::Pass) {
             std::cout << getPlayer(i)->getName() << " ordered up the " << getTopCard().toString() << " to " << getPlayer(getDealer())->getName() << std::endl;
             return updateCall(i, response);
         }
@@ -395,7 +394,7 @@ int EuchreGame::topCardPhase(){
     }
 
     response = getPlayer(getDealer())->pickItUp(getTopCard());
-    if (response.first != Player::Pass){
+    if (response.first != Player::Pass) {
         return updateCall(dealer, response);
     }
     return Player::Pass;
@@ -406,11 +405,11 @@ int EuchreGame::topCardPhase(){
  * plays the phase of the game where players call trump
  * @return the called trump suit
  */
-int EuchreGame::callPhase(int unavailableSuit){
+int EuchreGame::callPhase(int unavailableSuit) {
     std::pair<int,bool> response;
-    for (int i = nextPlayer(getDealer()); i != getDealer(); i = nextPlayer(i)){
+    for (int i = nextPlayer(getDealer()); i != getDealer(); i = nextPlayer(i)) {
         response = getPlayer(i)->callTrump(unavailableSuit);
-        if (response.first != Player::Pass){
+        if (response.first != Player::Pass) {
             return updateCall(i, response);
         }
         else {
@@ -429,10 +428,10 @@ int EuchreGame::callPhase(int unavailableSuit){
  * @param startPlayer the starting player for the trick
  * @return the winner of the trick, relative to who started the trick
  */
-int EuchreGame::trickPhase(int trump, int startPlayerIDX){
+int EuchreGame::trickPhase(int trump, int startPlayerIDX) {
     clearTrick();
     trick.setTrump(trump);
-    for (int i = startPlayerIDX, first = 1; i != startPlayerIDX || first; i = nextPlayer(i), first = 0){
+    for (int i = startPlayerIDX, first = 1; i != startPlayerIDX || first; i = nextPlayer(i), first = 0) {
         trickCards[i] = getPlayer(i)->playCard(trick);
         trick.addCard(trickCards[i]);
         publicKnowledgeCallback(trickCards[i], i);
@@ -445,11 +444,11 @@ int EuchreGame::trickPhase(int trump, int startPlayerIDX){
 /**
  * @param wins the trick wins per team, updates the scores for this hand
  */
-void EuchreGame::scorePhase(std::array<int, NUM_TEAMS> trickWins){
+void EuchreGame::scorePhase(std::array<int, NUM_TEAMS> trickWins) {
     int toScore = 0;
     int scoringTeam = 0;
-    if (trickWins[getCallingTeam()] == Hand::NUM_CARDS){
-        if (wentAlone()){
+    if (trickWins[getCallingTeam()] == Hand::NUM_CARDS) {
+        if (wentAlone()) {
             toScore = ALONE_ALL;
             scoringTeam = getCallingTeam();
         }
@@ -458,7 +457,7 @@ void EuchreGame::scorePhase(std::array<int, NUM_TEAMS> trickWins){
             scoringTeam = getCallingTeam();
         }
     }
-    else if (trickWins[getCallingTeam()] > Hand::NUM_CARDS / 2){
+    else if (trickWins[getCallingTeam()] > Hand::NUM_CARDS / 2) {
         toScore = NORMAL_WIN;
         scoringTeam = getCallingTeam();
     }
@@ -474,15 +473,15 @@ void EuchreGame::scorePhase(std::array<int, NUM_TEAMS> trickWins){
 /**
  * runs through an entire game
  */
-void EuchreGame::play(){
+void EuchreGame::play() {
     std::array<int, NUM_TEAMS> wins;
-    while (!isGameOver()){
+    while (!isGameOver()) {
         startNewHand();
         draw();
 
         int trump = topCardPhase();
         turnDownTopCard();
-        if (trump == Player::Pass){
+        if (trump == Player::Pass) {
             draw();
             std::cout << getTopCard().toString() << " was turned down" << std::endl;
             trump = callPhase(getTopCard().getSuit());
@@ -490,10 +489,10 @@ void EuchreGame::play(){
 
         wins.fill(0);
         int start = nextPlayer(getDealer());
-        for (int round = 0; round < Hand::NUM_CARDS; round++){
+        for (int round = 0; round < Hand::NUM_CARDS; round++) {
             int winner = trickPhase(trump, start);
             //start = (start + winner) % NUM_PLAYERS;
-            for (int i = 0; i < winner; i++){
+            for (int i = 0; i < winner; i++) {
                 start = nextPlayer(start);
             }
             wins[getPlayerTeam(start)]++;

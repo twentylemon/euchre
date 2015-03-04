@@ -13,7 +13,7 @@ const class CardScore
 public:
     CardScore();
 
-    static int get(int trump, Card card);
+    static int get(int trump, const Card& card);
     static int get(int trump, int hash);
 
     const static int MIN_TRUMP_SCORE = 6;

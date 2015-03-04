@@ -5,7 +5,7 @@
 /**
  * base constructor
  */
-Player::Player(){
+Player::Player() {
     startNewHand();
     setName("default");
 }
@@ -13,7 +13,7 @@ Player::Player(){
 /**
  * @param name the name of this player
  */
-Player::Player(std::string name){
+Player::Player(std::string name) {
     startNewHand();
     setName(name);
 }
@@ -22,14 +22,14 @@ Player::Player(std::string name){
 /**
  * @return the name of this player
  */
-std::string Player::getName(){
+std::string Player::getName() const {
     return name;
 }
 
 /**
  * @param name the name of this player
  */
-void Player::setName(std::string name){
+void Player::setName(std::string name) {
     this->name = name;
 }
 
@@ -37,14 +37,14 @@ void Player::setName(std::string name){
 /**
  * @return this players hand
  */
-Hand Player::getHand(){
+const Hand& Player::getHand() const {
     return hand;
 }
 
 /**
  * @return the number of cards this player has in their hand
  */
-int Player::getNumCards(){
+int Player::getNumCards() const {
     return hand.getNumCards();
 }
 
@@ -52,14 +52,14 @@ int Player::getNumCards(){
 /**
  * @return the position of this player in the game, ie one of EuchreGame::UP/DOWN/LEFT/RIGHT
  */
-int Player::getPosition(){
+int Player::getPosition() const {
     return position;
 }
 
 /**
  * @param position the position to give this player, ie one of EuchreGame::UP/DOWN/LEFT/RIGHT
  */
-void Player::setPosition(int position){
+void Player::setPosition(int position) {
     this->position = position;
 }
 
@@ -67,7 +67,7 @@ void Player::setPosition(int position){
 /**
  * preps this player for a new hand
  */
-void Player::startNewHand(){
+void Player::startNewHand() {
     hand.clear();
 }
 
@@ -75,7 +75,7 @@ void Player::startNewHand(){
 /**
  * @param card the card to add to this players hand
  */
-void Player::addCard(Card card){
+void Player::addCard(Card card) {
     hand.addCard(card);
 }
 
@@ -83,7 +83,7 @@ void Player::addCard(Card card){
 /**
  * @return string representation of this player
  */
-std::string Player::toString(){
+std::string Player::toString() const {
     return name + ": " + hand.toString();
 }
 
@@ -93,7 +93,7 @@ std::string Player::toString(){
  * @param yourTeam true if you would be ordering up your partner
  * @return the action the player is taking, ordering up or passing
  */
-std::pair<int,bool> Player::orderUp(Card top, bool yourTeam){
+std::pair<int,bool> Player::orderUp(const Card& top, bool yourTeam) const {
     char response = '\0';
     std::cout << "do you want to order up " << top.toString() << " ([y]es/[n]o/[a]lone)? ";
     do {
@@ -107,7 +107,7 @@ std::pair<int,bool> Player::orderUp(Card top, bool yourTeam){
  * @param top the card that would be picked up
  * @return the action the player is taking, picking up or turning down
  */
-std::pair<int,bool> Player::pickItUp(Card top){
+std::pair<int,bool> Player::pickItUp(const Card& top) const {
     char response = '\0';
     std::cout << "do you want to pick up " << top.toString() << " ([y]es/[n]o/[a]lone)? ";
     do {
@@ -121,7 +121,7 @@ std::pair<int,bool> Player::pickItUp(Card top){
  * @param top the card that is coming into your hand, replacing another card
  * @todo this
  */
-void Player::replaceCard(Card top){
+void Player::replaceCard(const Card& top) {
 }
 
 
@@ -130,7 +130,7 @@ void Player::replaceCard(Card top){
  * @return the action the player is taking, calling trump or passing
  * @todo this
  */
-std::pair<int,bool> Player::callTrump(int badSuit){
+std::pair<int,bool> Player::callTrump(int badSuit) const {
     return std::make_pair(Pass, false);
 }
 
@@ -140,7 +140,7 @@ std::pair<int,bool> Player::callTrump(int badSuit){
  * @return the action the player is taking, calling trump must occur
  * @todo this
  */
-std::pair<int,bool> Player::stickTrump(int badSuit){
+std::pair<int,bool> Player::stickTrump(int badSuit) const {
     return std::make_pair(Card::Spades, false);
 }
 
@@ -150,6 +150,6 @@ std::pair<int,bool> Player::stickTrump(int badSuit){
  * @return the card to play
  * @todo this
  */
-Card Player::playCard(Trick &trick){
-    return Card(hand.removeCard(0));
+Card Player::playCard(const Trick& trick) {
+    return hand.removeCard(0);
 }

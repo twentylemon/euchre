@@ -5,7 +5,7 @@
 /**
  * constructs a new unshuffled deck
  */
-Deck::Deck(){
+Deck::Deck() {
     std::copy(Card::ALL_CARDS.begin(), Card::ALL_CARDS.end(), cards.begin());
     used.reset();
     top = 0;
@@ -16,8 +16,8 @@ Deck::Deck(){
 /**
  * updates the array that keeps track of where every card is in the deck
  */
-void Deck::updatePositions(){
-    for (int i = 0; i < SIZE; i++){
+void Deck::updatePositions() {
+    for (int i = 0; i < SIZE; i++) {
         positions[getCard(i).hashCode()] = i;
     }
 }
@@ -26,7 +26,7 @@ void Deck::updatePositions(){
 /**
  * shuffles the deck, sets all cards to not used
  */
-void Deck::shuffle(){
+void Deck::shuffle() {
     used.reset();
     top = 0;
     std::random_shuffle(cards.begin(), cards.end());
@@ -37,7 +37,7 @@ void Deck::shuffle(){
 /**
  * @return the top card of the deck, which is also set to be `used`
  */
-Card Deck::pop(){
+const Card& Deck::pop() {
     setUsed(top, true);
     return getCard(top++);
 }
@@ -46,7 +46,7 @@ Card Deck::pop(){
  * @param card the card to get the index of
  * @return the index of the Card in the deck
  */
-int Deck::indexOf(Card card){
+int Deck::indexOf(const Card& card) const {
     return indexOf(card.hashCode());
 }
 
@@ -54,7 +54,7 @@ int Deck::indexOf(Card card){
  * @param hash the hashcode of the card to get the index of
  * @return the index of the card in the deck
  */
-int Deck::indexOf(int hash){
+int Deck::indexOf(int hash) const {
     return positions[hash];
 }
 
@@ -63,7 +63,7 @@ int Deck::indexOf(int hash){
  * @param card the card to check if it is used, ie in play
  * @return true if the card is used, ie in play
  */
-bool Deck::isUsed(Card card){
+bool Deck::isUsed(const Card& card) const {
     return isUsed(indexOf(card));
 }
 
@@ -71,7 +71,7 @@ bool Deck::isUsed(Card card){
  * @param idx the card index to check if it is used, ie in play
  * @return true if the card is used, ie in play
  */
-bool Deck::isUsed(int idx){
+bool Deck::isUsed(int idx) const {
     return used[Card::HASH_IDX[getCard(idx).hashCode()]];
 }
 
@@ -79,7 +79,7 @@ bool Deck::isUsed(int idx){
  * @param card the card to set the used flag of, ie in play or not
  * @param used what to set the flag to
  */
-void Deck::setUsed(Card card, bool used){
+void Deck::setUsed(const Card& card, bool used) {
     setUsed(indexOf(card), used);
 }
 
@@ -87,7 +87,7 @@ void Deck::setUsed(Card card, bool used){
  * @param idx the card index to set the used flag of, ie in play or not
  * @param used what to set the flag to
  */
-void Deck::setUsed(int idx, bool used){
+void Deck::setUsed(int idx, bool used) {
     this->used.set(Card::HASH_IDX[getCard(idx).hashCode()], used);
 }
 
@@ -95,7 +95,7 @@ void Deck::setUsed(int idx, bool used){
 /**
  * @return the bitset of hands in this hand
  */
-std::bitset<Card::NUM_CARDS> Deck::getBitset(){
+std::bitset<Card::NUM_CARDS> Deck::getBitset() const {
     return used;
 }
 
@@ -104,7 +104,15 @@ std::bitset<Card::NUM_CARDS> Deck::getBitset(){
  * @param idx the index of the card to return
  * @return the card at idx
  */
-Card Deck::getCard(int idx){
+const Card& Deck::getCard(int idx) {
+    return cards[idx];
+}
+
+/**
+ * @param idx the index of the card to return
+ * @return the card at idx
+ */
+const Card& Deck::getCard(int idx) const {
     return cards[idx];
 }
 
@@ -112,14 +120,14 @@ Card Deck::getCard(int idx){
 /**
  * @return a string representation of this deck
  */
-std::string Deck::toString(){
+std::string Deck::toString() const {
     std::string str = "";
-    for (int i = 0; i < SIZE; i++){
+    for (int i = 0; i < SIZE; i++) {
         str += getCard(i).toString();
     }
     str += "\n";
-    for (int i = 0; i < SIZE; i++){
-        if (isUsed(i)){
+    for (int i = 0; i < SIZE; i++) {
+        if (isUsed(i)) {
             str += "--";
         }
         else {

@@ -48,47 +48,47 @@ public:
     void init();
     virtual void startNewGame();
 
-    virtual Player* getPlayer(int playerIDX);
+    virtual Player* getPlayer(int playerIDX) const;
     virtual void setPlayer(int playerIDX, Player* player);
     virtual void setTeamName(int team, std::string name);
-    virtual std::string getTeamName(int team);
+    virtual std::string getTeamName(int team) const;
 
-    virtual int getDealer();
-    virtual bool isDealer(int playerIDX);
+    virtual int getDealer() const;
+    virtual bool isDealer(int playerIDX) const;
     virtual void setDealer(int dealer);
 
     virtual void startNewHand();
     virtual void deal();
     virtual void setScore(int upScore, int leftScore);
 
-    virtual bool isGameOver();
-    virtual int getTeamScore(int team);
-    virtual int getWinningTeam();
+    virtual bool isGameOver() const;
+    virtual int getTeamScore(int team) const;
+    virtual int getWinningTeam() const;
 
-    virtual int nextPlayer(int playerIDX);
-    virtual int getOtherPlayerOnTeam(int playerIDX);
-    virtual int getPlayerTeam(int playerIDX);
-    virtual bool isSameTeam(int player1, int player2);
-    virtual int getOtherTeam(int team);
+    virtual int nextPlayer(int playerIDX) const;
+    virtual int getOtherPlayerOnTeam(int playerIDX) const;
+    virtual int getPlayerTeam(int playerIDX) const;
+    virtual bool isSameTeam(int player1, int player2) const;
+    virtual int getOtherTeam(int team) const;
     
-    virtual Card getTopCard();
+    virtual const Card& getTopCard() const;
     virtual void turnDownTopCard();
-    virtual void setTopCard(Card top);
-    virtual bool inTopCardPhase();
+    virtual void setTopCard(const Card& top);
+    virtual bool inTopCardPhase() const;
 
-    virtual int getCallingTeam();
-    virtual bool wentAlone();
-    virtual bool isPlayingThisHand(int playerIDX);
+    virtual int getCallingTeam() const;
+    virtual bool wentAlone() const;
+    virtual bool isPlayingThisHand(int playerIDX) const;
     virtual void setPlaying(int playerIDX, bool playing);
     
     virtual void clearTrick();
-    virtual Card getCard(int playerIDX);
-    virtual bool playedCard(int playerIDX);
-    virtual std::string topCard(int playerIDX);
-    virtual std::string trkCard(int playerIDX);
-    virtual void draw();
+    virtual const Card& getCard(int playerIDX) const;
+    virtual bool playedCard(int playerIDX) const;
+    virtual std::string topCard(int playerIDX) const;
+    virtual std::string trkCard(int playerIDX) const;
+    virtual void draw() const;
 
-    void setPublicKnowledgeCallback(std::function<void(Card,int)> fn);
+    void setPublicKnowledgeCallback(std::function<void(const Card&,int)> fn);
 
     virtual void play();
     virtual int updateCall(int playerIDX, std::pair<int,bool> response);
@@ -114,5 +114,5 @@ protected:
     std::pair<int,bool> call;
 
 private:
-    std::function<void(Card,int)> publicKnowledgeCallback;
+    std::function<void(const Card&,int)> publicKnowledgeCallback;
 };

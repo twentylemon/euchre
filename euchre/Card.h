@@ -9,9 +9,10 @@
 class Card
 {
 public:
-    Card(){}
+    Card();
     Card(int hash);
     Card(int rank, int suit);
+    Card(const Card& card);
 
     static enum Suit { Spades = 0, Hearts = 1, Diamonds = 2, Clubs = 3 };   //other suit: xor 0x3
     static enum Rank { Jack = 11, Queen = 12, King = 13, Ace = 14 };
@@ -32,15 +33,15 @@ public:
 
     static int otherSuit(int suit);
 
-    int getSuit();
-    int getRank();
-    int hashCode();
+    int getSuit() const;
+    int getRank() const;
+    int hashCode() const;
 
-    int getEffectiveSuit(int trump);
+    int getEffectiveSuit(int trump) const;
 
-    std::string toString();
+    std::string toString() const;
 
-    bool operator==(Card card);
+    bool operator==(const Card& card) const;
 
 private:
     int hash;

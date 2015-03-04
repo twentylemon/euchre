@@ -6,20 +6,20 @@
 /**
  * constructor
  */
-AIPlayer::AIPlayer() : Player(){
+AIPlayer::AIPlayer() : Player() {
 }
 
 /**
  * @param name the name of this player
  */
-AIPlayer::AIPlayer(std::string name) : Player(name){
+AIPlayer::AIPlayer(std::string name) : Player(name) {
 }
 
 
 /**
  * preps the ai player for a new hand.
  */
-void AIPlayer::startNewHand(){
+void AIPlayer::startNewHand() {
     knownCards.reset();
     Player::startNewHand();
 }
@@ -28,7 +28,7 @@ void AIPlayer::startNewHand(){
 /**
  * @param card the card to add to this players hand
  */
-void AIPlayer::addCard(Card card){
+void AIPlayer::addCard(Card card) {
     seenCard(card);
     Player::addCard(card);
 }
@@ -37,7 +37,7 @@ void AIPlayer::addCard(Card card){
 /**
  * @param card the card to set as seen for this player
  */
-void AIPlayer::seenCard(Card card){
+void AIPlayer::seenCard(Card card) {
     knownCards.set(Card::HASH_IDX[card.hashCode()], true);
 }
 
@@ -45,7 +45,7 @@ void AIPlayer::seenCard(Card card){
 /**
  * @return the bitset of hands in this hand
  */
-std::bitset<Card::NUM_CARDS> AIPlayer::getKnownCards(){
+std::bitset<Card::NUM_CARDS> AIPlayer::getKnownCards() const {
     return knownCards;
 }
 
@@ -53,7 +53,7 @@ std::bitset<Card::NUM_CARDS> AIPlayer::getKnownCards(){
 /**
  * @return a string representation of this ai player
  */
-std::string AIPlayer::toString(){
+std::string AIPlayer::toString() const {
     return Player::toString() + ", " + getKnownCards().to_string();
 }
 
@@ -65,7 +65,7 @@ std::string AIPlayer::toString(){
  * @return the action the player is taking, ordering up or passing
  * @todo this
  */
-std::pair<int,bool> AIPlayer::orderUp(Card top, bool yourTeam){
+std::pair<int,bool> AIPlayer::orderUp(const Card& top, bool yourTeam) const {
     return std::make_pair(Pass, false);
 }
 
@@ -75,7 +75,7 @@ std::pair<int,bool> AIPlayer::orderUp(Card top, bool yourTeam){
  * @return the action the player is taking, picking up or turning down
  * @todo this
  */
-std::pair<int,bool> AIPlayer::pickItUp(Card top){
+std::pair<int,bool> AIPlayer::pickItUp(const Card& top) const {
     return std::make_pair(Pass, false);
 }
 
@@ -84,7 +84,7 @@ std::pair<int,bool> AIPlayer::pickItUp(Card top){
  * @param top the card that is coming into your hand, replacing another card
  * @todo this
  */
-void AIPlayer::replaceCard(Card top){
+void AIPlayer::replaceCard(const Card& top) {
 }
 
 
@@ -93,7 +93,7 @@ void AIPlayer::replaceCard(Card top){
  * @return the action the player is taking, calling trump or passing
  * @todo this
  */
-std::pair<int,bool> AIPlayer::callTrump(int badSuit){
+std::pair<int,bool> AIPlayer::callTrump(int badSuit) const {
     return std::make_pair(Pass, false);
 }
 
@@ -103,7 +103,7 @@ std::pair<int,bool> AIPlayer::callTrump(int badSuit){
  * @return the action the player is taking, calling trump must occur
  * @todo this
  */
-std::pair<int,bool> AIPlayer::stickTrump(int badSuit){
+std::pair<int,bool> AIPlayer::stickTrump(int badSuit) const {
     return std::make_pair(Card::Spades, false);
 }
 
@@ -113,23 +113,23 @@ std::pair<int,bool> AIPlayer::stickTrump(int badSuit){
  * @return the card to play
  * @todo this
  */
-Card AIPlayer::playCard(Trick &trick){
+Card AIPlayer::playCard(const Trick& trick) {
     std::atomic<int> total = 0;
     int numCards = getNumCards();
-    if (knownCards.count() >= 13){
-        concurrency::parallel_for_each(Hand::ALL_HANDS[numCards].begin(), Hand::ALL_HANDS[numCards].end(), [&](Hand left){
-            if (left.intersects(knownCards)){ return; }
-            for (Hand across : Hand::ALL_HANDS[numCards]){
-                if (across.intersects(knownCards)|| across.intersects(left)){ continue; }
-                for (Hand right : Hand::ALL_HANDS[numCards]){
-                    if (right.intersects(knownCards)|| right.intersects(left)|| right.intersects(across)){ continue; }
+    if (knownCards.count() >= 11) {
+        concurrency::parallel_for_each(Hand::ALL_HANDS[numCards].begin(), Hand::ALL_HANDS[numCards].end(), [&](const Hand& left) {
+            if (left.intersects(knownCards)) { return; }
+            for (const Hand& across : Hand::ALL_HANDS[numCards]) {
+                if (across.intersects(knownCards)|| across.intersects(left)) { continue; }
+                for (const Hand& right : Hand::ALL_HANDS[numCards]) {
+                    if (right.intersects(knownCards)|| right.intersects(left)|| right.intersects(across)) { continue; }
                     total++;
                 }
             }
         });
     }
     std::cout << "know about " << knownCards.count() << " cards, counted " << total << " hands[size=" << numCards << "]" << std::endl;
-    return Card(hand.removeCard(0));
+    return hand.removeCard(0);
 }
 /**
  know about 6  cards, counted 617,512,896 hands[size=5]

@@ -8,7 +8,7 @@
 /**
  * define this to include trick hashcode stuff
  */
-#define TRICK_INCLUDE_HASH
+//#define TRICK_INCLUDE_HASH
 
 /**
  * One euchre trick.
@@ -20,35 +20,36 @@ public:
 
     static const int NUM_CARDS = 4;
 
+    static const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> EFF_SUITS;
+
     Trick();
     Trick(int);
 
-    int getTrump();
+    int getTrump() const;
     void setTrump(int trump);
 
-    int getLeadSuit();
-    bool isLegal(Card card);
+    int getLeadSuit() const;
+    bool isLegal(const Card& card) const;
 
     void clear();
 
-    std::vector<Card> getCards();
-    int getNumCards();
+    std::vector<Card> getCards() const;
+    int getNumCards() const;
 
-    void addCard(Card card);
+    void addCard(const Card& card);
     void removeLastCard();
 
-    int getWinner();
-    Card getWinningCard();
+    int getWinner() const;
+    const Card& getWinningCard();
+    const Card& getWinningCard() const;
 
 #ifdef TRICK_INCLUDE_HASH
-    int hashCode();
-    static int hashCode(int trump, Card card1, Card card2, Card card3, Card card4);
+    int hashCode() const;
+    static int hashCode(int trump, const Card& card1, const Card& card2, const Card& card3, const Card& card4);
     static int hashCode(int trump, int card1, int card2, int card3, int card4);
 #endif
 
-    std::string toString();
-
-    static const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> EFF_SUITS;
+    std::string toString() const;
 
 private:
 #ifdef TRICK_INCLUDE_HASH

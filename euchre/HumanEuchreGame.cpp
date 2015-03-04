@@ -3,7 +3,7 @@
 /**
  * sets up a euchre game
  */
-HumanEuchreGame::HumanEuchreGame() : EuchreGame(&partner, &human, &left, &right){
+HumanEuchreGame::HumanEuchreGame() : EuchreGame(&partner, &human, &left, &right) {
     dealer = std::rand() % NUM_PLAYERS;
     setTeamName(UP_TEAM, "your team");
     setTeamName(LEFT_TEAM, "ai team");
@@ -11,7 +11,7 @@ HumanEuchreGame::HumanEuchreGame() : EuchreGame(&partner, &human, &left, &right)
     partner.setName("partner");
     left.setName("left");
     right.setName("right");
-    setPublicKnowledgeCallback([=](Card card, int playerIDX){
+    setPublicKnowledgeCallback([=](const Card& card, int playerIDX) {
         left.seenCard(card);
         right.seenCard(card);
         partner.seenCard(card);
@@ -22,7 +22,7 @@ HumanEuchreGame::HumanEuchreGame() : EuchreGame(&partner, &human, &left, &right)
 /**
  * displays the game
  */
-void HumanEuchreGame::draw(){
+void HumanEuchreGame::draw() const {
     std::cout
         << "         partner" << (isDealer(PARTNER) ? "*" : "") << std::endl
         << "        " << std::string("X X X X X ", 2*partner.getNumCards()) << std::endl

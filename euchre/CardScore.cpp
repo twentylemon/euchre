@@ -33,7 +33,7 @@ const int CardScore::RANKINGS[Card::NUM_SUITS][Card::MAX_CARD] = {
 /**
  * initializes the rankings
  */
-CardScore::CardScore(){
+CardScore::CardScore() {
     initRankings();
 }
 
@@ -42,7 +42,7 @@ CardScore::CardScore(){
  * @param card the card to get the score of
  * @return the score of the card given the trump suit
  */
-int CardScore::get(int trump, Card card){
+int CardScore::get(int trump, const Card& card) {
     return get(trump, card.hashCode());
 }
 
@@ -51,7 +51,7 @@ int CardScore::get(int trump, Card card){
  * @param hash the has of the card to get the score of
  * @return the score of the card given the trump suit
  */
-int CardScore::get(int trump, int hash){
+int CardScore::get(int trump, int hash) {
     return RANKINGS[trump][hash];
 }
 
@@ -59,17 +59,17 @@ int CardScore::get(int trump, int hash){
 /**
  * initializes all of the cards' rankings for each trump value
  */
-void CardScore::initRankings(){
-    if (calculated){
+void CardScore::initRankings() {
+    if (calculated) {
         return;
     }
     
-    for (int trump : Card::SUITS){
-        for (Card card : Card::ALL_CARDS){
-            if (card.getRank() == Card::Rank::Jack && card.getSuit() == Card::otherSuit(trump)){
+    for (int trump : Card::SUITS) {
+        for (const Card& card : Card::ALL_CARDS) {
+            if (card.getRank() == Card::Jack && card.getSuit() == Card::otherSuit(trump)) {
                 rankings[trump][card.hashCode()] = LEFT_BOWER;
             }
-            else if (card.getSuit() == trump){
+            else if (card.getSuit() == trump) {
                 rankings[trump][card.hashCode()] = TRUMP_SCORE[card.getRank() - 9]; //offset by 9
             }
             else {  //not trump
@@ -83,11 +83,11 @@ void CardScore::initRankings(){
 /**
  * displays the calculated scores
  */
-void CardScore::display(){
+void CardScore::display() {
     initRankings();
-    for (int suit : Card::SUITS){
+    for (int suit : Card::SUITS) {
         std::cout << Card::SUIT_SYMBOLS[suit] << std::endl;
-        for (Card card : Card::ALL_CARDS){
+        for (Card card : Card::ALL_CARDS) {
             std::cout << card.toString() << "\t" << rankings[suit][card.hashCode()] << std::endl;
         }
         system("pause");

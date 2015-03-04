@@ -12,7 +12,7 @@
  * @param argc the number of command line arguments
  * @param argv the command line arguments
  */
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
 #ifndef _DEBUG
     Random::initSeed();
 #endif
@@ -21,7 +21,7 @@ int main(int argc, char** argv){
     EuchreGame game(new AIPlayer(), new AIPlayer(), new AIPlayer(), new AIPlayer());
     //EuchreGame game(new RandomPlayer(), new RandomPlayer(), new RandomPlayer(), new RandomPlayer());
     game.setScore(9, 9);
-   game.setPublicKnowledgeCallback([&](Card card, int playerIDX){
+   game.setPublicKnowledgeCallback([&](Card card, int playerIDX) {
         ((AIPlayer*)game.getPlayer(EuchreGame::UP))->seenCard(card);
         ((AIPlayer*)game.getPlayer(EuchreGame::DOWN))->seenCard(card);
         ((AIPlayer*)game.getPlayer(EuchreGame::LEFT))->seenCard(card);

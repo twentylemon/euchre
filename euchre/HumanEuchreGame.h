@@ -28,7 +28,7 @@ public:
 
     HumanEuchreGame();
 
-    virtual void draw() override;
+    virtual void draw() const override;
 
 private:
     Player human;

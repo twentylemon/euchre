@@ -17,11 +17,11 @@ public:
     RandomPlayer();
     RandomPlayer(std::string name);
 
-    std::pair<int,bool> orderUp(Card top, bool yourTeam) override;
-    std::pair<int,bool> pickItUp(Card top) override;
-    void replaceCard(Card top) override;
-    std::pair<int,bool> callTrump(int badSuit) override;
-    std::pair<int,bool> stickTrump(int badSuit) override;
+    std::pair<int,bool> orderUp(const Card& top, bool yourTeam) const override;
+    std::pair<int,bool> pickItUp(const Card& top) const override;
+    void replaceCard(const Card& top) override;
+    std::pair<int,bool> callTrump(int badSuit) const override;
+    std::pair<int,bool> stickTrump(int badSuit) const override;
 
-    Card playCard(Trick &trick) override;
+    Card playCard(const Trick& trick) override;
 };

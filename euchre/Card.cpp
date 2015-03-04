@@ -34,11 +34,18 @@ const std::array<int, Card::MAX_CARD> Card::HASH_IDX = {
     0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 };
 
 /**
+ * empty ctor
+ */
+Card::Card() {
+    hash = rank = 0;
+}
+
+/**
  * initializes this card using the rank and suit
  * @param rank the rank of this card
  * @param suit the suit of this card
  */
-Card::Card(int hash){
+Card::Card(int hash) {
     setHashCode(hash);
 }
 
@@ -47,14 +54,24 @@ Card::Card(int hash){
  * @param rank the rank of this card
  * @param suit the suit of this card
  */
-Card::Card(int rank, int suit){
+Card::Card(int rank, int suit) {
     setRankSuit(rank, suit);
 }
 
 /**
+ * @param card the card to copy
+ */
+Card::Card(const Card& card) {
+    hash = card.hashCode();
+    rank = card.getRank();
+    suit = card.getSuit();
+}
+
+
+/**
  * @param hash the hash code to set this card to
  */
-void Card::setHashCode(int hash){
+void Card::setHashCode(int hash) {
     this->hash = hash;
     suit = hash & 0x03;         //first 2 bits on, rest off
     rank = (hash & 0x3C) >> 2;  //all bits on expect first 2
@@ -64,7 +81,7 @@ void Card::setHashCode(int hash){
  * @param rank the rank to set this card to
  * @param suit the suit to set this card to
  */
-void Card::setRankSuit(int rank, int suit){
+void Card::setRankSuit(int rank, int suit) {
     setHashCode((rank << 2) | suit);
 }
 
@@ -73,14 +90,14 @@ void Card::setRankSuit(int rank, int suit){
  * @param suit the suit to get the other suit of the same colour
  * @return the other suit of the same colour as the given suit
  */
-int Card::otherSuit(int suit){
+int Card::otherSuit(int suit) {
     return suit ^ 0x03;
 }
 
 /**
  * @return the suit of this card
  */
-int Card::getSuit(){
+int Card::getSuit() const {
     return suit;
 }
 
@@ -88,7 +105,7 @@ int Card::getSuit(){
 /**
  * @return the rank of this card, with jack=11,...,ace=14
  */
-int Card::getRank(){
+int Card::getRank() const {
     return rank;
 }
 
@@ -96,7 +113,7 @@ int Card::getRank(){
 /**
  * @return a hashcode for this card
  */
-int Card::hashCode(){
+int Card::hashCode() const {
     return hash;
 }
 
@@ -105,8 +122,8 @@ int Card::hashCode(){
  * @param trump the trump suit
  * @return the suit of this card given the suit that is trump
  */
-int Card::getEffectiveSuit(int trump){
-    if (getRank() == Jack && getSuit() == otherSuit(trump)){
+int Card::getEffectiveSuit(int trump) const {
+    if (getRank() == Jack && getSuit() == otherSuit(trump)) {
         return trump;
     }
     return getSuit();
@@ -116,8 +133,8 @@ int Card::getEffectiveSuit(int trump){
 /**
  * @return  string version of this card, ie ace of hearts gives "AH"
  */
-std::string Card::toString(){
-    return RANK_SYMBOLS[rank] + SUIT_SYMBOLS[suit];
+std::string Card::toString() const {
+    return RANK_SYMBOLS[getRank()] + SUIT_SYMBOLS[getSuit()];
 }
 
 
@@ -125,6 +142,6 @@ std::string Card::toString(){
  * @param card another Card to test for equivalence
  * @return true if the Card sent has the same rank and suit as this card
  */
-bool Card::operator==(Card card){
-    return hash == card.hash;
+bool Card::operator==(const Card& card) const {
+    return hashCode() == card.hashCode();
 }
