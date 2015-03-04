@@ -115,8 +115,8 @@ std::pair<int,bool> AIPlayer::stickTrump(int badSuit){
  */
 Card AIPlayer::playCard(Trick &trick){
     std::atomic<int> total = 0;
-    int numCards = getHand().getNumCards();
-    if (knownCards.count() >= 15){
+    int numCards = getNumCards();
+    if (knownCards.count() >= 13){
         concurrency::parallel_for_each(Hand::ALL_HANDS[numCards].begin(), Hand::ALL_HANDS[numCards].end(), [&](Hand left){
             if (left.intersects(knownCards)){ return; }
             for (Hand across : Hand::ALL_HANDS[numCards]){

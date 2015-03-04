@@ -10,7 +10,7 @@ std::array<std::vector<Hand>, Hand::NUM_CARDS+1> allHands(){
         int start = BitString::first(size);
         int finish = BitString::last(size, Card::NUM_CARDS);
         for (int bits = start; bits <= finish; bits = BitString::next(bits)){
-            hands[size].push_back(Hand(std::bitset<Card::NUM_CARDS>(bits)));
+            hands[size].emplace_back(Hand(std::bitset<Card::NUM_CARDS>(bits)));
         }
         hands[size].shrink_to_fit();
     }
@@ -37,7 +37,6 @@ Hand::Hand(std::bitset<Card::NUM_CARDS> bits){
     clear();
     addSet(bits);
 }
-
 
 /**
  * clears all cards from this hand

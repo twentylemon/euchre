@@ -17,12 +17,16 @@ public:
 
     std::string getName();
     void setName(std::string name);
+
+    Hand getHand();
+    int getNumCards();
+
+    int getPosition();
+    void setPosition(int position);
  
     virtual void startNewHand();
 
     virtual void addCard(Card card);
-
-    virtual Hand getHand();
 
     virtual std::string toString();
 
@@ -35,6 +39,7 @@ public:
     virtual Card playCard(Trick &trick);
 
 protected:
+    int position;
     Hand hand;
     std::string name;
 };

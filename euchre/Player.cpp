@@ -35,6 +35,36 @@ void Player::setName(std::string name){
 
 
 /**
+ * @return this players hand
+ */
+Hand Player::getHand(){
+    return hand;
+}
+
+/**
+ * @return the number of cards this player has in their hand
+ */
+int Player::getNumCards(){
+    return hand.getNumCards();
+}
+
+
+/**
+ * @return the position of this player in the game, ie one of EuchreGame::UP/DOWN/LEFT/RIGHT
+ */
+int Player::getPosition(){
+    return position;
+}
+
+/**
+ * @param position the position to give this player, ie one of EuchreGame::UP/DOWN/LEFT/RIGHT
+ */
+void Player::setPosition(int position){
+    this->position = position;
+}
+
+
+/**
  * preps this player for a new hand
  */
 void Player::startNewHand(){
@@ -47,14 +77,6 @@ void Player::startNewHand(){
  */
 void Player::addCard(Card card){
     hand.addCard(card);
-}
-
-
-/**
- * @return this players hand
- */
-Hand Player::getHand(){
-    return hand;
 }
 
 

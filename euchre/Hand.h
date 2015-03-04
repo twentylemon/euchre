@@ -7,6 +7,7 @@
 #include <string>
 #include <bitset>
 #include <vector>
+#include <atomic>
 
 /**
  * a player hand
@@ -18,6 +19,8 @@ public:
     Hand(std::bitset<Card::NUM_CARDS> bits);
 
     static const int NUM_CARDS = 5;
+
+    static const std::array<std::vector<Hand>, NUM_CARDS+1> ALL_HANDS;
 
     void addCard(Card card);
     void addCard(int hash);
@@ -44,8 +47,6 @@ public:
     bool intersects(Hand hand);
     bool intersects(unsigned int bits);
     bool intersects(std::bitset<Card::NUM_CARDS> bits);
-
-    static const std::array<std::vector<Hand>, NUM_CARDS+1> ALL_HANDS;
 
 private:
     int numCards;

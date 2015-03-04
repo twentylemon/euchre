@@ -77,7 +77,6 @@ std::pair<int,bool> RandomPlayer::stickTrump(int badSuit){
 /**
  * @param trick the trick to play the card in
  * @return the card to play
- * @todo this
  */
 Card RandomPlayer::playCard(Trick &trick){
     std::vector<int> legalCards = getHand().getLegalCards(trick);

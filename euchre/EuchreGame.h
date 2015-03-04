@@ -5,6 +5,7 @@
 #include "Deck.h"
 #include "Hand.h"
 #include "Player.h"
+#include "Random.h"
 
 #include <array>
 #include <string>
@@ -44,6 +45,7 @@ public:
     EuchreGame();
     EuchreGame(Player* up, Player* down, Player* left, Player* right);
 
+    void init();
     virtual void startNewGame();
 
     virtual Player* getPlayer(int playerIDX);
@@ -86,7 +88,7 @@ public:
     virtual std::string trkCard(int playerIDX);
     virtual void draw();
 
-    void setPublicKnowledgeCallback(std::function<void(Card)> fn);
+    void setPublicKnowledgeCallback(std::function<void(Card,int)> fn);
 
     virtual void play();
     virtual int updateCall(int playerIDX, std::pair<int,bool> response);
@@ -109,8 +111,8 @@ protected:
     Card top;
     bool inTop;
     int dealer;
-    std::pair<int, bool> call;
+    std::pair<int,bool> call;
 
 private:
-    std::function<void(Card)> publicKnowledgeCallback;
+    std::function<void(Card,int)> publicKnowledgeCallback;
 };

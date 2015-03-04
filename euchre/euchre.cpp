@@ -21,7 +21,7 @@ int main(int argc, char** argv){
     EuchreGame game(new AIPlayer(), new AIPlayer(), new AIPlayer(), new AIPlayer());
     //EuchreGame game(new RandomPlayer(), new RandomPlayer(), new RandomPlayer(), new RandomPlayer());
     game.setScore(9, 9);
-    game.setPublicKnowledgeCallback([&](Card card){
+   game.setPublicKnowledgeCallback([&](Card card, int playerIDX){
         ((AIPlayer*)game.getPlayer(EuchreGame::UP))->seenCard(card);
         ((AIPlayer*)game.getPlayer(EuchreGame::DOWN))->seenCard(card);
         ((AIPlayer*)game.getPlayer(EuchreGame::LEFT))->seenCard(card);
@@ -36,19 +36,5 @@ int main(int argc, char** argv){
     eval(1);
     std::cout << "took " << GetTickCount64() - start1 << "ms" << std::endl;
 #endif
-    /*
-    ULONGLONG start = GetTickCount64();
-    std::array<std::array<int, 4>, Card::MAX_CARD> wins = evaluateTricks();
-    std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;
-    for (Card card : Card::ALL_CARDS){
-        std::cout << card.toString() << "\t";
-        int total = 0;
-        for (int w : wins[card.hashCode()]){
-            std::cout << w << "\t";
-            total += w;
-        }
-        printf("\t%s: %5d\n", card.toString().c_str(), total);
-    }
-    */
     system("pause");
 }

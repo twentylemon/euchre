@@ -7,6 +7,7 @@
  */
 EuchreGame::EuchreGame(){
     players.fill(nullptr);
+    init();
     startNewGame();
 }
 
@@ -22,7 +23,17 @@ EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right){
     setPlayer(DOWN, down);
     setPlayer(LEFT, left);
     setPlayer(RIGHT, right);
+    init();
     startNewGame();
+}
+
+/**
+ * sets default values for team names and the callback function
+ */
+void EuchreGame::init(){
+    setTeamName(UP_TEAM, "up/down team");
+    setTeamName(LEFT_TEAM, "left/right team");
+    setPublicKnowledgeCallback([](Card card, int playerIDX){});
 }
 
 
@@ -30,11 +41,8 @@ EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right){
  * resets the scores and randomly picks a new dealer
  */
 void EuchreGame::startNewGame(){
-    setDealer(DOWN);
+    setDealer(Random::nextInt(NUM_PLAYERS));
     score.fill(0);
-    setTeamName(UP_TEAM, "up/down team");
-    setTeamName(LEFT_TEAM, "left/right team");
-    setPublicKnowledgeCallback([](Card card){});
 }
 
 
@@ -62,6 +70,7 @@ Player* EuchreGame::getPlayer(int playerIDX){
  */
 void EuchreGame::setPlayer(int playerIDX, Player* player){
     players[playerIDX] = player;
+    players[playerIDX]->setPosition(playerIDX);
 }
 
 /**
@@ -118,7 +127,7 @@ void EuchreGame::startNewHand(){
     deal();                             //and deal
     top = deck.pop();                   //flip over the top card
     inTop = true;                       //we are in the top card phase
-    publicKnowledgeCallback(top);       //top is public knowledge
+    publicKnowledgeCallback(top, -1);   //top is public knowledge
 }
 
 
@@ -342,8 +351,11 @@ void EuchreGame::draw(){
 
 /**
  * @param fn the function to set as the callback when a card is made public
+ *  it is a function void fn(Card card, int playerIDX)
+ *  @param card the card that was made public knowledge
+ *  @param playerIDX the player that played it, or -1 for the deck
  */
-void EuchreGame::setPublicKnowledgeCallback(std::function<void(Card)> fn){
+void EuchreGame::setPublicKnowledgeCallback(std::function<void(Card,int)> fn){
     publicKnowledgeCallback = fn;
 }
 
@@ -423,7 +435,7 @@ int EuchreGame::trickPhase(int trump, int startPlayerIDX){
     for (int i = startPlayerIDX, first = 1; i != startPlayerIDX || first; i = nextPlayer(i), first = 0){
         trickCards[i] = getPlayer(i)->playCard(trick);
         trick.addCard(trickCards[i]);
-        publicKnowledgeCallback(trickCards[i]);
+        publicKnowledgeCallback(trickCards[i], i);
         draw();
     }
     return trick.getWinner();
@@ -479,11 +491,11 @@ void EuchreGame::play(){
         wins.fill(0);
         int start = nextPlayer(getDealer());
         for (int round = 0; round < Hand::NUM_CARDS; round++){
-            /**
-             * @todo this fails when someone is alone
-             */
             int winner = trickPhase(trump, start);
-            start = (start + winner) % NUM_PLAYERS;
+            //start = (start + winner) % NUM_PLAYERS;
+            for (int i = 0; i < winner; i++){
+                start = nextPlayer(start);
+            }
             wins[getPlayerTeam(start)]++;
             std::cout << getPlayer(start)->getName() << " takes the trick " << wins[UP_TEAM] << "-" << wins[LEFT_TEAM] << std::endl;
         }
