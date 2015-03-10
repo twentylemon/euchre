@@ -1,7 +1,9 @@
 
 #pragma once
 #include "Card.h"
+#include <array>
 #include <iostream>
+#include <functional>
 
 /**
  * calculates and retrieves card scorings by trump suit, higher scores are better
@@ -11,23 +13,24 @@
 const class CardScore
 {
 public:
-    CardScore();
-
     static int get(int trump, const Card& card);
     static int get(int trump, int hash);
 
     const static int MIN_TRUMP_SCORE = 6;
     const static int RIGHT_BOWER = 12;
     const static int LEFT_BOWER = 11;
-    const static int TRUMP_SCORE[6];
-    const static int OFF_SCORE[6];
-
-    const static int RANKINGS[Card::NUM_SUITS][Card::MAX_CARD];
+    const static std::array<int, Card::NUM_RANKS> TRUMP_SCORE;
+    const static std::array<int, Card::NUM_RANKS> OFF_SCORE;
 
     static void initRankings();
     static void display();
+    
+    const static std::array<std::function<bool(const Card&, const Card&)>, Card::NUM_SUITS> cardComparator;
+    const static std::array<std::function<bool(int, int)>, Card::NUM_SUITS> hashComparator;
 
 private:
     static bool calculated;
-    static int rankings[Card::NUM_SUITS][Card::MAX_CARD];
+    static std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> rankings;
+    
+    CardScore();
 };

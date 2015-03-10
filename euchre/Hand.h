@@ -27,13 +27,16 @@ public:
     void addSet(std::bitset<Card::NUM_CARDS> bits);
 
     int getCard(int idx) const;
-
+    
+    int removeCardIDX(int idx);
     int removeCard(int idx);
     int removeCard(const Card& card);
     int removeLastCard();
 
     int getNumCards() const;
 
+    std::vector<int> getCards() const;
+    std::vector<int> getSuitCards(int suit) const;
     std::vector<int> getLegalCards(const Trick &trick) const;
 
     void clear();

@@ -28,7 +28,7 @@ void AIPlayer::startNewHand() {
 /**
  * @param card the card to add to this players hand
  */
-void AIPlayer::addCard(Card card) {
+void AIPlayer::addCard(const Card& card) {
     seenCard(card);
     Player::addCard(card);
 }
@@ -37,7 +37,7 @@ void AIPlayer::addCard(Card card) {
 /**
  * @param card the card to set as seen for this player
  */
-void AIPlayer::seenCard(Card card) {
+void AIPlayer::seenCard(const Card& card) {
     knownCards.set(Card::HASH_IDX[card.hashCode()], true);
 }
 
@@ -58,7 +58,6 @@ std::string AIPlayer::toString() const {
 }
 
 
-
 /**
  * @param top the card that would be ordered up
  * @param yourTeam true if you would be ordering up your partner
@@ -66,7 +65,7 @@ std::string AIPlayer::toString() const {
  * @todo this
  */
 std::pair<int,bool> AIPlayer::orderUp(const Card& top, bool yourTeam) const {
-    return std::make_pair(Pass, false);
+    return Player::orderUp(top, yourTeam);
 }
 
 
@@ -76,7 +75,7 @@ std::pair<int,bool> AIPlayer::orderUp(const Card& top, bool yourTeam) const {
  * @todo this
  */
 std::pair<int,bool> AIPlayer::pickItUp(const Card& top) const {
-    return std::make_pair(Pass, false);
+    return Player::pickItUp(top);
 }
 
 
@@ -85,6 +84,7 @@ std::pair<int,bool> AIPlayer::pickItUp(const Card& top) const {
  * @todo this
  */
 void AIPlayer::replaceCard(const Card& top) {
+    Player::replaceCard(top);
 }
 
 
@@ -94,7 +94,7 @@ void AIPlayer::replaceCard(const Card& top) {
  * @todo this
  */
 std::pair<int,bool> AIPlayer::callTrump(int badSuit) const {
-    return std::make_pair(Pass, false);
+    return Player::callTrump(badSuit);
 }
 
 
@@ -104,7 +104,7 @@ std::pair<int,bool> AIPlayer::callTrump(int badSuit) const {
  * @todo this
  */
 std::pair<int,bool> AIPlayer::stickTrump(int badSuit) const {
-    return std::make_pair(Card::Spades, false);
+    return Player::stickTrump(badSuit);
 }
 
 

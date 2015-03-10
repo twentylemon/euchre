@@ -7,6 +7,9 @@
 #include <utility>
 #include <iostream>
 
+/**
+ * base class for players. provides basic "skip turn" implementations for each action
+ */
 class Player
 {
 public:
@@ -26,7 +29,7 @@ public:
  
     virtual void startNewHand();
 
-    virtual void addCard(Card card);
+    virtual void addCard(const Card& card);
 
     virtual std::string toString() const;
 

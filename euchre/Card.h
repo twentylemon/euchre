@@ -42,6 +42,8 @@ public:
     std::string toString() const;
 
     bool operator==(const Card& card) const;
+    static bool sameSuit(int hash1, int hash2);
+    static bool sameRank(int hash1, int hash2);
 
 private:
     int hash;

@@ -97,7 +97,7 @@ int Hand::getCard(int idx) const {
  * @param idx the index of the card to remove
  * @return the removed card
  */
-int Hand::removeCard(int idx) {
+int Hand::removeCardIDX(int idx) {
     int card = getCard(idx);
     bits.set(Card::HASH_IDX[card], false);
     numCards--;
@@ -107,18 +107,26 @@ int Hand::removeCard(int idx) {
     return card;
 }
 
+/**
+ * @param hash the card to remove
+ * @return the removed card
+ */
+int Hand::removeCard(int hash) {
+    for (int i = 0; i < numCards; i++ ) {
+        if (hash == getCard(i)) {
+            return removeCardIDX(i);
+        }
+    }
+    return -1;
+}
+
 
 /**
  * @param card the card to remove from this card
  * @return the removed card, or -1 if it was not found
  */
 int Hand::removeCard(const Card& card) {
-    for (int i = 0; i < numCards; i++ ) {
-        if (card.hashCode() == getCard(i)) {
-            return removeCard(i);
-        }
-    }
-    return -1;
+    return removeCard(card.hashCode());
 }
 
 /**
@@ -144,6 +152,32 @@ std::bitset<Card::NUM_CARDS> Hand::getBitset() const {
     return bits;
 }
 
+
+/**
+ * @return list of all the cards in this hand
+ */
+std::vector<int> Hand::getCards() const {
+    std::vector<int> cards;
+    for (int i = 0; i < getNumCards(); i++){
+        cards.push_back(getCard(i));
+    }
+    return cards;
+}
+
+/**
+ * @param suit the suit of cards to return from this hand
+ * @return list of cards of the given suit from this hand
+ */
+std::vector<int> Hand::getSuitCards(int suit) const {
+    std::vector<int> cards;
+    int hash = Card(9, suit).hashCode();
+    for (int i = 0; i < getNumCards(); i++) {
+        if (Card::sameSuit(getCard(i), hash)) {
+            cards.push_back(getCard(i));
+        }
+    }
+    return cards;
+}
 
 /**
  * @param trick the trick that we are playing into

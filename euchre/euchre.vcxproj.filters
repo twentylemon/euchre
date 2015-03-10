@@ -81,6 +81,18 @@
     <ClInclude Include="BitString.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
+    <ClInclude Include="HighPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="LowPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="HighLowPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp">
@@ -124,6 +136,18 @@
     </ClCompile>
     <ClCompile Include="BitString.cpp">
       <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="HighPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="LowPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="HighLowPlayer.cpp">
+      <Filter>Source Files\players</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

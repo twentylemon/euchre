@@ -36,35 +36,31 @@ const std::array<int, Card::MAX_CARD> Card::HASH_IDX = {
 /**
  * empty ctor
  */
-Card::Card() {
-    hash = rank = 0;
+Card::Card() : hash(0), rank(0), suit(0) {
 }
 
 /**
  * initializes this card using the rank and suit
  * @param rank the rank of this card
  * @param suit the suit of this card
+ * @see setHashCode(int)
  */
-Card::Card(int hash) {
-    setHashCode(hash);
+Card::Card(int hash) : hash(hash), rank((hash & 0x3C) >> 2), suit(hash & 0x03) {
 }
 
 /**
  * initializes this card using the rank and suit
  * @param rank the rank of this card
  * @param suit the suit of this card
+ * @see setRankSuit(int,int)
  */
-Card::Card(int rank, int suit) {
-    setRankSuit(rank, suit);
+Card::Card(int rank, int suit) : hash((rank << 2) | suit), rank(rank), suit(suit) {
 }
 
 /**
  * @param card the card to copy
  */
-Card::Card(const Card& card) {
-    hash = card.hashCode();
-    rank = card.getRank();
-    suit = card.getSuit();
+Card::Card(const Card& card) : hash(card.hashCode()), rank(card.getRank()), suit(card.getSuit()) {
 }
 
 
@@ -144,4 +140,22 @@ std::string Card::toString() const {
  */
 bool Card::operator==(const Card& card) const {
     return hashCode() == card.hashCode();
+}
+
+/**
+ * @param hash1 the hashcode of a card
+ * @param hash2 the hashcode of another card
+ * @return true if the two cards have the same suit
+ */
+bool Card::sameSuit(int hash1, int hash2) {
+    return (hash1 & 0x03) == (hash2 & 0x03);
+}
+
+/**
+ * @param hash1 the hashcode of a card
+ * @param hash2 the hashcode of another card
+ * @return true if the two cards have the same rank
+ */
+bool Card::sameRank(int hash1, int hash2) {
+    return (hash1 & 0x3C) == (hash2 & 0x3C);
 }

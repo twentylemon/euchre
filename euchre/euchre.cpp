@@ -16,17 +16,16 @@ int main(int argc, char** argv) {
 #ifndef _DEBUG
     Random::initSeed();
 #endif
+    CardScore::initRankings();
 
-    //HumanEuchreGame game;
-    EuchreGame game(new AIPlayer(), new AIPlayer(), new AIPlayer(), new AIPlayer());
-    //EuchreGame game(new RandomPlayer(), new RandomPlayer(), new RandomPlayer(), new RandomPlayer());
+    EuchreGame game(new HighLowPlayer("1"), new HighLowPlayer("2"), new HighLowPlayer("3"), new HighLowPlayer("4"));
     game.setScore(9, 9);
-   game.setPublicKnowledgeCallback([&](Card card, int playerIDX) {
+    /*game.setPublicKnowledgeCallback([&game](const Card& card, int playerIDX) {
         ((AIPlayer*)game.getPlayer(EuchreGame::UP))->seenCard(card);
         ((AIPlayer*)game.getPlayer(EuchreGame::DOWN))->seenCard(card);
         ((AIPlayer*)game.getPlayer(EuchreGame::LEFT))->seenCard(card);
         ((AIPlayer*)game.getPlayer(EuchreGame::RIGHT))->seenCard(card);
-    });
+    });*/
     ULONGLONG start = GetTickCount64();
     game.play();
     std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;

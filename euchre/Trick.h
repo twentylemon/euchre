@@ -20,7 +20,7 @@ public:
 
     static const int NUM_CARDS = 4;
 
-    static const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> EFF_SUITS;
+    static const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> EFFECTIVE_SUITS;
 
     Trick();
     Trick(int);
@@ -35,6 +35,7 @@ public:
 
     std::vector<Card> getCards() const;
     int getNumCards() const;
+    bool empty() const;
 
     void addCard(const Card& card);
     void removeLastCard();

@@ -1,6 +1,32 @@
 #include "CardScore.h"
 
 /**
+ * @return the comparators given the hashcode of the cards
+ */
+std::array<std::function<bool(int, int)>, Card::NUM_SUITS> mapHash(){
+    std::array<std::function<bool(int, int)>, Card::NUM_SUITS> comp;
+    std::transform(Card::SUITS.begin(), Card::SUITS.end(), comp.begin(), [](int suit){
+        return std::function<bool(int, int)>(
+            [suit](int card1, int card2){ return CardScore::get(suit, card1) < CardScore::get(suit, card2); }
+        );
+    });
+    return comp;
+}
+
+/**
+ * @return the comparators given the cards
+ */
+std::array<std::function<bool(const Card&, const Card&)>, Card::NUM_SUITS> mapCard(){
+    std::array<std::function<bool(const Card&, const Card&)>, Card::NUM_SUITS> comp;
+    std::transform(Card::SUITS.begin(), Card::SUITS.end(), comp.begin(), [](int suit){
+        return std::function<bool(const Card&, const Card&)>(
+            [suit](const Card& card1, const Card& card2){ return CardScore::get(suit, card1) < CardScore::get(suit, card2); }
+        );
+    });
+    return comp;
+}
+
+/**
  * prevents recalculating the scores
  */
 bool CardScore::calculated = false;
@@ -8,27 +34,19 @@ bool CardScore::calculated = false;
 /**
  * the scores of each card by trump suit
  */
-int CardScore::rankings[Card::NUM_SUITS][Card::MAX_CARD];
+std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> CardScore::rankings;
 
 /**
  * scores of trump cards and non trump cards, left bower is separate from trump
  */
-const int CardScore::TRUMP_SCORE[] = { 6, 7, CardScore::RIGHT_BOWER, 8, 9, 10 };   //6=trump 9, ... , 10=trump ace
-const int CardScore::OFF_SCORE[]   = { 0, 1, 2, 3, 4, 5 };     //0=off 9 etc
+const std::array<int, Card::NUM_RANKS> CardScore::TRUMP_SCORE = {{ 6, 7, CardScore::RIGHT_BOWER, 8, 9, 10 }};   //6=trump 9, ... , 10=trump ace
+const std::array<int, Card::NUM_RANKS> CardScore::OFF_SCORE   = {{ 0, 1, 2, 3, 4, 5 }};     //0=off 9 etc
 
 /**
- * the scores of each card by trump suit, post calculation
+ * comparators for sortings cards according to their score
  */
-const int CardScore::RANKINGS[Card::NUM_SUITS][Card::MAX_CARD] = {
-    { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        6,0,0,0, 7,1,1,1, 12,2,2,11, 8,3,3,3, 9,4,4,4, 10,5,5,5 },
-    { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,6,0,0, 1,7,1,1, 2,12,11,2, 3,8,3,3, 4,9,4,4, 5,10,5,5 },
-    { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,6,0, 1,1,7,1, 2,11,12,2, 3,3,8,3, 4,4,9,4, 5,5,10,5 },
-    { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,6, 1,1,1,7, 11,2,2,12, 3,3,3,8, 4,4,4,9, 5,5,5,10 }
-};
+const std::array<std::function<bool(int, int)>, Card::NUM_SUITS> CardScore::hashComparator = mapHash();
+const std::array<std::function<bool(const Card&, const Card&)>, Card::NUM_SUITS> CardScore::cardComparator = mapCard();
 
 /**
  * initializes the rankings
@@ -36,6 +54,7 @@ const int CardScore::RANKINGS[Card::NUM_SUITS][Card::MAX_CARD] = {
 CardScore::CardScore() {
     initRankings();
 }
+
 
 /**
  * @param trump the suit that is trump
@@ -52,7 +71,7 @@ int CardScore::get(int trump, const Card& card) {
  * @return the score of the card given the trump suit
  */
 int CardScore::get(int trump, int hash) {
-    return RANKINGS[trump][hash];
+    return rankings[trump][hash];
 }
 
 

@@ -17,7 +17,7 @@ std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> effSuits() {
 /**
  * effective suits per trump
  */
-const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> Trick::EFF_SUITS = effSuits();
+const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> Trick::EFFECTIVE_SUITS = effSuits();
 
 /**
  * initializes this trick to be empty.
@@ -79,7 +79,7 @@ int Trick::getLeadSuit() const {
  * @return true if card is a legal card to play
  */
 bool Trick::isLegal(const Card& card) const {
-    return cards.empty() || getLeadSuit() == EFF_SUITS[getTrump()][card.hashCode()];
+    return empty() || getLeadSuit() == EFFECTIVE_SUITS[getTrump()][card.hashCode()];
 }
 
 
@@ -95,6 +95,13 @@ std::vector<Card> Trick::getCards() const {
  */
 int Trick::getNumCards() const {
     return cards.size();
+}
+
+/**
+ * @return true if there are no cards in the trick
+ */
+bool Trick::empty() const {
+    return cards.empty();
 }
 
 
@@ -115,7 +122,7 @@ void Trick::addCard(const Card& card) {
         }
     }
     else {
-        leadSuit = EFF_SUITS[getTrump()][card.hashCode()];
+        leadSuit = EFFECTIVE_SUITS[getTrump()][card.hashCode()];
     }
     cards.push_back(card);
 #ifdef TRICK_INCLUDE_HASH

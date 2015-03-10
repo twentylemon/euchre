@@ -23,7 +23,10 @@
 
 #include "Player.h"
 #include "AIPlayer.h"
+#include "LowPlayer.h"
+#include "HighPlayer.h"
 #include "RandomPlayer.h"
+#include "HighLowPlayer.h"
 
 #include "EuchreGame.h"
 #include "HumanEuchreGame.h"

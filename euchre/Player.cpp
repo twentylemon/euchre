@@ -75,7 +75,7 @@ void Player::startNewHand() {
 /**
  * @param card the card to add to this players hand
  */
-void Player::addCard(Card card) {
+void Player::addCard(const Card& card) {
     hand.addCard(card);
 }
 
@@ -94,12 +94,7 @@ std::string Player::toString() const {
  * @return the action the player is taking, ordering up or passing
  */
 std::pair<int,bool> Player::orderUp(const Card& top, bool yourTeam) const {
-    char response = '\0';
-    std::cout << "do you want to order up " << top.toString() << " ([y]es/[n]o/[a]lone)? ";
-    do {
-        std::cin >> response;
-    } while (response != 'y' && response != 'a' && response != 'n');
-    return std::make_pair(response == 'n' ? Pass : top.getSuit(), response == 'a');
+    return std::make_pair(Pass, false);
 }
 
 
@@ -108,12 +103,7 @@ std::pair<int,bool> Player::orderUp(const Card& top, bool yourTeam) const {
  * @return the action the player is taking, picking up or turning down
  */
 std::pair<int,bool> Player::pickItUp(const Card& top) const {
-    char response = '\0';
-    std::cout << "do you want to pick up " << top.toString() << " ([y]es/[n]o/[a]lone)? ";
-    do {
-        std::cin >> response;
-    } while (response != 'y' && response != 'a' && response != 'n');
-    return std::make_pair(response == 'n' ? Pass : top.getSuit(), response == 'a');
+    return std::make_pair(Pass, false);
 }
 
 
@@ -138,7 +128,6 @@ std::pair<int,bool> Player::callTrump(int badSuit) const {
 /**
  * @param badSuit the suit that was turned down
  * @return the action the player is taking, calling trump must occur
- * @todo this
  */
 std::pair<int,bool> Player::stickTrump(int badSuit) const {
     return std::make_pair(Card::Spades, false);
@@ -151,5 +140,5 @@ std::pair<int,bool> Player::stickTrump(int badSuit) const {
  * @todo this
  */
 Card Player::playCard(const Trick& trick) {
-    return hand.removeCard(0);
+    return hand.removeCardIDX(0);
 }
