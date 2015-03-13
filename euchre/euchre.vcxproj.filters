@@ -93,6 +93,9 @@
     <ClInclude Include="HighLowPlayer.h">
       <Filter>Header Files\players</Filter>
     </ClInclude>
+    <ClInclude Include="PartnerHLPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp">
@@ -147,6 +150,9 @@
       <Filter>Source Files\players</Filter>
     </ClCompile>
     <ClCompile Include="HighLowPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="PartnerHLPlayer.cpp">
       <Filter>Source Files\players</Filter>
     </ClCompile>
   </ItemGroup>

@@ -91,6 +91,14 @@ std::vector<Card> Trick::getCards() const {
 }
 
 /**
+ * @param position 0 for first card in trick, 1 for second etc
+ * @return the card in the trick
+ */
+const Card& Trick::getCard(int position) const {
+    return cards[position];
+}
+
+/**
  * @return the number of cards in the trick
  */
 int Trick::getNumCards() const {
@@ -149,13 +157,6 @@ int Trick::getWinner() const {
     return winner[cards.size() - 1];
 }
 
-
-/**
- * @return the Card that is winning this trick
- */
-const Card& Trick::getWinningCard() {
-    return cards[getWinner()];
-}
 
 /**
  * @return the Card that is winning this trick

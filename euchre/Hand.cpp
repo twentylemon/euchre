@@ -158,7 +158,7 @@ std::bitset<Card::NUM_CARDS> Hand::getBitset() const {
  */
 std::vector<int> Hand::getCards() const {
     std::vector<int> cards;
-    for (int i = 0; i < getNumCards(); i++){
+    for (int i = 0; i < getNumCards(); i++) {
         cards.push_back(getCard(i));
     }
     return cards;
@@ -191,6 +191,18 @@ std::vector<int> Hand::getLegalCards(const Trick &trick) const {
         }
     }
     return legalCards;
+}
+
+/**
+ * @param trick the trick that we are playing into
+ * @return list of all playable cards from this hand
+ */
+std::vector<int> Hand::getPlayableCards(const Trick &trick) const {
+    std::vector<int> cards = getLegalCards(trick);
+    if (cards.empty()) {
+        return getCards();
+    }
+    return cards;
 }
 
 

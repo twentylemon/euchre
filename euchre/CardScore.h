@@ -1,9 +1,13 @@
 
 #pragma once
 #include "Card.h"
+#include "Trick.h"
 #include <array>
+#include <vector>
 #include <iostream>
 #include <functional>
+
+class Trick;
 
 /**
  * calculates and retrieves card scorings by trump suit, higher scores are better
@@ -21,6 +25,11 @@ public:
     const static int LEFT_BOWER = 11;
     const static std::array<int, Card::NUM_RANKS> TRUMP_SCORE;
     const static std::array<int, Card::NUM_RANKS> OFF_SCORE;
+    
+    static int getBestCard(std::vector<int> cards, const Trick& trick);
+    static int getWorstCard(std::vector<int> cards, const Trick& trick);
+    const static Card& getBestCard(std::vector<Card> cards, const Trick& trick);
+    const static Card& getWorstCard(std::vector<Card> cards, const Trick& trick);
 
     static void initRankings();
     static void display();

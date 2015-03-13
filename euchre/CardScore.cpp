@@ -3,11 +3,11 @@
 /**
  * @return the comparators given the hashcode of the cards
  */
-std::array<std::function<bool(int, int)>, Card::NUM_SUITS> mapHash(){
+std::array<std::function<bool(int, int)>, Card::NUM_SUITS> mapHash() {
     std::array<std::function<bool(int, int)>, Card::NUM_SUITS> comp;
-    std::transform(Card::SUITS.begin(), Card::SUITS.end(), comp.begin(), [](int suit){
+    std::transform(Card::SUITS.begin(), Card::SUITS.end(), comp.begin(), [](int suit) {
         return std::function<bool(int, int)>(
-            [suit](int card1, int card2){ return CardScore::get(suit, card1) < CardScore::get(suit, card2); }
+            [suit](int card1, int card2) { return CardScore::get(suit, card1) < CardScore::get(suit, card2); }
         );
     });
     return comp;
@@ -16,11 +16,11 @@ std::array<std::function<bool(int, int)>, Card::NUM_SUITS> mapHash(){
 /**
  * @return the comparators given the cards
  */
-std::array<std::function<bool(const Card&, const Card&)>, Card::NUM_SUITS> mapCard(){
+std::array<std::function<bool(const Card&, const Card&)>, Card::NUM_SUITS> mapCard() {
     std::array<std::function<bool(const Card&, const Card&)>, Card::NUM_SUITS> comp;
-    std::transform(Card::SUITS.begin(), Card::SUITS.end(), comp.begin(), [](int suit){
+    std::transform(Card::SUITS.begin(), Card::SUITS.end(), comp.begin(), [](int suit) {
         return std::function<bool(const Card&, const Card&)>(
-            [suit](const Card& card1, const Card& card2){ return CardScore::get(suit, card1) < CardScore::get(suit, card2); }
+            [suit](const Card& card1, const Card& card2) { return CardScore::get(suit, card1) < CardScore::get(suit, card2); }
         );
     });
     return comp;
@@ -76,6 +76,44 @@ int CardScore::get(int trump, int hash) {
 
 
 /**
+ * @param cards the list of cards to play from
+ * @param trick the trick
+ * @return the best card from the list
+ */
+int CardScore::getBestCard(std::vector<int> cards, const Trick& trick) {
+    return *std::max_element(cards.begin(), cards.end(), hashComparator[trick.getTrump()]);
+}
+
+/**
+ * @param cards the list of cards to play from
+ * @param trick the trick
+ * @return the best card from the list
+ */
+int CardScore::getWorstCard(std::vector<int> cards, const Trick& trick) {
+    return *std::min_element(cards.begin(), cards.end(), hashComparator[trick.getTrump()]);
+}
+
+
+/**
+ * @param cards the list of cards to play from
+ * @param trick the trick
+ * @return the best card from the list
+ */
+const Card& CardScore::getBestCard(std::vector<Card> cards, const Trick& trick) {
+    return *std::max_element(cards.begin(), cards.end(), cardComparator[trick.getTrump()]);
+}
+
+/**
+ * @param cards the list of cards to play from
+ * @param trick the trick
+ * @return the best card from the list
+ */
+const Card& CardScore::getWorstCard(std::vector<Card> cards, const Trick& trick) {
+    return *std::min_element(cards.begin(), cards.end(), cardComparator[trick.getTrump()]);
+}
+
+
+/**
  * initializes all of the cards' rankings for each trump value
  */
 void CardScore::initRankings() {
@@ -84,6 +122,7 @@ void CardScore::initRankings() {
     }
     
     for (int trump : Card::SUITS) {
+        rankings[trump].fill(-1);   //for non-existant cards, rate them below the worst
         for (const Card& card : Card::ALL_CARDS) {
             if (card.getRank() == Card::Jack && card.getSuit() == Card::otherSuit(trump)) {
                 rankings[trump][card.hashCode()] = LEFT_BOWER;

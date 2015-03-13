@@ -29,7 +29,7 @@ public:
     int getCard(int idx) const;
     
     int removeCardIDX(int idx);
-    int removeCard(int idx);
+    int removeCard(int hash);
     int removeCard(const Card& card);
     int removeLastCard();
 
@@ -37,7 +37,8 @@ public:
 
     std::vector<int> getCards() const;
     std::vector<int> getSuitCards(int suit) const;
-    std::vector<int> getLegalCards(const Trick &trick) const;
+    std::vector<int> getLegalCards(const Trick& trick) const;
+    std::vector<int> getPlayableCards(const Trick& trick) const;
 
     void clear();
 

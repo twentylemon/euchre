@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+class CardScore;
+
 /**
  * define this to include trick hashcode stuff
  */
@@ -34,6 +36,7 @@ public:
     void clear();
 
     std::vector<Card> getCards() const;
+    const Card& getCard(int position) const;
     int getNumCards() const;
     bool empty() const;
 
@@ -41,7 +44,6 @@ public:
     void removeLastCard();
 
     int getWinner() const;
-    const Card& getWinningCard();
     const Card& getWinningCard() const;
 
 #ifdef TRICK_INCLUDE_HASH

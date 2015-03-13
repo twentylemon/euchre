@@ -27,6 +27,7 @@
 #include "HighPlayer.h"
 #include "RandomPlayer.h"
 #include "HighLowPlayer.h"
+#include "PartnerHLPlayer.h"
 
 #include "EuchreGame.h"
 #include "HumanEuchreGame.h"

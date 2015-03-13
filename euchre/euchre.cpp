@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 #endif
     CardScore::initRankings();
 
-    EuchreGame game(new HighLowPlayer("1"), new HighLowPlayer("2"), new HighLowPlayer("3"), new HighLowPlayer("4"));
+    EuchreGame game(new PartnerHLPlayer("1"), new PartnerHLPlayer("2"), new PartnerHLPlayer("3"), new PartnerHLPlayer("4"));
     game.setScore(9, 9);
     /*game.setPublicKnowledgeCallback([&game](const Card& card, int playerIDX) {
         ((AIPlayer*)game.getPlayer(EuchreGame::UP))->seenCard(card);

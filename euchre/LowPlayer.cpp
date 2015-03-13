@@ -6,13 +6,13 @@
 /**
  * basic constructor
  */
-LowPlayer::LowPlayer() : Player(){
+LowPlayer::LowPlayer() : Player() {
 }
 
 /**
  * @param name the name of this player
  */
-LowPlayer::LowPlayer(std::string name) : Player(name){
+LowPlayer::LowPlayer(std::string name) : Player(name) {
 }
 
 
@@ -22,7 +22,7 @@ LowPlayer::LowPlayer(std::string name) : Player(name){
  */
 Card LowPlayer::playCard(const Trick& trick) {
     std::vector<int> legal = hand.getLegalCards(trick);
-    if (legal.empty()){
+    if (legal.empty()) {
         legal = hand.getCards();    //if no legal cards, play the best card in the hand
     }
     std::sort(legal.begin(), legal.end(), CardScore::hashComparator[trick.getTrump()]);
