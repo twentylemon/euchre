@@ -53,7 +53,7 @@
     <ClCompile>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -61,7 +61,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <ExceptionHandling>false</ExceptionHandling>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -74,6 +74,7 @@
     <ClInclude Include="BitString.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardScore.h" />
+    <ClInclude Include="DataGame.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="EuchreGame.h" />
     <ClInclude Include="HighLowPlayer.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="BitString.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="CardScore.cpp" />
+    <ClCompile Include="DataGame.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="EuchreGame.cpp" />
     <ClCompile Include="HighLowPlayer.cpp" />

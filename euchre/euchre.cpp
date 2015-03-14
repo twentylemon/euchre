@@ -17,14 +17,21 @@ int main(int argc, char** argv) {
     Random::initSeed();
 #endif
     CardScore::init();
+    const int NUM_GAMES = 255;
 
-#ifndef EVAL
+    /*
     EuchreGame game(new MarkovPlayer("up"), new MarkovPlayer("down"), new MarkovPlayer("left"), new MarkovPlayer("right"));
     game.setScore(9, 9);
     ULONGLONG start = GetTickCount64();
     game.play();
+    game.displayStats();
     std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;
-#endif
+    */
+    DataGame game(new PartnerHLPlayer("up"), new PartnerHLPlayer("down"), new HighPlayer("left"), new HighPlayer("right"));
+    ULONGLONG start = GetTickCount64();
+    game.play(NUM_GAMES);
+    game.displayStats();
+    std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;
 
 #ifdef EVAL
     ULONGLONG start1 = GetTickCount64();

@@ -33,6 +33,11 @@ EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right) {
 void EuchreGame::init() {
     setTeamName(UP_TEAM, "up/down team");
     setTeamName(LEFT_TEAM, "left/right team");
+    trickWins.fill(0);
+    gameWins.fill(0);
+    totalScores.fill(0);
+    timeTaken.fill(0);
+    setDisplay(true);
 }
 
 
@@ -109,6 +114,13 @@ bool EuchreGame::isDealer(int playerIDX) const {
  */
 void EuchreGame::setDealer(int dealer) {
     this->dealer = dealer;
+}
+
+/**
+ * @param displayStuff whether or not to display game updates to the screen
+ */
+void EuchreGame::setDisplay(bool displayStuff) {
+    this->displayStuff = displayStuff;
 }
 
 
@@ -347,14 +359,61 @@ std::string EuchreGame::trkCard(int playerIDX) const {
  * displays the game
  */
 void EuchreGame::draw() const {
-    std::cout
-        << "\t+------------+" << std::endl
-        << "\t|   " << topCard(UP) << trkCard(UP) << "     |" << std::endl
-        << "\t|         " << topCard(RIGHT) << " |" << std::endl
-        << "\t| " << trkCard(LEFT) << "      " << trkCard(RIGHT) << " |" << std::endl
-        << "\t| " << topCard(LEFT) << "         |" << std::endl
-        << "\t|     " << trkCard(DOWN) << topCard(DOWN) << "   |" << std::endl
-        << "\t+------------+" << std::endl;
+    if (displayStuff) {
+        std::cout
+            << "\t+------------+" << std::endl
+            << "\t|   " << topCard(UP) << trkCard(UP) << "     |" << std::endl
+            << "\t|         " << topCard(RIGHT) << " |" << std::endl
+            << "\t| " << trkCard(LEFT) << "      " << trkCard(RIGHT) << " |" << std::endl
+            << "\t| " << topCard(LEFT) << "         |" << std::endl
+            << "\t|     " << trkCard(DOWN) << topCard(DOWN) << "   |" << std::endl
+            << "\t+------------+" << std::endl;
+    }
+}
+
+/**
+ * @param str the string to display, if we are set to display things
+ */
+void EuchreGame::write(std::string str) const {
+    if (displayStuff) {
+        std::cout << str << std::endl;
+    }
+}
+
+
+/**
+ * @return the number of games won by each team
+ */
+std::array<int, EuchreGame::NUM_TEAMS> EuchreGame::getGameWins() const {
+    return gameWins;
+}
+
+/**
+ * @return the number of tricks won by each team
+ */
+std::array<int, EuchreGame::NUM_TEAMS> EuchreGame::getTrickWins() const {
+    return trickWins;
+}
+
+/**
+ * @return the total points earned by each team
+ */
+std::array<int, EuchreGame::NUM_TEAMS> EuchreGame::getTotalScores() const {
+    return totalScores;
+}
+
+/**
+ * displays the results so far over all games played
+ */
+void EuchreGame::displayStats() const {
+    std::cout << "overall results" << std::endl
+        << getPlayer(UP)->getName() << "\t(" << typeid(*getPlayer(UP)).name() << ")\t" << timeTaken[UP] << std::endl
+        << getPlayer(DOWN)->getName() << "\t(" << typeid(*getPlayer(DOWN)).name() << ")\t" << timeTaken[DOWN] << std::endl
+        << getPlayer(LEFT)->getName() << "\t(" << typeid(*getPlayer(LEFT)).name() << ")\t" << timeTaken[LEFT] << std::endl
+        << getPlayer(RIGHT)->getName() << "\t(" << typeid(*getPlayer(RIGHT)).name() << ")\t" << timeTaken[RIGHT] << std::endl
+        << "gameWins( UP_TEAM => " << gameWins[UP_TEAM] << ", LEFT_TEAM => " << gameWins[LEFT_TEAM] << ")" << std::endl
+        << "trickWins( UP_TEAM => " << trickWins[UP_TEAM] << ", LEFT_TEAM => " << trickWins[LEFT_TEAM] << ")" << std::endl
+        << "totalScores( UP_TEAM => " << totalScores[UP_TEAM] << ", LEFT_TEAM => " << totalScores[LEFT_TEAM] << ")" << std::endl;
 }
 
 
@@ -384,11 +443,11 @@ int EuchreGame::topCardPhase() {
     for (int i = nextPlayer(getDealer()); i != getDealer(); i = nextPlayer(i)) {
         response = getPlayer(i)->orderUp(getTopCard(), isSameTeam(i, getDealer()));
         if (response.first != Player::Pass) {
-            std::cout << getPlayer(i)->getName() << " ordered up the " << getTopCard().toString() << " to " << getPlayer(getDealer())->getName() << std::endl;
+            write(getPlayer(i)->getName() + " ordered up the " + getTopCard().toString() + " to " + getPlayer(getDealer())->getName());
             return updateCall(i, response);
         }
         else {
-            std::cout << getPlayer(i)->getName() << " passed" << std::endl;
+            write(getPlayer(i)->getName() + " passed");
         }
     }
 
@@ -412,11 +471,11 @@ int EuchreGame::callPhase(int unavailableSuit) {
             return updateCall(i, response);
         }
         else {
-            std::cout << getPlayer(i)->getName() << " passed" << std::endl;
+            write(getPlayer(i)->getName() + " passed");
         }
     }
     response = getPlayer(getDealer())->stickTrump(unavailableSuit);
-    std::cout << getPlayer(getDealer())->getName() << " called " << Card::SUIT_SYMBOLS[response.first] << std::endl;
+    write(getPlayer(getDealer())->getName() + " called " + Card::SUIT_SYMBOLS[response.first]);
     return updateCall(dealer, response);
 }
 
@@ -431,7 +490,9 @@ int EuchreGame::trickPhase(int trump, int startPlayerIDX) {
     clearTrick();
     trick.setTrump(trump);
     for (int i = startPlayerIDX, first = 1; i != startPlayerIDX || first; i = nextPlayer(i), first = 0) {
+        std::clock_t time = std::clock();
         trickCards[i] = getPlayer(i)->playCard(trick);
+        timeTaken[i] = timeTaken[i] - time + clock();
         trick.addCard(trickCards[i]);
         publicKnowledgeCallback(trickCards[i], i);
         draw();
@@ -465,7 +526,7 @@ void EuchreGame::scorePhase(std::array<int, NUM_TEAMS> trickWins) {
         scoringTeam = getOtherTeam(getCallingTeam());
     }
     score[scoringTeam] += toScore;
-    std::cout << getTeamName(scoringTeam) << " scores " << toScore << " points" << std::endl << std::endl;
+    write(getTeamName(scoringTeam) + " scores " + std::to_string(toScore) + " points\n");
 }
 
 
@@ -482,7 +543,7 @@ void EuchreGame::play() {
         turnDownTopCard();
         if (trump == Player::Pass) {
             draw();
-            std::cout << getTopCard().toString() << " was turned down" << std::endl;
+            write(getTopCard().toString() + " was turned down");
             trump = callPhase(getTopCard().getSuit());
         }
 
@@ -490,15 +551,18 @@ void EuchreGame::play() {
         int start = nextPlayer(getDealer());
         for (int round = 0; round < Hand::NUM_CARDS; round++) {
             int winner = trickPhase(trump, start);
-            //start = (start + winner) % NUM_PLAYERS;
             for (int i = 0; i < winner; i++) {
                 start = nextPlayer(start);
             }
             wins[getPlayerTeam(start)]++;
-            std::cout << getPlayer(start)->getName() << " takes the trick " << wins[UP_TEAM] << "-" << wins[LEFT_TEAM] << std::endl;
+            trickWins[getPlayerTeam(start)]++;  //overall statistics
+            write(getPlayer(start)->getName() + " takes the trick " + std::to_string(wins[UP_TEAM]) + "-" + std::to_string(wins[LEFT_TEAM]));
         }
         scorePhase(wins);
     }
     draw();
-    std::cout << getTeamName(getWinningTeam()) << " wins" << std::endl << std::endl;
+    gameWins[getWinningTeam()]++;
+    totalScores[UP_TEAM] += getTeamScore(UP_TEAM);
+    totalScores[LEFT_TEAM] += getTeamScore(LEFT_TEAM);
+    write(getTeamName(getWinningTeam()) + " wins\n");
 }

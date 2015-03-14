@@ -31,6 +31,7 @@
 #include "MarkovPlayer.h"
 
 #include "EuchreGame.h"
+#include "DataGame.h"
 #include "HumanEuchreGame.h"
 
 #define ulong unsigned long long

@@ -99,6 +99,9 @@
     <ClInclude Include="MarkovPlayer.h">
       <Filter>Header Files\players</Filter>
     </ClInclude>
+    <ClInclude Include="DataGame.h">
+      <Filter>Header Files\games</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp">
@@ -160,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="MarkovPlayer.cpp">
       <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="DataGame.cpp">
+      <Filter>Source Files\games</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

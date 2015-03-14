@@ -7,11 +7,13 @@
 #include "Player.h"
 #include "Random.h"
 
+#include <ctime>
 #include <array>
 #include <string>
 #include <vector>
 #include <utility>
 #include <iostream>
+#include <typeinfo>
 #include <algorithm>
 #include <functional>
 
@@ -88,6 +90,13 @@ public:
     virtual std::string topCard(int playerIDX) const;
     virtual std::string trkCard(int playerIDX) const;
     virtual void draw() const;
+    virtual void write(std::string str) const;
+    virtual void setDisplay(bool displayStuff);
+    
+    virtual std::array<int, NUM_TEAMS> getGameWins() const;
+    virtual std::array<int, NUM_TEAMS> getTrickWins() const;
+    virtual std::array<int, NUM_TEAMS> getTotalScores() const;
+    virtual void displayStats() const;
 
     virtual void play();
     virtual int updateCall(int playerIDX, std::pair<int,bool> response);
@@ -111,4 +120,10 @@ protected:
     bool inTop;
     int dealer;
     std::pair<int,bool> call;
+
+    bool displayStuff;
+    std::array<int, NUM_TEAMS> gameWins;
+    std::array<int, NUM_TEAMS> trickWins;
+    std::array<int, NUM_TEAMS> totalScores;
+    std::array<std::clock_t, NUM_PLAYERS> timeTaken;
 };
