@@ -23,8 +23,7 @@ public:
 
     virtual void startNewHand() override;
 
-    virtual void addCard(const Card& card) override;
-    virtual void seenCard(const Card& card);
+    virtual void publicKnowledge(const Card& card, int playerIDX) override;
 
     virtual std::string toString() const override;
 

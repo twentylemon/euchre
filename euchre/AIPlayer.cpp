@@ -26,18 +26,10 @@ void AIPlayer::startNewHand() {
 
 
 /**
- * @param card the card to add to this players hand
- */
-void AIPlayer::addCard(const Card& card) {
-    seenCard(card);
-    Player::addCard(card);
-}
-
-
-/**
  * @param card the card to set as seen for this player
+ * @param playerIDX the player that played the card
  */
-void AIPlayer::seenCard(const Card& card) {
+void AIPlayer::publicKnowledge(const Card& card, int playerIDX) {
     knownCards.set(Card::HASH_IDX[card.hashCode()], true);
 }
 

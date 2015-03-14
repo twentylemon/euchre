@@ -96,6 +96,9 @@
     <ClInclude Include="PartnerHLPlayer.h">
       <Filter>Header Files\players</Filter>
     </ClInclude>
+    <ClInclude Include="MarkovPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp">
@@ -153,6 +156,9 @@
       <Filter>Source Files\players</Filter>
     </ClCompile>
     <ClCompile Include="PartnerHLPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="MarkovPlayer.cpp">
       <Filter>Source Files\players</Filter>
     </ClCompile>
   </ItemGroup>

@@ -83,6 +83,7 @@
     <ClInclude Include="euchre.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="LowPlayer.h" />
+    <ClInclude Include="MarkovPlayer.h" />
     <ClInclude Include="PartnerHLPlayer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Random.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="euchre.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="LowPlayer.cpp" />
+    <ClCompile Include="MarkovPlayer.cpp" />
     <ClCompile Include="PartnerHLPlayer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Random.cpp" />

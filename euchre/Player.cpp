@@ -77,6 +77,14 @@ void Player::startNewHand() {
  */
 void Player::addCard(const Card& card) {
     hand.addCard(card);
+    publicKnowledge(card, getPosition());
+}
+
+
+/**
+ * @param card the card that is public knowledge
+ */
+void Player::publicKnowledge(const Card& card, int playerIDX){
 }
 
 
@@ -84,7 +92,7 @@ void Player::addCard(const Card& card) {
  * @return string representation of this player
  */
 std::string Player::toString() const {
-    return name + ": " + hand.toString();
+    return typeid(this).name() + name + ": " + hand.toString();
 }
 
 

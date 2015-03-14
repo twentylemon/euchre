@@ -80,6 +80,7 @@ public:
     virtual bool wentAlone() const;
     virtual bool isPlayingThisHand(int playerIDX) const;
     virtual void setPlaying(int playerIDX, bool playing);
+    virtual void publicKnowledgeCallback(const Card& card, int playerIDX);
     
     virtual void clearTrick();
     virtual const Card& getCard(int playerIDX) const;
@@ -87,8 +88,6 @@ public:
     virtual std::string topCard(int playerIDX) const;
     virtual std::string trkCard(int playerIDX) const;
     virtual void draw() const;
-
-    void setPublicKnowledgeCallback(std::function<void(const Card&,int)> fn);
 
     virtual void play();
     virtual int updateCall(int playerIDX, std::pair<int,bool> response);
@@ -112,7 +111,4 @@ protected:
     bool inTop;
     int dealer;
     std::pair<int,bool> call;
-
-private:
-    std::function<void(const Card&,int)> publicKnowledgeCallback;
 };

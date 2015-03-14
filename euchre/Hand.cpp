@@ -152,6 +152,47 @@ std::bitset<Card::NUM_CARDS> Hand::getBitset() const {
     return bits;
 }
 
+/**
+ * @param suit the suit of cards to return from this hand
+ * @return list of cards of the given suit from this hand
+ */
+std::bitset<Card::NUM_CARDS> Hand::getSuitBitset(int suit) const {
+    std::bitset<Card::NUM_CARDS> cards;
+    int hash = Card(9, suit).hashCode();
+    for (int i = 0; i < getNumCards(); i++) {
+        if (Card::sameSuit(getCard(i), hash)) {
+            cards.set(Card::HASH_IDX[getCard(i)], true);
+        }
+    }
+    return cards;
+}
+
+/**
+ * @param trick the trick that we are playing into
+ * @return list of legal cards from this hand
+ */
+std::bitset<Card::NUM_CARDS> Hand::getLegalBitset(const Trick &trick) const {
+    std::bitset<Card::NUM_CARDS> legalCards;
+    for (int i = 0; i < getNumCards(); i++) {
+        if (trick.isLegal(getCard(i))) {
+            legalCards.set(Card::HASH_IDX[getCard(i)], true);
+        }
+    }
+    return legalCards;
+}
+
+/**
+ * @param trick the trick that we are playing into
+ * @return list of all playable cards from this hand
+ */
+std::bitset<Card::NUM_CARDS> Hand::getPlayableBitset(const Trick &trick) const {
+    std::bitset<Card::NUM_CARDS> cards = getLegalBitset(trick);
+    if (!cards.any()) {
+        return getBitset();
+    }
+    return cards;
+}
+
 
 /**
  * @return list of all the cards in this hand

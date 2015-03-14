@@ -11,11 +11,6 @@ HumanEuchreGame::HumanEuchreGame() : EuchreGame(&partner, &human, &left, &right)
     partner.setName("partner");
     left.setName("left");
     right.setName("right");
-    setPublicKnowledgeCallback([=](const Card& card, int playerIDX) {
-        left.seenCard(card);
-        right.seenCard(card);
-        partner.seenCard(card);
-    });
 }
 
 

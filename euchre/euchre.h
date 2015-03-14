@@ -28,6 +28,7 @@
 #include "RandomPlayer.h"
 #include "HighLowPlayer.h"
 #include "PartnerHLPlayer.h"
+#include "MarkovPlayer.h"
 
 #include "EuchreGame.h"
 #include "HumanEuchreGame.h"

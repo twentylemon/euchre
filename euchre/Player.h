@@ -31,6 +31,8 @@ public:
 
     virtual void addCard(const Card& card);
 
+    virtual void publicKnowledge(const Card& card, int playerIDX);
+
     virtual std::string toString() const;
 
     virtual std::pair<int,bool> orderUp(const Card& top, bool yourTeam) const;

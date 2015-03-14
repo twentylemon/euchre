@@ -43,6 +43,9 @@ public:
     void clear();
 
     std::bitset<Card::NUM_CARDS> getBitset() const;
+    std::bitset<Card::NUM_CARDS> getSuitBitset(int suit) const;
+    std::bitset<Card::NUM_CARDS> getLegalBitset(const Trick& trick) const;
+    std::bitset<Card::NUM_CARDS> getPlayableBitset(const Trick& trick) const;
     int hashCode() const;
 
     std::string toString() const;

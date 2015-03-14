@@ -33,7 +33,6 @@ EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right) {
 void EuchreGame::init() {
     setTeamName(UP_TEAM, "up/down team");
     setTeamName(LEFT_TEAM, "left/right team");
-    setPublicKnowledgeCallback([](const Card& card, int playerIDX) {});
 }
 
 
@@ -293,6 +292,17 @@ void EuchreGame::setPlaying(int playerIDX, bool playing) {
 
 
 /**
+ * @param card the card that went public
+ * @param playerIDX the index of the player that played it, or -1 for top card
+ */
+void EuchreGame::publicKnowledgeCallback(const Card& card, int playerIDX) {
+    for (Player* player : players) {
+        player->publicKnowledge(card, playerIDX);
+    }
+}
+
+
+/**
  * clears the trick to prep for a new one
  */
 void EuchreGame::clearTrick() {
@@ -345,17 +355,6 @@ void EuchreGame::draw() const {
         << "\t| " << topCard(LEFT) << "         |" << std::endl
         << "\t|     " << trkCard(DOWN) << topCard(DOWN) << "   |" << std::endl
         << "\t+------------+" << std::endl;
-}
-
-
-/**
- * @param fn the function to set as the callback when a card is made public
- *  it is a function void fn(Card card, int playerIDX)
- *  @param card the card that was made public knowledge
- *  @param playerIDX the player that played it, or -1 for the deck
- */
-void EuchreGame::setPublicKnowledgeCallback(std::function<void(const Card&,int)> fn) {
-    publicKnowledgeCallback = fn;
 }
 
 
