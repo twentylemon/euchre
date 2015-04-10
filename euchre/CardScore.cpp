@@ -67,8 +67,8 @@ std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> CardScore::trickWin
 /**
  * scores of trump cards and non trump cards, left bower is separate from trump
  */
-const std::array<int, Card::NUM_RANKS> CardScore::TRUMP_SCORE = {{ 6, 7, CardScore::RIGHT_BOWER, 8, 9, 10 }};   //6=trump 9, ... , 10=trump ace
-const std::array<int, Card::NUM_RANKS> CardScore::OFF_SCORE   = {{ 0, 1, 2, 3, 4, 5 }};     //0=off 9 etc
+const std::array<int, Card::NUM_RANKS> CardScore::TRUMP_SCORE = {{ 7, 8, CardScore::RIGHT_BOWER, 9, 10, 11 }};   //6=trump 9, ... , 10=trump ace
+const std::array<int, Card::NUM_RANKS> CardScore::OFF_SCORE   = {{ 1, 2, 3, 4, 5, 6 }};     //1=off 9 etc
 
 /**
  * comparators for sortings cards according to their score

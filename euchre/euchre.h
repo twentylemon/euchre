@@ -1,6 +1,5 @@
 
 #pragma once
-
 #include <map>
 #include <array>
 #include <vector>
@@ -8,6 +7,7 @@
 #include <bitset>
 
 #include <new>
+#include <fstream>
 #include <iostream>
 #include <algorithm>
 #include <Windows.h>
@@ -29,6 +29,8 @@
 #include "HighLowPlayer.h"
 #include "PartnerHLPlayer.h"
 #include "MarkovPlayer.h"
+#include "CardCountingPlayer.h"
+#include "MonteCarloPlayer.h"
 
 #include "EuchreGame.h"
 #include "DataGame.h"

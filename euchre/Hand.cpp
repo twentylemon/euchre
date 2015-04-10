@@ -1,6 +1,7 @@
 
 #include "Hand.h"
 
+#ifdef HAND_ALL_HANDS
 /**
  * @return all possible hands per size
  */
@@ -21,7 +22,7 @@ std::array<std::vector<Hand>, Hand::NUM_CARDS+1> allHands() {
  * all possible euchre hands
  */
 const std::array<std::vector<Hand>, Hand::NUM_CARDS+1> Hand::ALL_HANDS = allHands();
-
+#endif
 
 /**
  * constructor sets up an empty hand
@@ -42,8 +43,8 @@ Hand::Hand(std::bitset<Card::NUM_CARDS> bits) {
  * clears all cards from this hand
  */
 void Hand::clear() {
-    numCards = 0;
     bits.reset();
+    hand.clear();
 }
 
 
@@ -59,7 +60,7 @@ void Hand::addCard(const Card& card) {
  * @param hash the hashcode of the card to add to this hand
  */
 void Hand::addCard(int hash) {
-    hand[numCards++] = hash;
+    hand.push_back(hash);
     bits.set(Card::HASH_IDX[hash], true);
 }
 
@@ -100,10 +101,7 @@ int Hand::getCard(int idx) const {
 int Hand::removeCardIDX(int idx) {
     int card = getCard(idx);
     bits.set(Card::HASH_IDX[card], false);
-    numCards--;
-    for (int i = idx; i < numCards; i++) {
-        hand[i] = hand[i+1];    //shift the other cards down
-    }
+    hand.erase(hand.begin() + idx);
     return card;
 }
 
@@ -112,7 +110,7 @@ int Hand::removeCardIDX(int idx) {
  * @return the removed card
  */
 int Hand::removeCard(int hash) {
-    for (int i = 0; i < numCards; i++ ) {
+    for (int i = 0; i < getNumCards(); i++ ) {
         if (hash == getCard(i)) {
             return removeCardIDX(i);
         }
@@ -133,7 +131,7 @@ int Hand::removeCard(const Card& card) {
  * @return the last card added to this card, which is also removed from this hand
  */
 int Hand::removeLastCard() {
-    return removeCard(numCards - 1);
+    return removeCard(getNumCards() - 1);
 }
 
 
@@ -141,7 +139,7 @@ int Hand::removeLastCard() {
  * @return the number of cards in this hand
  */
 int Hand::getNumCards() const {
-    return numCards;
+    return hand.size();
 }
 
 
@@ -158,10 +156,10 @@ std::bitset<Card::NUM_CARDS> Hand::getBitset() const {
  */
 std::bitset<Card::NUM_CARDS> Hand::getSuitBitset(int suit) const {
     std::bitset<Card::NUM_CARDS> cards;
-    int hash = Card(9, suit).hashCode();
-    for (int i = 0; i < getNumCards(); i++) {
-        if (Card::sameSuit(getCard(i), hash)) {
-            cards.set(Card::HASH_IDX[getCard(i)], true);
+    int hash = Card::hashCode(9, suit);
+    for (int card : hand) {
+        if (Card::sameSuit(card, hash)) {
+            cards.set(Card::HASH_IDX[card], true);
         }
     }
     return cards;
@@ -173,9 +171,9 @@ std::bitset<Card::NUM_CARDS> Hand::getSuitBitset(int suit) const {
  */
 std::bitset<Card::NUM_CARDS> Hand::getLegalBitset(const Trick &trick) const {
     std::bitset<Card::NUM_CARDS> legalCards;
-    for (int i = 0; i < getNumCards(); i++) {
-        if (trick.isLegal(getCard(i))) {
-            legalCards.set(Card::HASH_IDX[getCard(i)], true);
+    for (int card : hand) {
+        if (trick.isLegal(card)) {
+            legalCards.set(Card::HASH_IDX[card], true);
         }
     }
     return legalCards;
@@ -198,11 +196,7 @@ std::bitset<Card::NUM_CARDS> Hand::getPlayableBitset(const Trick &trick) const {
  * @return list of all the cards in this hand
  */
 std::vector<int> Hand::getCards() const {
-    std::vector<int> cards;
-    for (int i = 0; i < getNumCards(); i++) {
-        cards.push_back(getCard(i));
-    }
-    return cards;
+    return hand;
 }
 
 /**
@@ -211,10 +205,10 @@ std::vector<int> Hand::getCards() const {
  */
 std::vector<int> Hand::getSuitCards(int suit) const {
     std::vector<int> cards;
-    int hash = Card(9, suit).hashCode();
-    for (int i = 0; i < getNumCards(); i++) {
-        if (Card::sameSuit(getCard(i), hash)) {
-            cards.push_back(getCard(i));
+    int hash = Card::hashCode(9, suit);
+    for (int card : hand) {
+        if (Card::sameSuit(card, hash)) {
+            cards.push_back(card);
         }
     }
     return cards;
@@ -226,9 +220,9 @@ std::vector<int> Hand::getSuitCards(int suit) const {
  */
 std::vector<int> Hand::getLegalCards(const Trick &trick) const {
     std::vector<int> legalCards;
-    for (int i = 0; i < getNumCards(); i++) {
-        if (trick.isLegal(getCard(i))) {
-            legalCards.push_back(getCard(i));
+    for (int card : hand) {
+        if (trick.isLegal(card)) {
+            legalCards.push_back(card);
         }
     }
     return legalCards;
@@ -260,8 +254,8 @@ int Hand::hashCode() const {
  */
 std::string Hand::toString() const {
     std::string str = "";
-    for (int i = 0; i < numCards; i++) {
-        str += Card(getCard(i)).toString() + " ";
+    for (int card : hand) {
+        str += Card(card).toString() + " ";
     }
     return str;
 }
@@ -287,6 +281,14 @@ bool Hand::intersects(unsigned int bits) const {
  * @param bits a bitset of cards to check if this hand intersects it
  * @return true if this hand intersects the bitset of cards given
  */
-bool Hand::intersects(std::bitset<Card::NUM_CARDS> bits) const {
+bool Hand::intersects(const std::bitset<Card::NUM_CARDS>& bits) const {
     return (getBitset() & bits).any();
+}
+
+/**
+ * @param bits a bitset of cards to check if this hand is contained in the bitset
+ * @return true if this hand intersects the bitset of cards given
+ */
+bool Hand::subsetOf(const std::bitset<Card::NUM_CARDS>& bits) const {
+    return (getBitset() & bits) == getBitset();
 }

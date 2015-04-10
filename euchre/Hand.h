@@ -18,7 +18,9 @@ public:
     Hand(std::bitset<Card::NUM_CARDS> bits);
 
     static const int NUM_CARDS = 5;
+#ifdef HAND_ALL_HANDS
     static const std::array<std::vector<Hand>, NUM_CARDS+1> ALL_HANDS;
+#endif
 
     void addCard(const Card& card);
     void addCard(int hash);
@@ -52,10 +54,10 @@ public:
 
     bool intersects(const Hand& hand) const;
     bool intersects(unsigned int bits) const;
-    bool intersects(std::bitset<Card::NUM_CARDS> bits) const;
+    bool intersects(const std::bitset<Card::NUM_CARDS>& bits) const;
+    bool subsetOf(const std::bitset<Card::NUM_CARDS>& bits) const;
 
 private:
-    int numCards;
     std::bitset<Card::NUM_CARDS> bits;
-    std::array<int, NUM_CARDS> hand;
+    std::vector<int> hand;
 };

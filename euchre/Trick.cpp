@@ -14,10 +14,29 @@ std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> effSuits() {
     return suits;
 }
 
+std::array<std::array<std::vector<int>, Card::NUM_SUITS>, Card::NUM_SUITS> effCards() {
+    std::array<std::array<std::vector<int>, Card::NUM_SUITS>, Card::NUM_SUITS> cards;
+    for (int trump : Card::SUITS) {
+        for (int suit : Card::SUITS) {
+            for (const Card& card : Card::ALL_CARDS) {
+                if (card.getEffectiveSuit(trump) == suit) {
+                    cards[trump][suit].push_back(card.hashCode());
+                }
+            }
+        }
+    }
+    return cards;
+}
+
 /**
  * effective suits per trump
  */
 const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> Trick::EFFECTIVE_SUITS = effSuits();
+
+/**
+ * effective suits per trump, list of cards
+ */
+const std::array<std::array<std::vector<int>, Card::NUM_SUITS>, Card::NUM_SUITS> Trick::EFF_SUIT_CARDS = effCards();
 
 /**
  * initializes this trick to be empty.

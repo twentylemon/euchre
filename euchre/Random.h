@@ -17,7 +17,9 @@ public:
 
     static void setSeed(unsigned int seed);
     static void initSeed();
-
-private:
+    
+    unsigned int operator() ();
+    unsigned int operator() (int n);
+        
     Random();
 };

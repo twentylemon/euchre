@@ -15,7 +15,6 @@
 #include <iostream>
 #include <typeinfo>
 #include <algorithm>
-#include <functional>
 
 /**
  * base class for euchre games
@@ -47,11 +46,12 @@ public:
     EuchreGame();
     EuchreGame(Player* up, Player* down, Player* left, Player* right);
 
-    void init();
+    virtual void init();
     virtual void startNewGame();
 
     virtual Player* getPlayer(int playerIDX) const;
     virtual void setPlayer(int playerIDX, Player* player);
+    virtual void setPlayers(Player* up, Player* down, Player* left, Player* right);
     virtual void setTeamName(int team, std::string name);
     virtual std::string getTeamName(int team) const;
 

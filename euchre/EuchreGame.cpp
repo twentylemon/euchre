@@ -6,9 +6,8 @@
  * sets up a euchre game
  */
 EuchreGame::EuchreGame() {
-    players.fill(nullptr);
+    players.fill(nullptr);  //setPlayers sets their positions, avoid it here
     init();
-    startNewGame();
 }
 
 
@@ -19,16 +18,12 @@ EuchreGame::EuchreGame() {
  * @param right the right player
  */
 EuchreGame::EuchreGame(Player* up, Player* down, Player* left, Player* right) {
-    setPlayer(UP, up);
-    setPlayer(DOWN, down);
-    setPlayer(LEFT, left);
-    setPlayer(RIGHT, right);
+    setPlayers(up, down, left, right);
     init();
-    startNewGame();
 }
 
 /**
- * sets default values for team names and the callback function
+ * sets default values for team names etc
  */
 void EuchreGame::init() {
     setTeamName(UP_TEAM, "up/down team");
@@ -38,6 +33,7 @@ void EuchreGame::init() {
     totalScores.fill(0);
     timeTaken.fill(0);
     setDisplay(true);
+    startNewGame();
 }
 
 
@@ -75,6 +71,19 @@ Player* EuchreGame::getPlayer(int playerIDX) const {
 void EuchreGame::setPlayer(int playerIDX, Player* player) {
     players[playerIDX] = player;
     players[playerIDX]->setPosition(playerIDX);
+}
+
+/**
+ * @param up the up player
+ * @param down the down player
+ * @param left the left player
+ * @param right the right player
+ */
+void EuchreGame::setPlayers(Player* up, Player* down, Player* left, Player* right) {
+    setPlayer(UP, up);
+    setPlayer(DOWN, down);
+    setPlayer(LEFT, left);
+    setPlayer(RIGHT, right);
 }
 
 /**
@@ -308,8 +317,15 @@ void EuchreGame::setPlaying(int playerIDX, bool playing) {
  * @param playerIDX the index of the player that played it, or -1 for top card
  */
 void EuchreGame::publicKnowledgeCallback(const Card& card, int playerIDX) {
-    for (Player* player : players) {
-        player->publicKnowledge(card, playerIDX);
+    if (playerIDX == -1) {
+        for (Player* player : players) {
+            player->publicKnowledge(card, playerIDX);
+        }
+    }
+    else {
+        for (Player* player : players) {
+            player->publicKnowledge(card, playerIDX, trick);
+        }
     }
 }
 
@@ -407,6 +423,7 @@ std::array<int, EuchreGame::NUM_TEAMS> EuchreGame::getTotalScores() const {
  */
 void EuchreGame::displayStats() const {
     std::cout << "overall results" << std::endl
+        << "time taken per player" << std::endl
         << getPlayer(UP)->getName() << "\t(" << typeid(*getPlayer(UP)).name() << ")\t" << timeTaken[UP] << std::endl
         << getPlayer(DOWN)->getName() << "\t(" << typeid(*getPlayer(DOWN)).name() << ")\t" << timeTaken[DOWN] << std::endl
         << getPlayer(LEFT)->getName() << "\t(" << typeid(*getPlayer(LEFT)).name() << ")\t" << timeTaken[LEFT] << std::endl
@@ -492,7 +509,7 @@ int EuchreGame::trickPhase(int trump, int startPlayerIDX) {
     for (int i = startPlayerIDX, first = 1; i != startPlayerIDX || first; i = nextPlayer(i), first = 0) {
         std::clock_t time = std::clock();
         trickCards[i] = getPlayer(i)->playCard(trick);
-        timeTaken[i] = timeTaken[i] - time + clock();
+        timeTaken[i] = timeTaken[i] - time + std::clock();
         trick.addCard(trickCards[i]);
         publicKnowledgeCallback(trickCards[i], i);
         draw();
@@ -526,7 +543,7 @@ void EuchreGame::scorePhase(std::array<int, NUM_TEAMS> trickWins) {
         scoringTeam = getOtherTeam(getCallingTeam());
     }
     score[scoringTeam] += toScore;
-    write(getTeamName(scoringTeam) + " scores " + std::to_string(toScore) + " points\n");
+    write(getTeamName(scoringTeam) + " scores " + std::to_string(toScore) + " points\t" + std::to_string(getTeamScore(UP_TEAM)) + "-" + std::to_string(getTeamScore(LEFT_TEAM)) + "\n");
 }
 
 

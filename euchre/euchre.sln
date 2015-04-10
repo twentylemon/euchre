@@ -8,11 +8,14 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		MonteCarlo|Win32 = MonteCarlo|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7112AFF7-E395-4CD6-98CB-44BB5477091B}.Debug|Win32.ActiveCfg = Debug|Win32
 		{7112AFF7-E395-4CD6-98CB-44BB5477091B}.Debug|Win32.Build.0 = Debug|Win32
+		{7112AFF7-E395-4CD6-98CB-44BB5477091B}.MonteCarlo|Win32.ActiveCfg = MonteCarlo|Win32
+		{7112AFF7-E395-4CD6-98CB-44BB5477091B}.MonteCarlo|Win32.Build.0 = MonteCarlo|Win32
 		{7112AFF7-E395-4CD6-98CB-44BB5477091B}.Release|Win32.ActiveCfg = Release|Win32
 		{7112AFF7-E395-4CD6-98CB-44BB5477091B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

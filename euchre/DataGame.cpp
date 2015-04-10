@@ -1,8 +1,6 @@
 #include "DataGame.h"
 
-
 DataGame::DataGame() : EuchreGame() {
-    setDisplay(false);
 }
 
 /**
@@ -12,16 +10,24 @@ DataGame::DataGame() : EuchreGame() {
  * @param right the right player
  */
 DataGame::DataGame(Player* up, Player* down, Player* left, Player* right) : EuchreGame(up, down, left, right) {
+}
+
+/**
+ * sets default values for team names etc
+ */
+void DataGame::init() {
+    EuchreGame::init();
     setDisplay(false);
 }
 
 
+#ifndef MONTE_CARLO
 /**
  * skips displaying the game
  */
 void DataGame::draw() const {
 }
-
+#endif
 
 /**
  * @param numGames the number of games to play

@@ -1,9 +1,10 @@
 #pragma once
 #include "Card.h"
+#include "Random.h"
 #include <array>
-#include <algorithm>
 #include <bitset>
 #include <string>
+#include <algorithm>
 
 /**
  * The euchre deck.

@@ -1,0 +1,11 @@
+overall results
+time taken per player
+up	(class MonteCarloPlayer)	7352616
+down	(class MonteCarloPlayer)	6955147
+left	(class PartnerHLPlayer)	8
+right	(class PartnerHLPlayer)	9
+gameWins( UP_TEAM => 8, LEFT_TEAM => 23)
+trickWins( UP_TEAM => 705, LEFT_TEAM => 820)
+totalScores( UP_TEAM => 190, LEFT_TEAM => 281)
+
+

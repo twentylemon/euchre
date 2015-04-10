@@ -22,7 +22,7 @@ public:
     AIPlayer(std::string name);
 
     virtual void startNewHand() override;
-
+    
     virtual void publicKnowledge(const Card& card, int playerIDX) override;
 
     virtual std::string toString() const override;

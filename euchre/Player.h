@@ -26,12 +26,16 @@ public:
 
     int getPosition() const;
     void setPosition(int position);
+    int relativeIDX(int offset) const;
+    int partnerIDX() const;
+    int cyclicIDX(int idx) const;
  
     virtual void startNewHand();
 
     virtual void addCard(const Card& card);
-
+    
     virtual void publicKnowledge(const Card& card, int playerIDX);
+    virtual void publicKnowledge(const Card& card, int playerIDX, const Trick& trick);
 
     virtual std::string toString() const;
 

@@ -25,9 +25,9 @@ public:
     static int winRate(int trump, int hash);
     static int sumWinRate(int trump, std::bitset<Card::NUM_CARDS> cards);
 
-    const static int MIN_TRUMP_SCORE = 6;
-    const static int RIGHT_BOWER = 12;
-    const static int LEFT_BOWER = 11;
+    const static int MIN_TRUMP_SCORE = 7;
+    const static int RIGHT_BOWER = 13;
+    const static int LEFT_BOWER = 12;
     const static std::array<int, Card::NUM_RANKS> TRUMP_SCORE;
     const static std::array<int, Card::NUM_RANKS> OFF_SCORE;
 

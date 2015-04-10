@@ -63,6 +63,29 @@ void Player::setPosition(int position) {
     this->position = position;
 }
 
+/**
+ * @param offset the relative position to get the player index of
+ * @return the player idx of the player at the given offset from us
+ */
+int Player::relativeIDX(int offset) const {
+    return ((getPosition() + offset) % Trick::NUM_CARDS + Trick::NUM_CARDS) % Trick::NUM_CARDS;
+}
+
+/**
+ * @return the partner idx
+ */
+int Player::partnerIDX() const {
+    return relativeIDX(2);
+}
+
+/**
+ * @param idx
+ * @return cyclic index of idx
+ */
+int Player::cyclicIDX(int idx) const {
+    return ((idx % Trick::NUM_CARDS) + Trick::NUM_CARDS) % Trick::NUM_CARDS;
+}
+
 
 /**
  * preps this player for a new hand
@@ -83,8 +106,19 @@ void Player::addCard(const Card& card) {
 
 /**
  * @param card the card that is public knowledge
+ * @param playerIDX the player that played the card
  */
 void Player::publicKnowledge(const Card& card, int playerIDX){
+}
+
+
+/**
+ * @param card the card that is public knowledge
+ * @param playerIDX the player that played the card
+ * @param trick the trick the card was played into
+ */
+void Player::publicKnowledge(const Card& card, int playerIDX, const Trick& trick){
+    publicKnowledge(card, playerIDX);
 }
 
 

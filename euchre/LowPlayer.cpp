@@ -21,10 +21,7 @@ LowPlayer::LowPlayer(std::string name) : Player(name) {
  * @return the card to play
  */
 Card LowPlayer::playCard(const Trick& trick) {
-    std::vector<int> legal = hand.getLegalCards(trick);
-    if (legal.empty()) {
-        legal = hand.getCards();    //if no legal cards, play the best card in the hand
-    }
-    std::sort(legal.begin(), legal.end(), CardScore::hashComparator[trick.getTrump()]);
-    return hand.removeCard(legal.front());
+    std::vector<int> cards = getHand().getPlayableCards(trick);
+    std::sort(cards.begin(), cards.end(), CardScore::hashComparator[trick.getTrump()]);
+    return hand.removeCard(cards.front());
 }

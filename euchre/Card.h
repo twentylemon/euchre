@@ -36,6 +36,7 @@ public:
     int getSuit() const;
     int getRank() const;
     int hashCode() const;
+    static int hashCode(int rank, int suit);
 
     int getEffectiveSuit(int trump) const;
 

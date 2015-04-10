@@ -29,7 +29,7 @@ void Deck::updatePositions() {
 void Deck::shuffle() {
     used.reset();
     top = 0;
-    std::random_shuffle(cards.begin(), cards.end());
+    std::random_shuffle(cards.begin(), cards.end(), Random());
     updatePositions();
 }
 

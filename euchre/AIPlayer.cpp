@@ -108,6 +108,7 @@ std::pair<int,bool> AIPlayer::stickTrump(int badSuit) const {
 Card AIPlayer::playCard(const Trick& trick) {
     std::atomic<int> total = 0;
     int numCards = getNumCards();
+#ifdef HAND_ALL_HANDS
     if (knownCards.count() >= 11) {
         concurrency::parallel_for_each(Hand::ALL_HANDS[numCards].begin(), Hand::ALL_HANDS[numCards].end(), [&](const Hand& left) {
             if (left.intersects(knownCards)) { return; }
@@ -120,6 +121,7 @@ Card AIPlayer::playCard(const Trick& trick) {
             }
         });
     }
+#endif
     std::cout << "know about " << knownCards.count() << " cards, counted " << total << " hands[size=" << numCards << "]" << std::endl;
     return hand.removeCard(0);
 }

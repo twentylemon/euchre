@@ -5,7 +5,7 @@
 /**
  * default threshold value if none is provided
  */
-const double MarkovPlayer::DEFAULT_THRESHOLD = 0.20;//0.25;
+const double MarkovPlayer::DEFAULT_THRESHOLD = 0.25;
 
 /**
  * constructor

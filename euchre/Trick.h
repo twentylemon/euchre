@@ -23,6 +23,7 @@ public:
     static const int NUM_CARDS = 4;
 
     static const std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> EFFECTIVE_SUITS;
+    static const std::array<std::array<std::vector<int>, Card::NUM_SUITS>, Card::NUM_SUITS> EFF_SUIT_CARDS;
 
     Trick();
     Trick(int);

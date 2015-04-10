@@ -54,7 +54,7 @@ Card::Card(int hash) : hash(hash), rank((hash & 0x3C) >> 2), suit(hash & 0x03) {
  * @param suit the suit of this card
  * @see setRankSuit(int,int)
  */
-Card::Card(int rank, int suit) : hash((rank << 2) | suit), rank(rank), suit(suit) {
+Card::Card(int rank, int suit) : hash(Card::hashCode(rank, suit)), rank(rank), suit(suit) {
 }
 
 /**
@@ -111,6 +111,15 @@ int Card::getRank() const {
  */
 int Card::hashCode() const {
     return hash;
+}
+
+/**
+ * @param rank the card rank
+ * @param suit the card suit
+ * @return the hashcode
+ */
+int Card::hashCode(int rank, int suit) {
+    return (rank << 2) | suit;
 }
 
 

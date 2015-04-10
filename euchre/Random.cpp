@@ -28,6 +28,21 @@ unsigned int Random::nextInt(unsigned int n) {
 }
 
 /**
+ * @return a random int in the range 0..getMax()
+ */
+unsigned int Random::operator() () {
+    return nextInt();
+}
+
+/**
+ * @param n the modulus
+ * @return a random int mod n
+ */
+unsigned int Random::operator() (int n) {
+    return nextInt(n);
+}
+
+/**
  * @return a random float in [0..1)
  */
 float Random::nextFloat() {

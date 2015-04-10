@@ -14,7 +14,10 @@ public:
     DataGame();
     DataGame(Player* up, Player* down, Player* left, Player* right);
 
+    virtual void init() override;
+#ifndef MONTE_CARLO
     virtual void draw() const override;
+#endif
 
     virtual void play(int numGames);
 };

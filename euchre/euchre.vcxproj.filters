@@ -102,6 +102,12 @@
     <ClInclude Include="DataGame.h">
       <Filter>Header Files\games</Filter>
     </ClInclude>
+    <ClInclude Include="CardCountingPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="MonteCarloPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp">
@@ -166,6 +172,12 @@
     </ClCompile>
     <ClCompile Include="DataGame.cpp">
       <Filter>Source Files\games</Filter>
+    </ClCompile>
+    <ClCompile Include="CardCountingPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="MonteCarloPlayer.cpp">
+      <Filter>Source Files\players</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
