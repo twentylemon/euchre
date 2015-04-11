@@ -49,11 +49,17 @@ public:
     const static Card& getBestWinCard(std::vector<Card> cards, const Trick& trick);
     const static Card& getWorstWinCard(std::vector<Card> cards, const Trick& trick);
 
+    static std::array<std::array<int, Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD>, Card::NUM_SUITS> calcPartialWins();
+    static int getPartialWinRate(int card, const Trick& trick);
+    static int getPartialWinRate(const Card& card, const Trick& trick);
+    static int sumPartialWinRate(const Trick& trick, std::bitset<Card::NUM_CARDS> cards);
+
     static void display();
 
 private:
     static std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> rankings;
     static std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> trickWins;
+    static std::array<std::array<int, Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD>, Card::NUM_SUITS> partialWins;
     
     CardScore();
 };

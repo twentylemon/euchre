@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{float}
+
+\usepackage{pseudocode}
+\usepackage{listings}
+\usepackage{color}
+
+\usepackage{ifthen}
+\usepackage{seqsplit}
+
+\usepackage{qcircuit}
+\usepackage{braket}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage{pdfpages}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ord}{ord}
+
+\addtolength{\textwidth}{1in}
+\addtolength{\textheight}{1in}
+\addtolength{\evensidemargin}{0.5in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\topmargin}{-0.5in}
+
+\title{Cooperative Agents in Euchre}
+\author{Taras Mychaskiw}
+\date{April 16th, 2015}
+
+\begin{document}
+\maketitle
+
+    \begin{abstract}
+        Typically, agents use a set of rules or follow a specific strategy when given options in order to maximize their expected utility.
+        This project explores such a setting in the card game euchre. Euchre gives an interesting setting where two teams of two agents
+        compete in an incomplete information game. A suite of euchre playing agents are given which each follow a specific
+        and quick strategy in order to maximize not only their personal utility, but their team utility.
+    \end{abstract}
+    
+    \thispagestyle{empty}
+    \clearpage
+    \thispagestyle{empty}
+    \tableofcontents
+    \clearpage
+    \setcounter{page}{1}
+    
+    \input{intro}
+    
+    \input{agents}
+    
+    \input{data}
+    
+    \input{discuss}
+    
+    \input{conclude}
+    
+    \bibliographystyle{plain}
+    \bibliography{euchre}
+
+\end{document}

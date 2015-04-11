@@ -1,0 +1,80 @@
+
+\section{Introduction}
+% talk about related work here
+
+A good heuristic or static evaluation function in games helps an agent make decisions which maximize their utility. This idea
+works well, however in team settings, maximizing a personal score may not be a good team strategy. In this project, we
+investigate this setting in the card game euchre, where two teams of two complete to maximize their team score. Some agents
+show, among those studied, that cooperation is a much more powerful strategy. This idea was defined in the prisoner's dilemma, where
+two rational agents that maximize their personal score end up both losing. If these agents cooperated instead, their personal scores
+and ``team'' scores would be optimal.
+
+Card games remain popular to study, as their offer interesting settings which lead to good understandings and findings. For example,
+a common thread in many card games is that they are incomplete information games -- other players' hands or the deck is not known to
+the agent. Perhaps the most interesting about card games is that humans are (generally) much better than the best known artificial agent.
+Famously, poker was solved in \cite{poker}, however they study a very small version of poker compared to what is normal in tournament play.
+Not to discredit their results, but just to say that much work needs still be done in order for artificial agents to consistently beat the
+best human players in many card game settings. Euchre, compared to other card games, is less conventional in that it is also a cooperative game.
+This project details various artificial agents for euchre in order to discover a strategy that is superior.
+
+\subsection{Euchre}
+
+Simply put, euchre is a trick taking card game. It plays very similarly to other trick taking games, such as hearts or bridge.
+The euchre deck only consists of 24 cards, 9 through ace of each suit. Each of the four players is dealt five cards which makes up
+their hand. Each players' hand is only known to them. The 21st card of the deck is turned face up to be offered as trump. The remaining
+three cards remain hidden and are not used in the hand (known as the ``kitty'').
+
+Players then take turns deciding on if they wish to ``order up'' the offered trump card. If so, the dealer must pick up the offered card,
+place it in his hand and secretly discard a card. If the card is not ordered up, players take turns having the option to call a trump suit
+or pass -- but players cannot call the same trump suit as what was offered prior. Players can also choose to ``go alone'' when they call
+a trump suit, which forbids their partner from playing the hand in the hopes of scoring more points.
+
+Once trump is called, the main portion of the game takes place. The player left of the dealer leads the first trick. Each player adds a card
+to the trick in turn. The winner of the trick leads the next trick. This play continues for five rounds, until all players are out of cards.
+Afterwards, teams count how many trick their won, and the team that took at least 3 of the tricks scores points as:
+\begin{itemize}[noitemsep, label={}]
+    \item 1 point : if called trump and took 3-4 tricks
+    \item 2 points: if called trump and took all 5 tricks
+    \item 2 points: if didn't call trump and took 3-5 tricks
+    \item 4 points: if went alone and took all 5 tricks
+\end{itemize}
+
+This play continues, shifting who deals every hand, until a team scores 10 points. That is euchre in a nutshell -- though trump hasn't been explained.
+The general play follows the above guidelines. There are additional rules with trump and which cards you can play into a trick, which are explained below.
+\\
+When a player leads a trick, the card they play determines the lead suit of the trick. Other players must play a card of the same suit
+if possible, otherwise they can play any card from their hand. The player with the highest ranked card in the trick wins it, however those cards
+which are not the lead suit or trump cannot ever win the trick. For example, if I lead the $9\heartsuit$ and you followed with A$\diamondsuit$, my
+lowly 9 is still winning the trick because you did not follow suit (assuming $\diamondsuit$ is not trump).
+\\
+Trump in euchre is peculiar, and leads to much confusion for beginners. For non-trump suits, the rankings of cards is as you would expect, ace $>$
+king $>$ queen \ldots. The lowest trump cards beat the highest non-trump cards (easy enough), however the rankings in among trump is not the same as
+non-trump. Let $\spadesuit$ be trump for a concrete example. The ordering of trump then goes
+J$\spadesuit$ $>$ J$\clubsuit$ $>$ A$\spadesuit$ $>$ K$\spadesuit$ $>$ Q$\spadesuit$ $>$ $10\spadesuit$ $>$ $9\spadesuit$.
+The jack is the highest card in the game, followed by the other jack of the same colour -- in our example J$\spadesuit$ is the best and J$\clubsuit$
+is the second best (called the ``right'' and ``left'' bowers respectfully). The left bower is the confusing part. Though it is printed J$\clubsuit$, it
+becomes a $\spadesuit$ as long as $\spadesuit$ is trump. So when $\clubsuit$ is led and your only $\clubsuit$ is J$\clubsuit$, you are not forced
+to play it as it is not a $\clubsuit$, but a $\spadesuit$. Likewise, when $\spadesuit$ is led, you must play J$\clubsuit$ since it is a $\spadesuit$.
+This means there are 7 $\spadesuit$ in the game, 6 of each red suit and only 5 $\clubsuit$.
+Similarly when a red suit is called trump, the other red jack becomes the left bower and it becomes on the trump suit rather than it's printed suit.
+
+
+\subsection{Agent Considerations}
+
+With the rules of euchre in mind, we can consider what information is known and important to an artificial agent. When it comes times to play a card
+into a trick, the following information is known:
+\begin{itemize}[noitemsep, label={}]
+    \item the rules of euchre
+    \item their own hand
+    \item the card offered as trump
+    \item all of the cards played so far, and by whom
+    \item the trump suit
+    \item the lead suit of the trick, is any
+    \item the overall rankings of each card
+\end{itemize}
+
+This is all the information an agent has access to. Additional information can be inferred, such as when a player doesn't follow the lead suit,
+it is known that the player cannot possibly have any cards of that suit in their hand. Making the best use of all the information available
+will lead to a powerful euchre agent. In the next section, we introduce several euchre agents which make different uses of all this available
+information. Afterwards, we compare these strategies to each other to determine which is best among them. Lastly, we will discuss the
+strengths and weaknesses of particular strategies and conclude with ideas for future work.

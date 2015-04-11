@@ -78,9 +78,9 @@ void MarkovPlayer::setThreshold(double threshold) {
  * @return the card to play
  */
 Card MarkovPlayer::playCard(const Trick& trick) {
-    int deckScore = CardScore::sumWinRate(trick.getTrump(), ~getKnownCards());
-    int handScore = CardScore::sumWinRate(trick.getTrump(), hand.getPlayableBitset(trick));
-    if ((double)handScore / (double)deckScore >= getThreshold()) {
+    double deckScore = CardScore::sumWinRate(trick.getTrump(), ~getKnownCards());
+    double handScore = CardScore::sumWinRate(trick.getTrump(), hand.getBitset());
+    if (handScore / deckScore >= getThreshold()) {
         return hand.removeCard(CardScore::getBestCard(hand.getPlayableCards(trick), trick));
     }
     return hand.removeCard(CardScore::getWorstCard(hand.getPlayableCards(trick), trick));

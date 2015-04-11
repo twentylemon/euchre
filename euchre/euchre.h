@@ -29,8 +29,11 @@
 #include "HighLowPlayer.h"
 #include "PartnerHLPlayer.h"
 #include "MarkovPlayer.h"
+#include "Markov2Player.h"
 #include "CardCountingPlayer.h"
 #include "MonteCarloPlayer.h"
+#include "HybridPlayer.h"
+#include "Hybrid2Player.h"
 
 #include "EuchreGame.h"
 #include "DataGame.h"

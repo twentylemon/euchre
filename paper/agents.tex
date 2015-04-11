@@ -1,0 +1,60 @@
+
+\section{Euchre Agents}
+
+The overall objective in euchre is to take as many tricks as possible. This ensures the other team does not benefit from them.
+Generally, this strategy works well, but it ignores the team aspect of the game. In this section, we give several euchre strategies
+making various use of the information available in the game. All agents know the basic rules of the game, as a useful agent could
+not be constructed without this knowledge. Additionally, no agent can cheat. When we say an agent chooses to play a card with some
+property, it is assumed that the card is chosen from the set of legally playable cards. These strategies range from simple to selfish to
+complex. These strategies aimed to produce a very quick but good decision when playing a card from their hand into a trick.
+
+
+\subsection{Simple Strategies}
+
+The first strategies discussed will be very simple, but serve as a very good base for more complex strategies. These agents only make use
+of the information given directly to them, their hand. The first agent plays a random card from their hand. This agent exists to serve
+as a basis for comparison. The next two agents are opposites of each other, one always plays the lowest card in their hand while
+the other always plays the highest card. Since these agents do not use any additional information, they all play selfishly.
+
+The agents High and Low serve as an excellent foundation for more complex agents. In euchre, the overall goal is to maximize the number
+of tricks your team earns. Playing High will give you the best possible chance of winning a trick, while Low allows you to throw away
+your worst card if you resign a trick. Playing a ``Middle'' strategy would not help compared to High and Low as it seems to give you
+the worst traits of both the other strategies. With Middle, you could have an increased chance of taking a trick, but if you lost the trick,
+you've lost a decent card which could have been used later to win a different trick. Do to this, no Middle agent was explored.
+
+
+\subsection{More Complex Strategies}
+
+The next agents become slightly more complex. These agents make use of the information given to them in the trick. The first one,
+called HighLow, behaves as follows:
+\begin{itemize}[noitemsep, label={}]
+    \item if I have a card that can win the trick, play High
+    \item otherwise, there's no hope, play Low
+\end{itemize}
+This HighLow strategy proves to perform quite well, and makes a lot of sense. If it is possible to take a trick, playing the best card
+gives the highest chance of actually winning the trick. If there's no hope of winning a trick, playing your worst card
+saves your better cards in the hopes that they can win later tricks.
+
+A cooperative version of HighLow was created as well, called CoopHighLow. The logic of this agent is as follows:
+\begin{itemize}[noitemsep, label={}]
+    \item if partner has played in the trick and is winning, play Low
+    \item otherwise, play HighLow
+\end{itemize}
+This strategy aims to not take tricks from your partner if it can be avoided. If your partner is winning the trick, saving your good cards for
+later and allowing them to win will generally be a very powerful strategy. However, if your partner is losing the trick, or hasn't played,
+the semi-aggressive HighLow strategy makes sense to play to try to win tricks or avoid losing better cards.
+
+
+\subsection{Markov Decision Strategy}
+
+
+
+\subsection{Card Counting Strategy}
+
+
+
+\subsection{Hybrid Strategy}
+
+
+\subsection{Monte Carlo Agent}
+

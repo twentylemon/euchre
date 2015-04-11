@@ -61,6 +61,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <StackReserveSize>1048576000</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,6 +83,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <StackReserveSize>1048576000</StackReserveSize>
+      <StackCommitSize>
+      </StackCommitSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MonteCarlo|Win32'">
@@ -104,6 +108,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <StackReserveSize>1048576000</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -121,7 +126,10 @@
     <ClInclude Include="Hand.h" />
     <ClInclude Include="euchre.h" />
     <ClInclude Include="HumanPlayer.h" />
+    <ClInclude Include="Hybrid2Player.h" />
+    <ClInclude Include="HybridPlayer.h" />
     <ClInclude Include="LowPlayer.h" />
+    <ClInclude Include="Markov2Player.h" />
     <ClInclude Include="MarkovPlayer.h" />
     <ClInclude Include="MonteCarloPlayer.h" />
     <ClInclude Include="PartnerHLPlayer.h" />
@@ -146,7 +154,10 @@
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="euchre.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
+    <ClCompile Include="Hybrid2Player.cpp" />
+    <ClCompile Include="HybridPlayer.cpp" />
     <ClCompile Include="LowPlayer.cpp" />
+    <ClCompile Include="Markov2Player.cpp" />
     <ClCompile Include="MarkovPlayer.cpp" />
     <ClCompile Include="MonteCarloPlayer.cpp" />
     <ClCompile Include="PartnerHLPlayer.cpp" />

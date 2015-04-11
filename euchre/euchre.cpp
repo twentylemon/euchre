@@ -82,12 +82,39 @@ void run() {
     play(new MarkovPlayer("up"), new MarkovPlayer("down"), new HighLowPlayer("left"), new HighLowPlayer("right"));
     play(new MarkovPlayer("up"), new MarkovPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
     
+    play(new Markov2Player("up"), new Markov2Player("down"), new RandomPlayer("left"), new RandomPlayer("right"));
+    play(new Markov2Player("up"), new Markov2Player("down"), new LowPlayer("left"), new LowPlayer("right"));
+    play(new Markov2Player("up"), new Markov2Player("down"), new HighPlayer("left"), new HighPlayer("right"));
+    play(new Markov2Player("up"), new Markov2Player("down"), new HighLowPlayer("left"), new HighLowPlayer("right"));
+    play(new Markov2Player("up"), new Markov2Player("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
+    play(new Markov2Player("up"), new Markov2Player("down"), new MarkovPlayer("left"), new MarkovPlayer("right"));
+    
     play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new RandomPlayer("left"), new RandomPlayer("right"));
     play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new LowPlayer("left"), new LowPlayer("right"));
     play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new HighPlayer("left"), new HighPlayer("right"));
     play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new HighLowPlayer("left"), new HighLowPlayer("right"));
     play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
     play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new MarkovPlayer("left"), new MarkovPlayer("right"));
+    play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new Markov2Player("left"), new Markov2Player("right"));
+    
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new RandomPlayer("left"), new RandomPlayer("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new LowPlayer("left"), new LowPlayer("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new HighPlayer("left"), new HighPlayer("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new HighLowPlayer("left"), new HighLowPlayer("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new MarkovPlayer("left"), new MarkovPlayer("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new Markov2Player("left"), new Markov2Player("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new CardCountingPlayer("left"), new CardCountingPlayer("right"));
+    
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new RandomPlayer("left"), new RandomPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new LowPlayer("left"), new LowPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new HighPlayer("left"), new HighPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new HighLowPlayer("left"), new HighLowPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new MarkovPlayer("left"), new MarkovPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new Markov2Player("left"), new Markov2Player("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new CardCountingPlayer("left"), new CardCountingPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new HybridPlayer("left"), new HybridPlayer("right"));
 }
 
 

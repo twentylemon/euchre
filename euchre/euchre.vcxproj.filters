@@ -108,6 +108,15 @@
     <ClInclude Include="MonteCarloPlayer.h">
       <Filter>Header Files\players</Filter>
     </ClInclude>
+    <ClInclude Include="HybridPlayer.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="Markov2Player.h">
+      <Filter>Header Files\players</Filter>
+    </ClInclude>
+    <ClInclude Include="Hybrid2Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp">
@@ -178,6 +187,15 @@
     </ClCompile>
     <ClCompile Include="MonteCarloPlayer.cpp">
       <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridPlayer.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="Markov2Player.cpp">
+      <Filter>Source Files\players</Filter>
+    </ClCompile>
+    <ClCompile Include="Hybrid2Player.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

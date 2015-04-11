@@ -63,6 +63,11 @@ std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> CardScore::rankings
  * how many tricks each card wins
  */
 std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> CardScore::trickWins;
+    
+/**
+ * how many tricks each card wins given a partial trick
+ */
+std::array<std::array<int, Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD>, Card::NUM_SUITS> CardScore::partialWins;
 
 /**
  * scores of trump cards and non trump cards, left bower is separate from trump
@@ -129,11 +134,50 @@ int CardScore::winRate(int trump, int hash) {
  * @param cards bitset of cards to get the win rate of
  * @return the total win rate of all the cards in the bitset
  */
-int CardScore::sumWinRate(int trump, std::bitset<Card::NUM_CARDS> cards){
+int CardScore::sumWinRate(int trump, std::bitset<Card::NUM_CARDS> cards) {
     int total = 0;
     for (int i = 0; i < Card::NUM_CARDS; i++) {
         if (cards[i]) {
             total += winRate(trump, Card::ALL_CARDS[i]);
+        }
+    }
+    return total;
+}
+
+
+/**
+ * @param card the card hashcode
+ * @param trick the trick so far
+ * @return the number of tricks the card wins given the trick so far
+ */
+int CardScore::getPartialWinRate(int card, const Trick& trick) {
+    int idx = 0;
+    for (int i = 0; i < trick.getNumCards(); i++) {
+        idx = (idx << Card::HASHBITS) | trick.getCard(i).hashCode();
+    }
+    idx = (idx << Card::HASHBITS) | card;
+    return partialWins[trick.getTrump()][idx];
+}
+
+/**
+ * @param card the card hashcode
+ * @param trick the trick so far
+ * @return the number of tricks the card wins given the trick so far
+ */
+int CardScore::getPartialWinRate(const Card& card, const Trick& trick) {
+    return getPartialWinRate(card.hashCode(), trick);
+}
+
+/**
+ * @param trump the trump suit
+ * @param cards bitset of cards to get the win rate of
+ * @return the total win rate of all the cards in the bitset
+ */
+int CardScore::sumPartialWinRate(const Trick& trick, std::bitset<Card::NUM_CARDS> cards) {
+    int total = 0;
+    for (int i = 0; i < Card::NUM_CARDS; i++) {
+        if (cards[i]) {
+            total += getPartialWinRate(Card::ALL_CARDS[i], trick);
         }
     }
     return total;
@@ -220,6 +264,7 @@ const Card& CardScore::getWorstWinCard(std::vector<Card> cards, const Trick& tri
 void CardScore::init() {
     rankings = calcRankings();
     trickWins = calcTrickWins();
+    partialWins = calcPartialWins();
 }
 
 
@@ -277,6 +322,42 @@ std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> CardScore::calcTric
     return wins;
 }
 
+/**
+ * @return the number of wins each card wins given a partial trick
+ */
+std::array<std::array<int, Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD>, Card::NUM_SUITS> CardScore::calcPartialWins() {
+    std::array<std::array<int, Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD>, Card::NUM_SUITS> wins;
+    for (int trump : Card::SUITS) {
+        Trick trick(trump);
+        wins[trump].fill(0);
+        std::array<int, Trick::NUM_CARDS> idx;
+        for (int card1 : Card::ALL_CARDS) {
+            trick.addCard(card1);
+            idx[0] = card1;
+            for (int card2 : Card::ALL_CARDS) {
+                if (card1 == card2){ continue; }
+                trick.addCard(card2);
+                idx[1] = (idx[0] << Card::HASHBITS) | card2;
+                for (int card3 : Card::ALL_CARDS) {
+                    if (card1 == card3 || card2 == card3){ continue; }
+                    trick.addCard(card3);
+                    idx[2] = (idx[1] << Card::HASHBITS) | card3;
+                    for (int card4 : Card::ALL_CARDS) {
+                        if (card1 == card4 || card2 == card4 || card3 == card4){ continue; }
+                        idx[3] = (idx[2] << Card::HASHBITS) | card4;
+                        trick.addCard(card4);
+                        wins[trump][idx[trick.getWinner()]]++;
+                        trick.removeLastCard();
+                    }
+                    trick.removeLastCard();
+                }
+                trick.removeLastCard();
+            }
+            trick.removeLastCard();
+        }
+    }
+    return wins;
+}
 
 
 /**
