@@ -115,7 +115,7 @@
       <Filter>Header Files\players</Filter>
     </ClInclude>
     <ClInclude Include="Hybrid2Player.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\players</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +195,7 @@
       <Filter>Source Files\players</Filter>
     </ClCompile>
     <ClCompile Include="Hybrid2Player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\players</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

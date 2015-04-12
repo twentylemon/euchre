@@ -1,24 +1,720 @@
 
 \section{Agent Comparisons}
 
+For each table in this section, we compare two of the strategies discussed in the previous section. At first, we look at
+teams where the two agents follow the same strategy, followed later by teams consisting of two different types of agents.
+Unless otherwise noted, all the statistics were taken from a simulation of 10,001 games. In these games, it was forced
+that the dealer call trump to be $\spadesuit$ for simplicity, as the agents do not have a strategy for calling trump.
+Each game was played until a team had 10 points (teams can get 11 points if they score 2 points when they are at 9 points).
+Each agent was also timed when making it's decisions. Be forewarned, each possible competition is given, so there are many many tables to come.
+
 
 \subsection{Simple Strategies}
 
+The simple strategies were compared to each other. Tables \ref{tab:random_low} through \ref{tab:low_high} show the results of their competition.
+As to be expected, Low did poorly overall. Low managed to still win some games however, since Low essentially keeps it's highest cards for the
+end of the game. When they get a lucky deal, they can manage to scrape together enough tricks to win a hand. Generally though, playing Low is
+worse than playing Random. On the other hand, playing High proved to be slightly better than playing Random, though not by very much.
+Also not surprising is that High beats Low, likely due to winning early tricks. Each of the simple agents perform very quickly, each performing
+their decisions in very little time.
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Random  &   Low     \\  \hline
+            Games Won       &   7656   &   2345   \\
+            Tricks Won      &   284003 &   226482 \\
+            Total Score     &   94343  &   62520  \\
+            Time Taken (ms) &   477+468     &   495+454
+        \end{tabular}
+        \caption{Results of Random against Low.}
+        \label{tab:random_low}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Random  &   High    \\  \hline
+            Games Won       &   4794   &   5207   \\
+            Tricks Won      &   248331 &   263064 \\
+            Total Score     &   79314  &   82199  \\
+            Time Taken (ms) &   678+676   &   800+802
+        \end{tabular}
+        \caption{Results of Random against High.}
+        \label{tab:random_high}
+    \end{minipage} 
+\end{table}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &   Low     &   High    \\  \hline
+        Games Won       &   2550   &   7451   \\
+        Tricks Won      &   229260 &   286025 \\
+        Total Score     &   63942  &   93393  \\
+        Time Taken (ms) &   1042+1038   &   1359+1372
+    \end{tabular}
+    \caption{Results of Low against High.}
+    \label{tab:low_high}
+\end{table}
 
 
 \subsection{More Complex Strategies}
+
+Tables \ref{tab:highlow_random} through \ref{tab:highlow_high} show the results for the HighLow agent against the simple
+strategies. The results show a staggering favour for the HighLow agent, able to win handily against any of the simple strategies.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &   HighLow &   Random  \\  \hline
+        Games Won       &   6902   &   3099   \\
+        Tricks Won      &   279444 &   226191 \\
+        Total Score     &   90862  &   68105  \\
+        Time Taken (ms) &   926+948   &   456+499
+    \end{tabular}
+    \caption{Results of HighLow against Random.}
+    \label{tab:highlow_random}
+\end{table}
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   HighLow &   Low     \\  \hline
+            Games Won       &   8498   &   1503   \\
+            Tricks Won      &   286502 &   208643 \\
+            Total Score     &   97902  &   54705  \\
+            Time Taken (ms) &   1606+1709   &   958+997
+        \end{tabular}
+        \caption{Results of HighLow against Low.}
+        \label{tab:highlow_low}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   HighLow &   High    \\  \hline
+            Games Won       &   7578   &   2423   \\
+            Tricks Won      &   278480 &   201590 \\
+            Total Score     &   94017  &   61710  \\
+            Time Taken (ms) &   1742+1894   &   1106+952
+        \end{tabular}
+        \caption{Results of HighLow against High.}
+        \label{tab:highlow_high}
+    \end{minipage} 
+\end{table}
+
+
+
+Tables \ref{tab:coophighlow_random} through \ref{tab:coophighlow_high} show the results for the CoopHighLow agent against the simple
+strategies. Following the trend of the HighLow agent, the CoopHighLow proves to be very powerful compared to the simple strategies.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &   CoopHighLow &   Random  \\  \hline
+        Games Won       &   7729        &   2272   \\
+        Tricks Won      &   281984      &   211086 \\
+        Total Score     &   94601       &   61277  \\
+        Time Taken (ms) &   2228+2355   &   1029+951
+    \end{tabular}
+    \caption{Results of CoopHighLow against Random.}
+    \label{tab:coophighlow_random}
+\end{table}
+
+\begin{table}[ht]
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   CoopHighLow &   Low  \\  \hline
+            Games Won       &   9202        &   799   \\
+            Tricks Won      &   285032      &   183243 \\
+            Total Score     &   100696      &   44827  \\
+            Time Taken (ms) &   1883+1933   &   859+874
+        \end{tabular}
+        \caption{Results of CoopHighLow against Low.}
+        \label{tab:coophighlow_low}
+    \end{minipage}%
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   CoopHighLow &   High  \\  \hline
+            Games Won       &   7874        &   2127   \\
+            Tricks Won      &   278651      &   197859 \\
+            Total Score     &   95331       &   59278  \\
+            Time Taken (ms) &   915+906   &   553+516
+        \end{tabular}
+        \caption{Results of CoopHighLow against High.}
+        \label{tab:coophighlow_high}
+    \end{minipage} 
+\end{table}
+
+
+Table \ref{tab:coophighlow_highlow} shows the results of an important competition. The CoopHighLow and HighLow agents both prove
+strong agents, but only one of the tries to cooperate with their team mate. The results favour the CoopHighLow agent, who took
+on average about a point more per game.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &   CoopHighLow &   HighLow  \\  \hline
+        Games Won       &   5611        &   4390   \\
+        Tricks Won      &   261354      &   248731 \\
+        Total Score     &   84074       &   76743  \\
+        Time Taken (ms) &   964+991   &   977+873
+    \end{tabular}
+    \caption{Results of CoopHighLow against HighLow.}
+    \label{tab:coophighlow_highlow}
+\end{table}
 
 
 
 \subsection{Markov Decision Strategy}
 
+Here, we show the results of two different Markov agents. They follow the same strategy, however the values they assign to each card
+is different. The first agent uses the number of tricks a card wins out of all possible tricks given the current trump suit as the value for
+each card. This proved to perform strangely, so an additional value base was formed. Markov2 uses a very similar value base; the value of
+a card is the number of tricks the card can win which derive from the current trick and given the trump suit. This different value
+base lends itself more closely to the actual values of the cards. For example, an ace that isn't the lead suit or trump cannot win any tricks,
+so it should be considered a powerful card. When leading a trick, Markov2 behaves identically to Markov. Both Markov agents used a threshold $\tau$
+of 0.25 due to there being 4 players in the game.
+
+Something worth mentioning, these Markov strategies precomputed all the values of the cards and stored them for quick lookup when needed during
+the games. They perform much faster this way, but used quite a bit of memory (around 1GB). However, the time taken to precompute the values
+was only on the order of a second or two, so in real games they can be calculated on the fly quickly enough.
+
+As mentioned, Markov performs strangely. Markov proves worse than Random, but slightly better than both Low and High. This is strange due to
+the results given in Table \ref{tab:random_high}, showing that High is better than Random. When played against HighLow and CoopHighLow, Markov
+did not do well at all, losing most of the games and averaging relatively low scores.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &   Markov &   Random  \\  \hline
+        Games Won       &   4631        &   5370   \\
+        Tricks Won      &   258091      &   257844 \\
+        Total Score     &   78564       &   83222  \\
+        Time Taken (ms) &   749+712   &   471+483
+    \end{tabular}
+    \caption{Results of Markov against Random.}
+    \label{tab:markov_random}
+\end{table}
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov &   Low  \\  \hline
+            Games Won       &   5343        &   4658   \\
+            Tricks Won      &   271165      &   255480 \\
+            Total Score     &   82893       &   78518  \\
+            Time Taken (ms) &   1297+1313   &   947+899
+        \end{tabular}
+        \caption{Results of Markov against Low.}
+        \label{tab:markov_low}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov &   High  \\  \hline
+            Games Won       &   5615        &   4386   \\
+            Tricks Won      &   259661      &   238594 \\
+            Total Score     &   84134       &   76711  \\
+            Time Taken (ms) &   670+702   &   493+520
+        \end{tabular}
+        \caption{Results of Markov against High.}
+        \label{tab:markov_high}
+    \end{minipage} 
+\end{table}
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov &   HighLow  \\  \hline
+            Games Won       &   3067        &   6934   \\
+            Tricks Won      &   227647      &   277003 \\
+            Total Score     &   68100       &   91009  \\
+            Time Taken (ms) &   673+733   &   818+848
+        \end{tabular}
+        \caption{Results of Markov against HighLow.}
+        \label{tab:markov_highlow}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov &   CoopHighLow  \\  \hline
+            Games Won       &   2357        &   7644   \\
+            Tricks Won      &   213619      &   279671 \\
+            Total Score     &   62108       &   94436  \\
+            Time Taken (ms) &   670+706   &   857+831
+        \end{tabular}
+        \caption{Results of Markov against CoopHighLow.}
+        \label{tab:markov_coophighlow}
+    \end{minipage} 
+\end{table}
+
+
+
+The Markov2 agent shows more promise than the Markov agent, showing it is actually slightly better than Random and still better
+than both High and Low. Markov2 also is quite a bit better than the Markov agent.
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov2 &   Random  \\  \hline
+            Games Won       &   5373        &   4628   \\
+            Tricks Won      &   266023      &   248947 \\
+            Total Score     &   83148       &   78497  \\
+            Time Taken (ms) &   775+802   &   477+446
+        \end{tabular}
+        \caption{Results of Markov2 against Random.}
+        \label{tab:markov2_random}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov2 &   Markov  \\  \hline
+            Games Won       &   6501        &   3500   \\
+            Tricks Won      &   273030      &   238175 \\
+            Total Score     &   88540       &   71045  \\
+            Time Taken (ms) &   1095+1081   &   962+1034
+        \end{tabular}
+        \caption{Results of Markov2 against Markov.}
+        \label{tab:markov2_markov}
+    \end{minipage} 
+\end{table}
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov2 &   Low  \\  \hline
+            Games Won       &   6528        &   3473   \\
+            Tricks Won      &   277486      &   241509 \\
+            Total Score     &   88888       &   71113  \\
+            Time Taken (ms) &   1177+1237   &   789+773
+        \end{tabular}
+        \caption{Results of Markov2 against Low.}
+        \label{tab:markov2_low}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov2 &   High  \\  \hline
+            Games Won       &   6502        &   3499   \\
+            Tricks Won      &   273597      &   228823 \\
+            Total Score     &   88825       &   70785  \\
+            Time Taken (ms) &   1051+1045   &   777+829
+        \end{tabular}
+        \caption{Results of Markov2 against High.}
+        \label{tab:markov2_high}
+    \end{minipage} 
+\end{table}
+
+
+
+This high that Markov2 experienced is quickly brought down by the soul crushing HighLow and CoopHighLow agents. Although Markov2
+performed much better than Markov against these two agents, Markov2 was still trounced. Rather unfortunate.
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov2 &   HighLow  \\  \hline
+            Games Won       &   3999        &   6002   \\
+            Tricks Won      &   246909      &   269371 \\
+            Total Score     &   74230       &   86241  \\
+            Time Taken (ms) &   989+1086   &   1268+1323
+        \end{tabular}
+        \caption{Results of Markov2 against HighLow.}
+        \label{tab:markov2_highlow}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &   Markov2 &   CoopHighLow  \\  \hline
+            Games Won       &   3215        &   6786   \\
+            Tricks Won      &   232695      &   273115 \\
+            Total Score     &   68630       &   90180  \\
+            Time Taken (ms) &   998+981   &   1513+1537
+        \end{tabular}
+        \caption{Results of Markov2 against CoopHighLow.}
+        \label{tab:markov2_coophighlow}
+    \end{minipage} 
+\end{table}
 
 
 \subsection{Card Counting Strategy}
 
+The CardCounting was modelling off of how I personally play euchre, for the most part. Human players tend to keep track of what suit
+players hold and play accordingly. The CardCounting, similar to the HighLow agent, performs very well against the simple strategies.
+The results are promising, as the agent achieves very high average scores in each game.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &  CardCounting &   Random  \\  \hline
+        Games Won       &   7615        &   2386   \\
+        Tricks Won      &   283993      &   214217 \\
+        Total Score     &   94358       &   62629  \\
+        Time Taken (ms) &   1717+1634   &   667+643
+    \end{tabular}
+    \caption{Results of CardCounting against Random.}
+    \label{tab:cardcounting_random}
+\end{table}
+
+\begin{table}[ht]
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  CardCounting &   Low  \\  \hline
+            Games Won       &   9050        &   951   \\
+            Tricks Won      &   286240      &   187960 \\
+            Total Score     &   100314      &   46352  \\
+            Time Taken (ms) &   2817+2904   &   890+908
+        \end{tabular}
+        \caption{Results of CardCounting ~~ against ~~ Low.}
+        \label{tab:cardcounting_low}
+    \end{minipage}%
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  CardCounting &   High  \\  \hline
+            Games Won       &   7868        &   2133   \\
+            Tricks Won      &   280486      &   196979 \\
+            Total Score     &   95434      &   59665  \\
+            Time Taken (ms) &   1062+1126   &   469+502
+        \end{tabular}
+        \caption{Results of CardCounting against High.}
+        \label{tab:cardcounting_high}
+    \end{minipage} 
+\end{table}
+
+
+Surprisingly, the more complex strategy modelled after more human play performs not as well as expected against the relatively simple
+CoopHighLow agent. CardCounting was able to beat the HighLow agent. However, against the CoopHighLow agent, the CardCounting
+essentially tied, performing slightly worse but taking more tricks. It is due to this disappointing result that the Hybrid strategy
+was created, in hopes to beat the CoopHighLow agent.
+
+\begin{table}[ht]
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  CardCounting &   HighLow  \\  \hline
+            Games Won       &   5519        &   4482   \\
+            Tricks Won      &   260753      &   248582 \\
+            Total Score     &   83466      &   77259  \\
+            Time Taken (ms) &   1221+1215   &   869+845
+        \end{tabular}
+        \caption{Results of CardCounting against HighLow.}
+        \label{tab:cardcounting_highlow}
+    \end{minipage}%
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  CardCounting &   CoopHighLow  \\  \hline
+            Games Won       &   4931        &   5070   \\
+            Tricks Won      &   254396      &   253984 \\
+            Total Score     &   79835      &   80750  \\
+            Time Taken (ms) &   1360+1320   &   1043+1048
+        \end{tabular}
+        \caption{Results of CardCounting against CoopHighLow.}
+        \label{tab:cardcounting_coophighlow}
+    \end{minipage} 
+\end{table}
+
+
+As shown in the previous subsection, the Markov agents are not very powerful. They are swept aside by the CardCounting agent.
+
+\begin{table}[ht]
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  CardCounting &   Markov  \\  \hline
+            Games Won       &   7603        &   2398   \\
+            Tricks Won      &   279571      &   215099 \\
+            Total Score     &   93918      &   62358  \\
+            Time Taken (ms) &   1428+1431   &   999+937
+        \end{tabular}
+        \caption{Results of CardCounting against Markov.}
+        \label{tab:cardcounting_markov}
+    \end{minipage}%
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  CardCounting &   Markov2  \\  \hline
+            Games Won       &   6627        &   3374   \\
+            Tricks Won      &   273151      &   236744 \\
+            Total Score     &   89326      &   70192  \\
+            Time Taken (ms) &   1621+1568   &   933+975
+        \end{tabular}
+        \caption{Results of CardCounting against Markov2.}
+        \label{tab:cardcounting_markov2}
+    \end{minipage} 
+\end{table}
+
 
 
 \subsection{Hybrid Strategy}
+
+how the hybrid works
+
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &  Hybrid &   Random  \\  \hline
+        Games Won       &   7765        &   2236   \\
+        Tricks Won      &   283926      &   211484 \\
+        Total Score     &   94993      &   61292  \\
+        Time Taken (ms) &   1609+1610   &   562+613
+    \end{tabular}
+    \caption{Results of Hybrid against Random.}
+    \label{tab:hybrid_random}
+\end{table}
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid &   Low  \\  \hline
+            Games Won       &   9191        &   810   \\
+            Tricks Won      &   285601      &   183914 \\
+            Total Score     &   100750      &   44980  \\
+            Time Taken (ms) &   1645+1511   &   695+759
+        \end{tabular}
+        \caption{Results of Hybrid against Low.}
+        \label{tab:hybrid_low}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid &   High  \\  \hline
+            Games Won       &   7885        &   2116   \\
+            Tricks Won      &   279051      &   196344 \\
+            Total Score     &   95597      &   59033  \\
+            Time Taken (ms) &   1389+1405   &   613+595
+        \end{tabular}
+        \caption{Results of Hybrid against High.}
+        \label{tab:hybrid_high}
+    \end{minipage} 
+\end{table}
+
+
+
+again, how disappointing
+
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid &   HighLow  \\  \hline
+            Games Won       &   5651        &   4350   \\
+            Tricks Won      &   261381      &   247699 \\
+            Total Score     &   84221      &   76735  \\
+            Time Taken (ms) &   1548+1637   &   1139+1122
+        \end{tabular}
+        \caption{Results of Hybrid against ~~ HighLow.}
+        \label{tab:hybrid_highlow}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid &   CoopHighLow  \\  \hline
+            Games Won       &   4908        &   5093   \\
+            Tricks Won      &   253650      &   254010 \\
+            Total Score     &   80039      &   80856  \\
+            Time Taken (ms) &   1665+1720   &   1184+1214
+        \end{tabular}
+        \caption{Results of Hybrid against CoopHighLow.}
+        \label{tab:hybrid_coophighlow}
+    \end{minipage} 
+\end{table}
+
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid &   Markov  \\  \hline
+            Games Won       &   7626        &   2375   \\
+            Tricks Won      &   279820      &   213780 \\
+            Total Score     &   94273      &   61797  \\
+            Time Taken (ms) &   1648+1725   &   1017+1025
+        \end{tabular}
+        \caption{Results of Hybrid against Markov.}
+        \label{tab:hybrid_markov}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid &   Markov2  \\  \hline
+            Games Won       &   6872        &   3129   \\
+            Tricks Won      &   273513      &   231352 \\
+            Total Score     &   90506      &   68017  \\
+            Time Taken (ms) &   1735+1668   &   1107+1127
+        \end{tabular}
+        \caption{Results of Hybrid against Markov2.}
+        \label{tab:hybrid_markov2}
+    \end{minipage} 
+\end{table}
+
+
+
+
+
+although the hybridization worked much better than cardcounting
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &  Hybrid &   CardCounting  \\  \hline
+        Games Won       &   6872        &   3129   \\
+        Tricks Won      &   273513      &   231352 \\
+        Total Score     &   90506      &   68017  \\
+        Time Taken (ms) &   1735+1668   &   1107+1127
+    \end{tabular}
+    \caption{Results of Hybrid against CardCounting.}
+    \label{tab:hybrid_cardcounting}
+\end{table}
+
+
+
+since markov2 worked so well, hybrid2
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|rr}
+        ~               &  Hybrid2 &   Random  \\  \hline
+        Games Won       &   7764        &   2237   \\
+        Tricks Won      &   282805      &   211655 \\
+        Total Score     &   94729      &   61478  \\
+        Time Taken (ms) &   1694+1658   &   636+694
+    \end{tabular}
+    \caption{Results of Hybrid2 against Random.}
+    \label{tab:hybrid2_random}
+\end{table}
+
+\clearpage
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   Low  \\  \hline
+            Games Won       &   9113        &   888   \\
+            Tricks Won      &   285040      &   183310 \\
+            Total Score     &   100451      &   45177  \\
+            Time Taken (ms) &   1291+1380   &   563+536
+        \end{tabular}
+        \caption{Results of Hybrid2 against Low.}
+        \label{tab:hybrid2_low}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   High  \\  \hline
+            Games Won       &   7888        &   2113   \\
+            Tricks Won      &   279751      &   197474 \\
+            Total Score     &   95359      &   59365  \\
+            Time Taken (ms) &   1386+1384   &   590+629
+        \end{tabular}
+        \caption{Results of Hybrid2 against High.}
+        \label{tab:hybrid2_high}
+    \end{minipage} 
+\end{table}
+
+
+
+what is this nonsense
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   HighLow  \\  \hline
+            Games Won       &   5501        &   4500   \\
+            Tricks Won      &   260460      &   248690 \\
+            Total Score     &   83300      &   77467  \\
+            Time Taken (ms) &   1523+1579   &   1022+987
+        \end{tabular}
+        \caption{Results of Hybrid2 against HighLow.}
+        \label{tab:hybrid2_highlow}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   CoopHighLow  \\  \hline
+            Games Won       &   4907        &   5094   \\
+            Tricks Won      &   253938      &   254392 \\
+            Total Score     &   80020      &   80882  \\
+            Time Taken (ms) &   1583+1654   &   1102+1192
+        \end{tabular}
+        \caption{Results of Hybrid2 against CoopHighLow.}
+        \label{tab:hybrid2_coophighlow}
+    \end{minipage} 
+\end{table}
+
+
+\begin{table}[ht]
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   Markov  \\  \hline
+            Games Won       &   7595        &   2406   \\
+            Tricks Won      &   278489      &   213471 \\
+            Total Score     &   93890      &   61727  \\
+            Time Taken (ms) &   1581+1524   &   892+918
+        \end{tabular}
+        \caption{Results of Hybrid2 against ~~ Markov.}
+        \label{tab:hybrid2_markov}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   Markov2  \\  \hline
+            Games Won       &   6713        &   3288   \\
+            Tricks Won      &   273888      &   234572 \\
+            Total Score     &   89770      &   69558  \\
+            Time Taken (ms) &   1639+1587   &   1010+1056
+        \end{tabular}
+        \caption{Results of Hybrid2 against Markov2.}
+        \label{tab:hybrid2_markov2}
+    \end{minipage} 
+\end{table}
+
+
+
+better than cardcounting again, worse than hybrid
+
+\begin{table}[ht]
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   CardCounting  \\  \hline
+            Games Won       &   5085        &   4916   \\
+            Tricks Won      &   254083      &   254462 \\
+            Total Score     &   80599      &   80379  \\
+            Time Taken (ms) &   1589+1554   &   1369+1268
+        \end{tabular}
+        \caption{Results of Hybrid2 against CardCounting.}
+        \label{tab:hybrid2_cardcounting}
+    \end{minipage}%
+    \begin{minipage}{.525\linewidth}
+        \centering
+        \begin{tabular}{l|rr}
+            ~               &  Hybrid2 &   Hybrid  \\  \hline
+            Games Won       &   4909        &   5092   \\
+            Tricks Won      &   254848      &   255172 \\
+            Total Score     &   80396      &   81205  \\
+            Time Taken (ms) &   1546+1497   &   1488+1445
+        \end{tabular}
+        \caption{Results of ~~ Hybrid2 ~~ against ~~ Hybrid.}
+        \label{tab:hybrid2_hybrid}
+    \end{minipage} 
+\end{table}
 
 
 

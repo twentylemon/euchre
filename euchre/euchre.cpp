@@ -1,12 +1,6 @@
 
 #include "euchre.h"
 
-/**
- * only consider games after two tricks have been played?
- *  after only one trick may also be tractable? maybe not after considering playing cards from the hand?
- */
-
-
 #ifdef _DEBUG
     const int NUM_GAMES = 255;
 #else
@@ -136,11 +130,14 @@ int main(int argc, char** argv) {
     game.displayStats();
     std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;
     */
+    play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
+    play(new HybridPlayer("up"), new HybridPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
+    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
 
 #ifdef MONTE_CARLO
     play(new MonteCarloPlayer("up"), new MonteCarloPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
 #else
-    run();
+    //run();
 #endif
 
 #ifdef EVAL

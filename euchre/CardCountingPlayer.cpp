@@ -160,7 +160,7 @@ Card CardCountingPlayer::playFirst(const Trick& trick) {
         }
     }
 
-    //check if partner is "strong" in any suit, lead high that suit
+    //check if partner is "strong" in any suit, lead low that suit
     const int noncalc = -10000;
     std::array<int, Card::NUM_SUITS> difs = {{ noncalc, noncalc, noncalc, noncalc }};
     for (Card card : cards) {
@@ -184,7 +184,6 @@ Card CardCountingPlayer::playFirst(const Trick& trick) {
         }
     }
     if (suitToPlay != -1) { //they are strong in a suit, lead it
-        //@todo should this lead low or high?
         return hand.removeCard(CardScore::getWorstCard(hand.getSuitCards(suitToPlay), trick));
     }
     return PartnerHLPlayer::playCard(trick);    //otherwise, play high

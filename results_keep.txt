@@ -1,0 +1,495 @@
+overall results
+time taken per player
+up	(class RandomPlayer)	477
+down	(class RandomPlayer)	468
+left	(class LowPlayer)	495
+right	(class LowPlayer)	454
+gameWins( UP_TEAM => 7656, LEFT_TEAM => 2345)
+trickWins( UP_TEAM => 284003, LEFT_TEAM => 226482)
+totalScores( UP_TEAM => 94343, LEFT_TEAM => 62520)
+
+
+overall results
+time taken per player
+up	(class RandomPlayer)	678
+down	(class RandomPlayer)	676
+left	(class HighPlayer)	800
+right	(class HighPlayer)	802
+gameWins( UP_TEAM => 4794, LEFT_TEAM => 5207)
+trickWins( UP_TEAM => 248331, LEFT_TEAM => 263064)
+totalScores( UP_TEAM => 79314, LEFT_TEAM => 82199)
+
+
+overall results
+time taken per player
+up	(class LowPlayer)	1042
+down	(class LowPlayer)	1038
+left	(class HighPlayer)	1372
+right	(class HighPlayer)	1359
+gameWins( UP_TEAM => 2550, LEFT_TEAM => 7451)
+trickWins( UP_TEAM => 229260, LEFT_TEAM => 286025)
+totalScores( UP_TEAM => 63942, LEFT_TEAM => 93393)
+
+
+overall results
+time taken per player
+up	(class HighLowPlayer)	926
+down	(class HighLowPlayer)	948
+left	(class RandomPlayer)	456
+right	(class RandomPlayer)	499
+gameWins( UP_TEAM => 6902, LEFT_TEAM => 3099)
+trickWins( UP_TEAM => 279444, LEFT_TEAM => 226191)
+totalScores( UP_TEAM => 90862, LEFT_TEAM => 68105)
+
+
+overall results
+time taken per player
+up	(class HighLowPlayer)	1606
+down	(class HighLowPlayer)	1709
+left	(class LowPlayer)	958
+right	(class LowPlayer)	997
+gameWins( UP_TEAM => 8498, LEFT_TEAM => 1503)
+trickWins( UP_TEAM => 286502, LEFT_TEAM => 208643)
+totalScores( UP_TEAM => 97902, LEFT_TEAM => 54705)
+
+
+overall results
+time taken per player
+up	(class HighLowPlayer)	1742
+down	(class HighLowPlayer)	1894
+left	(class HighPlayer)	1106
+right	(class HighPlayer)	952
+gameWins( UP_TEAM => 7578, LEFT_TEAM => 2423)
+trickWins( UP_TEAM => 278480, LEFT_TEAM => 201590)
+totalScores( UP_TEAM => 94017, LEFT_TEAM => 61710)
+
+
+overall results
+time taken per player
+up	(class PartnerHLPlayer)	2228
+down	(class PartnerHLPlayer)	2355
+left	(class RandomPlayer)	1029
+right	(class RandomPlayer)	951
+gameWins( UP_TEAM => 7729, LEFT_TEAM => 2272)
+trickWins( UP_TEAM => 281984, LEFT_TEAM => 211086)
+totalScores( UP_TEAM => 94601, LEFT_TEAM => 61277)
+
+
+overall results
+time taken per player
+up	(class PartnerHLPlayer)	1883
+down	(class PartnerHLPlayer)	1933
+left	(class LowPlayer)	859
+right	(class LowPlayer)	874
+gameWins( UP_TEAM => 9202, LEFT_TEAM => 799)
+trickWins( UP_TEAM => 285032, LEFT_TEAM => 183243)
+totalScores( UP_TEAM => 100696, LEFT_TEAM => 44827)
+
+
+overall results
+time taken per player
+up	(class PartnerHLPlayer)	915
+down	(class PartnerHLPlayer)	906
+left	(class HighPlayer)	553
+right	(class HighPlayer)	516
+gameWins( UP_TEAM => 7874, LEFT_TEAM => 2127)
+trickWins( UP_TEAM => 278651, LEFT_TEAM => 197859)
+totalScores( UP_TEAM => 95331, LEFT_TEAM => 59278)
+
+
+overall results
+time taken per player
+up	(class PartnerHLPlayer)	964
+down	(class PartnerHLPlayer)	991
+left	(class HighLowPlayer)	977
+right	(class HighLowPlayer)	873
+gameWins( UP_TEAM => 5611, LEFT_TEAM => 4390)
+trickWins( UP_TEAM => 261354, LEFT_TEAM => 248731)
+totalScores( UP_TEAM => 84074, LEFT_TEAM => 76743)
+
+
+overall results
+time taken per player
+up	(class MarkovPlayer)	749
+down	(class MarkovPlayer)	712
+left	(class RandomPlayer)	471
+right	(class RandomPlayer)	483
+gameWins( UP_TEAM => 4631, LEFT_TEAM => 5370)
+trickWins( UP_TEAM => 258091, LEFT_TEAM => 257844)
+totalScores( UP_TEAM => 78564, LEFT_TEAM => 83222)
+
+
+overall results
+time taken per player
+up	(class MarkovPlayer)	1297
+down	(class MarkovPlayer)	1313
+left	(class LowPlayer)	947
+right	(class LowPlayer)	899
+gameWins( UP_TEAM => 5343, LEFT_TEAM => 4658)
+trickWins( UP_TEAM => 271165, LEFT_TEAM => 255480)
+totalScores( UP_TEAM => 82893, LEFT_TEAM => 78518)
+
+
+overall results
+time taken per player
+up	(class MarkovPlayer)	670
+down	(class MarkovPlayer)	702
+left	(class HighPlayer)	493
+right	(class HighPlayer)	520
+gameWins( UP_TEAM => 5615, LEFT_TEAM => 4386)
+trickWins( UP_TEAM => 259661, LEFT_TEAM => 238594)
+totalScores( UP_TEAM => 84134, LEFT_TEAM => 76711)
+
+
+overall results
+time taken per player
+up	(class MarkovPlayer)	673
+down	(class MarkovPlayer)	733
+left	(class HighLowPlayer)	818
+right	(class HighLowPlayer)	848
+gameWins( UP_TEAM => 3067, LEFT_TEAM => 6934)
+trickWins( UP_TEAM => 227647, LEFT_TEAM => 277003)
+totalScores( UP_TEAM => 68100, LEFT_TEAM => 91009)
+
+
+overall results
+time taken per player
+up	(class MarkovPlayer)	670
+down	(class MarkovPlayer)	706
+left	(class PartnerHLPlayer)	857
+right	(class PartnerHLPlayer)	831
+gameWins( UP_TEAM => 2357, LEFT_TEAM => 7644)
+trickWins( UP_TEAM => 213619, LEFT_TEAM => 279671)
+totalScores( UP_TEAM => 62108, LEFT_TEAM => 94436)
+
+
+overall results
+time taken per player
+up	(class Markov2Player)	775
+down	(class Markov2Player)	802
+left	(class RandomPlayer)	477
+right	(class RandomPlayer)	446
+gameWins( UP_TEAM => 5373, LEFT_TEAM => 4628)
+trickWins( UP_TEAM => 266023, LEFT_TEAM => 248947)
+totalScores( UP_TEAM => 83148, LEFT_TEAM => 78497)
+
+
+overall results
+time taken per player
+up	(class Markov2Player)	1177
+down	(class Markov2Player)	1237
+left	(class LowPlayer)	789
+right	(class LowPlayer)	773
+gameWins( UP_TEAM => 6528, LEFT_TEAM => 3473)
+trickWins( UP_TEAM => 277486, LEFT_TEAM => 241509)
+totalScores( UP_TEAM => 88888, LEFT_TEAM => 71113)
+
+
+overall results
+time taken per player
+up	(class Markov2Player)	1051
+down	(class Markov2Player)	1045
+left	(class HighPlayer)	777
+right	(class HighPlayer)	829
+gameWins( UP_TEAM => 6502, LEFT_TEAM => 3499)
+trickWins( UP_TEAM => 273597, LEFT_TEAM => 228823)
+totalScores( UP_TEAM => 88825, LEFT_TEAM => 70785)
+
+
+overall results
+time taken per player
+up	(class Markov2Player)	989
+down	(class Markov2Player)	1086
+left	(class HighLowPlayer)	1268
+right	(class HighLowPlayer)	1323
+gameWins( UP_TEAM => 3999, LEFT_TEAM => 6002)
+trickWins( UP_TEAM => 246909, LEFT_TEAM => 269371)
+totalScores( UP_TEAM => 74230, LEFT_TEAM => 86241)
+
+
+overall results
+time taken per player
+up	(class Markov2Player)	998
+down	(class Markov2Player)	981
+left	(class PartnerHLPlayer)	1513
+right	(class PartnerHLPlayer)	1537
+gameWins( UP_TEAM => 3215, LEFT_TEAM => 6786)
+trickWins( UP_TEAM => 232695, LEFT_TEAM => 273115)
+totalScores( UP_TEAM => 68630, LEFT_TEAM => 90180)
+
+
+overall results
+time taken per player
+up	(class Markov2Player)	1095
+down	(class Markov2Player)	1081
+left	(class MarkovPlayer)	962
+right	(class MarkovPlayer)	1034
+gameWins( UP_TEAM => 6501, LEFT_TEAM => 3500)
+trickWins( UP_TEAM => 273030, LEFT_TEAM => 238175)
+totalScores( UP_TEAM => 88540, LEFT_TEAM => 71045)
+
+
+overall results
+time taken per player
+up	(class CardCountingPlayer)	1717
+down	(class CardCountingPlayer)	1634
+left	(class RandomPlayer)	667
+right	(class RandomPlayer)	643
+gameWins( UP_TEAM => 7615, LEFT_TEAM => 2386)
+trickWins( UP_TEAM => 283993, LEFT_TEAM => 214217)
+totalScores( UP_TEAM => 94358, LEFT_TEAM => 62629)
+
+
+overall results
+time taken per player
+up	(class CardCountingPlayer)	2817
+down	(class CardCountingPlayer)	2904
+left	(class LowPlayer)	890
+right	(class LowPlayer)	908
+gameWins( UP_TEAM => 9050, LEFT_TEAM => 951)
+trickWins( UP_TEAM => 286240, LEFT_TEAM => 187960)
+totalScores( UP_TEAM => 100314, LEFT_TEAM => 46352)
+
+
+overall results
+time taken per player
+up	(class CardCountingPlayer)	1062
+down	(class CardCountingPlayer)	1126
+left	(class HighPlayer)	469
+right	(class HighPlayer)	502
+gameWins( UP_TEAM => 7868, LEFT_TEAM => 2133)
+trickWins( UP_TEAM => 280486, LEFT_TEAM => 196979)
+totalScores( UP_TEAM => 95434, LEFT_TEAM => 59665)
+
+
+overall results
+time taken per player
+up	(class CardCountingPlayer)	1221
+down	(class CardCountingPlayer)	1215
+left	(class HighLowPlayer)	869
+right	(class HighLowPlayer)	845
+gameWins( UP_TEAM => 5519, LEFT_TEAM => 4482)
+trickWins( UP_TEAM => 260753, LEFT_TEAM => 248582)
+totalScores( UP_TEAM => 83466, LEFT_TEAM => 77259)
+
+
+overall results
+time taken per player
+up	(class CardCountingPlayer)	1360
+down	(class CardCountingPlayer)	1320
+left	(class PartnerHLPlayer)	1043
+right	(class PartnerHLPlayer)	1048
+gameWins( UP_TEAM => 4931, LEFT_TEAM => 5070)
+trickWins( UP_TEAM => 254396, LEFT_TEAM => 253984)
+totalScores( UP_TEAM => 79835, LEFT_TEAM => 80750)
+
+
+overall results
+time taken per player
+up	(class CardCountingPlayer)	1428
+down	(class CardCountingPlayer)	1431
+left	(class MarkovPlayer)	999
+right	(class MarkovPlayer)	937
+gameWins( UP_TEAM => 7603, LEFT_TEAM => 2398)
+trickWins( UP_TEAM => 279571, LEFT_TEAM => 215099)
+totalScores( UP_TEAM => 93918, LEFT_TEAM => 62358)
+
+
+overall results
+time taken per player
+up	(class CardCountingPlayer)	1621
+down	(class CardCountingPlayer)	1568
+left	(class Markov2Player)	933
+right	(class Markov2Player)	975
+gameWins( UP_TEAM => 6627, LEFT_TEAM => 3374)
+trickWins( UP_TEAM => 273151, LEFT_TEAM => 236744)
+totalScores( UP_TEAM => 89326, LEFT_TEAM => 70192)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1609
+down	(class HybridPlayer)	1610
+left	(class RandomPlayer)	562
+right	(class RandomPlayer)	613
+gameWins( UP_TEAM => 7765, LEFT_TEAM => 2236)
+trickWins( UP_TEAM => 283926, LEFT_TEAM => 211484)
+totalScores( UP_TEAM => 94993, LEFT_TEAM => 61292)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1645
+down	(class HybridPlayer)	1511
+left	(class LowPlayer)	695
+right	(class LowPlayer)	759
+gameWins( UP_TEAM => 9191, LEFT_TEAM => 810)
+trickWins( UP_TEAM => 285601, LEFT_TEAM => 183914)
+totalScores( UP_TEAM => 100750, LEFT_TEAM => 44980)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1389
+down	(class HybridPlayer)	1405
+left	(class HighPlayer)	613
+right	(class HighPlayer)	595
+gameWins( UP_TEAM => 7885, LEFT_TEAM => 2116)
+trickWins( UP_TEAM => 279051, LEFT_TEAM => 196344)
+totalScores( UP_TEAM => 95597, LEFT_TEAM => 59033)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1548
+down	(class HybridPlayer)	1637
+left	(class HighLowPlayer)	1139
+right	(class HighLowPlayer)	1122
+gameWins( UP_TEAM => 5651, LEFT_TEAM => 4350)
+trickWins( UP_TEAM => 261381, LEFT_TEAM => 247699)
+totalScores( UP_TEAM => 84221, LEFT_TEAM => 76735)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1665
+down	(class HybridPlayer)	1720
+left	(class PartnerHLPlayer)	1184
+right	(class PartnerHLPlayer)	1214
+gameWins( UP_TEAM => 4908, LEFT_TEAM => 5093)
+trickWins( UP_TEAM => 253650, LEFT_TEAM => 254010)
+totalScores( UP_TEAM => 80039, LEFT_TEAM => 80856)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1648
+down	(class HybridPlayer)	1725
+left	(class MarkovPlayer)	1017
+right	(class MarkovPlayer)	1025
+gameWins( UP_TEAM => 7626, LEFT_TEAM => 2375)
+trickWins( UP_TEAM => 279820, LEFT_TEAM => 213780)
+totalScores( UP_TEAM => 94273, LEFT_TEAM => 61797)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1735
+down	(class HybridPlayer)	1668
+left	(class Markov2Player)	1107
+right	(class Markov2Player)	1127
+gameWins( UP_TEAM => 6872, LEFT_TEAM => 3129)
+trickWins( UP_TEAM => 273513, LEFT_TEAM => 231352)
+totalScores( UP_TEAM => 90506, LEFT_TEAM => 68017)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	1678
+down	(class HybridPlayer)	1599
+left	(class CardCountingPlayer)	1538
+right	(class CardCountingPlayer)	1476
+gameWins( UP_TEAM => 5053, LEFT_TEAM => 4948)
+trickWins( UP_TEAM => 254632, LEFT_TEAM => 253038)
+totalScores( UP_TEAM => 80932, LEFT_TEAM => 79942)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1694
+down	(class Hybrid2Player)	1658
+left	(class RandomPlayer)	636
+right	(class RandomPlayer)	694
+gameWins( UP_TEAM => 7764, LEFT_TEAM => 2237)
+trickWins( UP_TEAM => 282805, LEFT_TEAM => 211655)
+totalScores( UP_TEAM => 94729, LEFT_TEAM => 61478)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1291
+down	(class Hybrid2Player)	1380
+left	(class LowPlayer)	563
+right	(class LowPlayer)	536
+gameWins( UP_TEAM => 9113, LEFT_TEAM => 888)
+trickWins( UP_TEAM => 285040, LEFT_TEAM => 183310)
+totalScores( UP_TEAM => 100451, LEFT_TEAM => 45177)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1386
+down	(class Hybrid2Player)	1384
+left	(class HighPlayer)	590
+right	(class HighPlayer)	629
+gameWins( UP_TEAM => 7888, LEFT_TEAM => 2113)
+trickWins( UP_TEAM => 279751, LEFT_TEAM => 197474)
+totalScores( UP_TEAM => 95359, LEFT_TEAM => 59365)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1523
+down	(class Hybrid2Player)	1579
+left	(class HighLowPlayer)	1022
+right	(class HighLowPlayer)	987
+gameWins( UP_TEAM => 5501, LEFT_TEAM => 4500)
+trickWins( UP_TEAM => 260460, LEFT_TEAM => 248690)
+totalScores( UP_TEAM => 83300, LEFT_TEAM => 77467)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1583
+down	(class Hybrid2Player)	1654
+left	(class PartnerHLPlayer)	1102
+right	(class PartnerHLPlayer)	1192
+gameWins( UP_TEAM => 4907, LEFT_TEAM => 5094)
+trickWins( UP_TEAM => 253938, LEFT_TEAM => 254392)
+totalScores( UP_TEAM => 80020, LEFT_TEAM => 80882)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1581
+down	(class Hybrid2Player)	1524
+left	(class MarkovPlayer)	892
+right	(class MarkovPlayer)	918
+gameWins( UP_TEAM => 7595, LEFT_TEAM => 2406)
+trickWins( UP_TEAM => 278489, LEFT_TEAM => 213471)
+totalScores( UP_TEAM => 93890, LEFT_TEAM => 61727)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1639
+down	(class Hybrid2Player)	1587
+left	(class Markov2Player)	1010
+right	(class Markov2Player)	1056
+gameWins( UP_TEAM => 6713, LEFT_TEAM => 3288)
+trickWins( UP_TEAM => 273888, LEFT_TEAM => 234572)
+totalScores( UP_TEAM => 89770, LEFT_TEAM => 69558)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1589
+down	(class Hybrid2Player)	1554
+left	(class CardCountingPlayer)	1369
+right	(class CardCountingPlayer)	1268
+gameWins( UP_TEAM => 5085, LEFT_TEAM => 4916)
+trickWins( UP_TEAM => 254083, LEFT_TEAM => 254462)
+totalScores( UP_TEAM => 80599, LEFT_TEAM => 80379)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1546
+down	(class Hybrid2Player)	1497
+left	(class HybridPlayer)	1488
+right	(class HybridPlayer)	1445
+gameWins( UP_TEAM => 4909, LEFT_TEAM => 5092)
+trickWins( UP_TEAM => 254848, LEFT_TEAM => 255172)
+totalScores( UP_TEAM => 80396, LEFT_TEAM => 81205)
+
+

@@ -47,14 +47,88 @@ the semi-aggressive HighLow strategy makes sense to play to try to win tricks or
 
 \subsection{Markov Decision Strategy}
 
+The next agent uses a simplified Markov decision process to determine it's hand strength compared to the strength of remaining cards.
+The agent uses the ratio of these values to guess at whether a card in his hand is strong and has a good chance of winning the trick.
+At a high level, the Markov agent keeps track of all cards that have been seen so it knows what cards have not been seen. A value is
+assigned to each card in the deck which represents the strength of that card. When it comes time to make a decision, the Markov agent
+performs:
+\begin{equation}
+    \text{action}(H, D, \tau) = \left\{ \begin{array}{lr}
+            \text{play High} & : \frac{Value(H)}{Value(U \setminus D)} \geq \tau \\
+            \text{play Low}  & : \frac{Value(H)}{Value(U \setminus D)} < \tau 
+        \end{array} \right. \nonumber
+\end{equation}
+where $H$ is the set of cards in the agent's hand, $D$ is the set of cards that have been seen and $U$ is the set of all cards. The function
+$Value(\cdot)$ gives the sum of the values of all the cards in the given set. The threshold parameter $\tau$ determines the operating point
+of the agent, as $\tau$ grows, the Markov agent becomes more and more aggressive. Essentially, when the Markov agent sees a high ratio value,
+it seems it's hand as good, so a High card is played. Otherwise, the weak is viewed as weak and a Low card is played.
+
+The specific values for $\tau$ and the cards used in our experiments are discussed in the next section.
 
 
 \subsection{Card Counting Strategy}
 
+The CardCounting agent tries to use all available information to it's advantage. This agent keeps track of whether or not each player can
+possibly have a card or not. When a card is seen, it is known that no player can possibly hold that card in their hand, so this information
+is tracked. For additional information, whenever a player does not follow the lead suit, it is known that the player cannot have any of the
+lead suit in their hand. This information is also recorded.
 
+In addition to using all available information, this agent employs a different strategy depending on how many cards are in the trick.
+It tries to use players being out of a suit (or strong in a suit) to the team advantage. At a high level, the CardCounting agent performs
+the following thought process before making a decision:
+
+\begin{itemize}[label={}]
+    \item \textbf{Leading the trick}
+        \begin{itemize}[noitemsep]
+            \item if partner is out of a suit and has trump, play Low in that suit hoping the partner can play trump
+            \item if partner is ``strong'' in a suit compared to both other players, play Low in that suit
+            \item otherwise, play High
+        \end{itemize}
+    \item \textbf{Second to play}
+        \begin{itemize}[noitemsep]
+            \item if partner can possibly win and is ``stronger'' than the other remaining player, play Low
+            \item if partner doesn't have the lead suit:
+                \begin{itemize}[noitemsep, label={}]
+                    \item if trump was led, play HighLow
+                    \item otherwise, if partner has trump, play Low
+                \end{itemize}
+            \item otherwise, play HighLow
+        \end{itemize}
+    \item \textbf{Third to play}
+        \begin{itemize}[noitemsep]
+            \item if partner is winning so far but the last player can win the trick, play HighLow
+            \item otherwise, play CoopHighLow
+        \end{itemize}
+    \item \textbf{Last to play}
+        \begin{itemize}[noitemsep]
+            \item play CoopHighLow
+        \end{itemize}
+\end{itemize}
+
+This method introduces complexity in the hopes of intelligent performance. This agent aims to maximize the number of tricks the team wins
+through trying to let the partner take as many tricks as possible; except when the partner cannot help, where this agent tries to play selfishly
+for the benefit of the team.
+
+The word ``strong'' comes up in the above explanation. The strength of a player in a suit is defined as the sum of the ranks of
+each card that player can possible have of that suit, where a high ranking means a stronger card. Then, $S_a > S_b$ implies that player $a$
+has a stronger hand than player $b$ in that suit.
 
 \subsection{Hybrid Strategy}
 
+The Hybrid strategy combines the logics of the CoopHighLow, Markov and CardCounting agents. Essentially, this agent using the same Markov decision
+process as the Markov agent, except when the agent's hand is good, the CoopHighLow strategy is played. Other times, the CardCounting strategy is played.
+This strategy was created to hopefully compensate for the passive play of the CardCounting agent with the aggressive behaviour of the CoopHighLow agent.
 
 \subsection{Monte Carlo Agent}
+
+An overly simple strategy in euchre (or any card game) would be to simulate all possible games which follow from the current game state. In incomplete
+information settings such as euchre, this is simply not computationally feasible. Instead of traversing the entire game tree, the MonteCarlo agent
+randomly traverses the game tree for a set amount of time, keeping track of how many tricks were won in each path. This is similar to the strategy
+laid out in \cite{skat}.
+
+To help reduce the search space further, the MonteCarlo agent retains the idea from the CardCounting agent to keep track of which cards every
+other player can possibly have. When it comes time to make a decision, a random possible hand is assigned to each other player and games are
+simulated until finished. This process is repeated until some amount of time has passed, then the card that led to the most number of trick
+wins is played. At the start of a game, this agent will likely perform poorly as the game tree is still enormous, while nearing the end of the
+game, the game tree shrinks to a point where it is possible to simulate all possible games which will greatly strengthen play.
 
