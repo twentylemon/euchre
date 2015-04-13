@@ -25,13 +25,13 @@ their hand. Each players' hand is only known to them. The 21st card of the deck 
 three cards remain hidden and are not used in the hand (known as the ``kitty'').
 
 Players then take turns deciding on if they wish to ``order up'' the offered trump card. If so, the dealer must pick up the offered card,
-place it in his hand and secretly discard a card. If the card is not ordered up, players take turns having the option to call a trump suit
-or pass -- but players cannot call the same trump suit as what was offered prior. Players can also choose to ``go alone'' when they call
-a trump suit, which forbids their partner from playing the hand in the hopes of scoring more points.
+place it in his hand and secretly discard a card into the kitty. If the card is not ordered up, players take turns having the option to
+call a trump suit or pass -- but players cannot call the same trump suit as what was offered prior. Players can also choose to ``go alone''
+when they call a trump suit, which forbids their partner from playing the hand in the hopes of scoring more points.
 
 Once trump is called, the main portion of the game takes place. The player left of the dealer leads the first trick. Each player adds a card
 to the trick in turn. The winner of the trick leads the next trick. This play continues for five rounds, until all players are out of cards.
-Afterwards, teams count how many trick their won, and the team that took at least 3 of the tricks scores points as:
+Afterwards, teams count how many trick their won and the team that took at least three of the tricks scores points as:
 \begin{itemize}[noitemsep, label={}]
     \item 1 point : if called trump and took 3-4 tricks
     \item 2 points: if called trump and took all 5 tricks
@@ -40,7 +40,7 @@ Afterwards, teams count how many trick their won, and the team that took at leas
 \end{itemize}
 
 This play continues, shifting who deals every hand, until a team scores 10 points. That is euchre in a nutshell -- though trump hasn't been explained.
-The general play follows the above guidelines. There are additional rules with trump and which cards you can play into a trick, which are explained below.
+The general play follows the above guidelines. There are additional rules with trump and which cards you can play into a trick, which are detailed below.
 
 When a player leads a trick, the card they play determines the lead suit of the trick. Other players must play a card of the same suit
 if possible, otherwise they can play any card from their hand. The player with the highest ranked card in the trick wins it, however those cards
@@ -74,7 +74,7 @@ into a trick, the following information is known:
 \end{itemize}
 
 This is all the information an agent has access to. Additional information can be inferred, such as when a player doesn't follow the lead suit,
-it is known that the player cannot possibly have any cards of that suit in their hand. Making the best use of all the information available
-will lead to a powerful euchre agent. In the next section, we introduce several euchre agents which make different uses of all this available
-information. Afterwards, we compare these strategies to each other to determine which is best among them. Lastly, we will discuss the
-strengths and weaknesses of particular strategies and conclude with ideas for future work.
+it is known that the player cannot possibly have any cards of that suit in their hand (assuming they are not cheating). Making the best use of
+all the information available will lead to a powerful euchre agent. In the next section, we introduce several euchre agents which make
+different uses of all this available information. Afterwards, we compare these strategies to each other to determine which is best among them.
+Lastly, we will discuss the strengths and weaknesses of particular strategies and conclude with ideas for future work.

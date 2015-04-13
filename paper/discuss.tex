@@ -23,10 +23,10 @@ The CardCounting agent shows more promise compared to other agents -- it is a st
 to it's advantage. The particular rules followed could be improved upon to create a more useful and intelligent agent.
 
 MonteCarlo obviously has the most potential for perfect play. In fact, nearing the end of the game, MonteCarlo10 should be close to perfect play,
-if not perfect already. This is because as the game is played, more and more information becomes known. As mentioned, there are about 600million
+if not perfect already. This is because as the game is played, more and more information becomes known. As mentioned, there are about 3billion
 branches in the game tree at the beginning of the game. When leading a trick with only three cards left, the tree size is reduced drastically to
-${12 \choose 3}{9 \choose 3}{6 \choose 3} \approx 370,000$. This tree size becomes easily traversable, all games can be played out before
-making a decision.
+$3 {12 \choose 3}{9 \choose 3}{6 \choose 3} \approx 10^6$. This tree size becomes easily traversable, all games can be played out before
+making a decision if given a reasonable amount of time.
 
 
 \subsection{Weaknesses of Particular Agents}
@@ -40,11 +40,12 @@ the rules, CoopHighLow will lead with it's highest card. This means leading trum
 For example, CoopHighLow will happily lead it's $9\spadesuit$ as it's highest card, but this is the lowest trump -- this type of play is essentially
 asking other plays to freely take his trump away.
 
-It's for this reason CardCounting as a high potential. It can avoid those type of mistakes using it's more complex rule set. The proposed rule set
-however, seems to not be perfect. Additional rules may need to be added, or some rules may require changes. Perhaps the largest flaw with the
+It is for this reason CardCounting as a high potential. It can avoid those type of mistakes using it's more complex rule set. The proposed rule set
+seems to not be perfect however. Additional rules may need to be added or some rules may require changes. Perhaps the largest flaw with the
 CardCounting agent is that it fails to ever check if opponents are missing a suit. For example, when leading CardCounting checks if their partner
 is out of a suit and tries to lead that suit hoping the partner can trump it -- but perhaps this rule should not be followed if the opponents are also
-out of the suit and are stronger in trump than my partner. A more complex rule set may lead to a more well rounded agent.
+out of the suit and are stronger in trump than my partner. A more complex rule set may lead to a more well rounded agent. Additionally, perhaps
+a more rigorous definition of ``strong'' would be required for this agent to perform better.
 
 The Markov agents, and by extension the Hybrid agents suffer from one major flaw: they are parametrized. The values of each card and for $\tau$
 need to be assigned. In our experiments, somewhat natural values were assigned, however a natural value may not lead to the best performing agent.

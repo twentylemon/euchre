@@ -9,8 +9,12 @@ weaknesses that the CoopHighLow strategy has and ways to improve upon them.
 
 Some future work would be to create a more complete rule set for the CardCoutning agent to improve it. This would in turn improve
 the Hybrid agent. Further improvements can be made to Hybrid, the parameters can be learned instead of arbitrarily assigned, perhaps
-leading to a much better agent overall. Perhaps the learned values can be used to make an intelligent decision when calling trump.
-Additionally, a more complex Markov decision process can be used instead of a simple threshold.
+leading to a much better agent overall. Perhaps the learned values can be used to make an intelligent decision when calculating a suit
+strength, and by extension, when calling trump. Additionally, a more complex Markov decision process can be used instead of a simple threshold.
+
+Using a simple rule set to call trump could also be used, then these strategies compared to each other. This may lead to more
+fair games where no team is at a disadvantage for being forced to call trump $\spadesuit$. As discussed however, given enough
+games the disadvantage should average out across both teams.
 
 In this project, several trick taking euchre strategies are given. A simple rule base consisting of Random, High and Low build
 up into more complex and more powerful agents. Counter intuitively, a relatively simple strategy proves to be the best trick taker

@@ -17,6 +17,10 @@ decision. These decisions were slower, and the times will be discussed later.
 A small note about the following charts. Each show the performance of other agents versus the target agent. A value of 0.25 in Games Won
 for example means the other agent won 25\% of the games against the target agent, so the target agent performed much better than the other one.
 
+[Apologies if this gets printed in black and white. The topmost label is the leftmost column in each of the charts below, then as you
+go down in the labels, move to the right in the columns. Better would be to view the full colour pdf version,
+which can be accessed at https://github.com/twentylemon/euchre/blob/master/paper/euchre.pdf]
+
 
 \subsection{Simple Strategies}
 
@@ -24,8 +28,7 @@ The simple strategies were compared to each other. Figures \ref{fig:results_low}
 As to be expected, Low did poorly overall. Low managed to still win some games however, since Low essentially keeps it's highest cards for the
 end of the game. When they get a lucky deal, they can manage to scrape together enough tricks to win a hand. Generally though, playing Low is
 worse than playing Random. On the other hand, playing High proved to be slightly better than playing Random, though not by very much.
-Also not surprising is that High beats Low, likely due to winning early tricks. Each of the simple agents perform very quickly, each performing
-their decisions in very little time.
+Also not surprising is that High beats Low, likely due to winning early tricks.
 
 \begin{figure}[ht]
     \begin{subfigure}[b]{0.5\textwidth}
@@ -79,7 +82,7 @@ is different. The first agent uses the number of tricks a card wins out of all p
 each card. This proved to perform strangely, so an additional value base was formed. Markov2 uses a very similar value base; the value of
 a card is the number of tricks the card can win which derive from the current trick and given the trump suit. This different value
 base lends itself more closely to the actual values of the cards. For example, an ace that isn't the lead suit or trump cannot win any tricks,
-so it should be considered a powerful card. When leading a trick, Markov2 behaves identically to Markov. Both Markov agents used a threshold
+so it should not be considered a powerful card. When leading a trick, Markov2 behaves identically to Markov. Both Markov agents used a threshold
 $\tau=0.25$ due to there being 4 players in the game.
 
 Something worth mentioning, these Markov strategies precomputed all the values of the cards and stored them for quick lookup when needed during
@@ -118,8 +121,9 @@ the Markov agents on par with the simple strategies.
 \subsection{Card Counting Strategy}
 
 The CardCounting was modelling off of how I personally play euchre, for the most part. Human players tend to keep track of what suit
-players hold and play accordingly. The CardCounting, similar to the HighLow agent, performs very well against the simple strategies.
-The results are promising, as the agent achieves very high average scores in each game.
+players hold and play accordingly, and play differently depending on how many cards are in the trick. The CardCounting, similar to the
+HighLow agent, performs very well against the simple strategies. The results are promising, as the agent achieves very high average
+scores in each game.
 
 Surprisingly, the more complex strategy modelled after more human play performs not as well as expected against the relatively simple
 CoopHighLow agent. CardCounting was able to beat the HighLow agent. However, against the CoopHighLow agent, the CardCounting
@@ -145,13 +149,13 @@ strategy was played, and CardCounting otherwise. The Hybrid agent uses the same 
 of Markov2 over Markov, a Hybrid2 agent was created as well in hopes of seeing the same type of improvement. Both Hybrid agents used
 a threshold $\tau=0.25$ again, same as with the Markov agents.
 
-Figure \ref{fig:results_hybrid} shows the results of the Hybrid agent against the other agents. Again, the wrath is the CoopHighLow agent
+Figure \ref{fig:results_hybrid} shows the results of the Hybrid agent against the other agents. Again, the wrath of the CoopHighLow agent
 is seen, the Hybrid agent essentially equivalent to the CoopHighLow agent. Hybrid, however, does prove a slight improvement over the CardCounting
 agent.
 
 Figure \ref{fig:results_hybrid} shows the results of the Hybrid2 agent against the other agents. After seeing the improvement of the Markov2
-agent over the Markov agent, it was hoped that Hybrid2 would see a similar improvement. Strangely, Hybrid2 tended to perform slightly worse than
-Hybrid overall, losing to Hybrid in addition to losing to the CoopHighLow agent.
+agent over the Markov agent, it was hoped that Hybrid2 would see a similar improvement over Hybrid. Strangely, Hybrid2 tended to perform slightly
+worse than Hybrid overall, losing to Hybrid in addition to losing to the CoopHighLow agent.
 
 \begin{figure}[ht]
     \begin{subfigure}[b]{0.5\textwidth}
@@ -181,7 +185,7 @@ only played 5. More games would be required for a stronger conclusion, however d
 Figure \ref{fig:results_montecarlo} shows the results of the two MonteCarlo agents against CoopHighLow. MonteCarlo10 notably does poorly. This
 is likely due to not being able to search enough of the game tree before being forced to make a decision. At the beginning of the game, only
 a few hundred runs were able to complete. Not enough information could be gathered in order to make a good decision, as there are
-${18 \choose 5}{13 \choose 5}{8 \choose 5} \approx 600 \text{million}$ possible branches to traverse at the start of the game -- not including
+$5 {18 \choose 5}{13 \choose 5}{8 \choose 5} \approx 3 \cdot 10^9$ possible branches to traverse at the start of the game -- not including
 playing out each branch.
 
 Given much more time, the MonteCarlo60 agent was able to beat the CoopHighLow agent. However, given a minute per decision makes for a very slow

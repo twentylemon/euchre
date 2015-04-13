@@ -6,7 +6,8 @@ Generally, this strategy works well, but it ignores the team aspect of the game.
 making various use of the information available in the game. All agents know the basic rules of the game, as a useful agent could
 not be constructed without this knowledge. Additionally, no agent can cheat. When we say an agent chooses to play a card with some
 property, it is assumed that the card is chosen from the set of legally playable cards. These strategies range from simple to selfish to
-complex. These strategies aimed to produce a very quick but good decision when playing a card from their hand into a trick.
+complex. These strategies aimed to produce a very quick (near instant in most cases) but good decision when playing a card from
+their hand into a trick.
 
 
 \subsection{Simple Strategies}
@@ -20,7 +21,7 @@ The agents High and Low serve as an excellent foundation for more complex agents
 of tricks your team earns. Playing High will give you the best possible chance of winning a trick, while Low allows you to throw away
 your worst card if you resign a trick. Playing a ``Middle'' strategy would not help compared to High and Low as it seems to give you
 the worst traits of both the other strategies. With Middle, you could have an increased chance of taking a trick, but if you lost the trick,
-you've lost a decent card which could have been used later to win a different trick. Do to this, no Middle agent was explored.
+you've lost a decent card which could have been used later to win a different trick. Due to this, no Middle agent was explored.
 
 
 \subsection{More Complex Strategies}
@@ -49,7 +50,7 @@ the semi-aggressive HighLow strategy makes sense to play to try to win tricks or
 
 The next agent uses a simplified Markov decision process to determine it's hand strength compared to the strength of remaining cards.
 The agent uses the ratio of these values to guess at whether a card in his hand is strong and has a good chance of winning the trick.
-At a high level, the Markov agent keeps track of all cards that have been seen so it knows what cards have not been seen. A value is
+At a high level, the Markov agent keeps track of all cards that have been seen and it knows what cards have not been seen. A value is
 assigned to each card in the deck which represents the strength of that card. When it comes time to make a decision, the Markov agent
 performs:
 \begin{equation}
@@ -60,8 +61,8 @@ performs:
 \end{equation}
 where $H$ is the set of cards in the agent's hand, $D$ is the set of cards that have been seen and $U$ is the set of all cards. The function
 $Value(\cdot)$ gives the sum of the values of all the cards in the given set. The threshold parameter $\tau$ determines the operating point
-of the agent, as $\tau$ grows, the Markov agent becomes more and more aggressive. Essentially, when the Markov agent sees a high ratio value,
-it seems it's hand as good, so a High card is played. Otherwise, the weak is viewed as weak and a Low card is played.
+of the agent. As $\tau$ grows, the Markov agent becomes more aggressive. Essentially, when the Markov agent sees a high ratio value,
+it deems it's hand as good and a High card is played. Otherwise, a lwo values is viewed as weak and a Low card is played.
 
 The specific values for $\tau$ and the cards used in our experiments are discussed in the next section.
 
@@ -74,7 +75,7 @@ is tracked. For additional information, whenever a player does not follow the le
 lead suit in their hand. This information is also recorded.
 
 In addition to using all available information, this agent employs a different strategy depending on how many cards are in the trick.
-It tries to use players being out of a suit (or strong in a suit) to the team advantage. At a high level, the CardCounting agent performs
+It tries to use players being out of a suit or strong in a suit to the team advantage. At a high level, the CardCounting agent performs
 the following thought process before making a decision:
 
 \begin{itemize}[label={}]
