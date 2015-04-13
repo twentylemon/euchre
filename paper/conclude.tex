@@ -1,3 +1,21 @@
 
 \section{Conclusions and Future Work}
 
+This project aimed to create an intelligent euchre playing agent, but found that relatively simple strategies performed
+just as well if not better than more complex ones. This leads to the conclusion that euchre is mostly not about trick taking,
+but about trump calling. Unfortunately, none of the strategies given are able to call a meaningful trump suit. This is not to say
+that CoopHighLow, the best performing agent overall, is an optimal trick taking euchre strategy. On the contrary, we have given some
+weaknesses that the CoopHighLow strategy has and ways to improve upon them.
+
+Some future work would be to create a more complete rule set for the CardCoutning agent to improve it. This would in turn improve
+the Hybrid agent. Further improvements can be made to Hybrid, the parameters can be learned instead of arbitrarily assigned, perhaps
+leading to a much better agent overall. Perhaps the learned values can be used to make an intelligent decision when calling trump.
+Additionally, a more complex Markov decision process can be used instead of a simple threshold.
+
+In this project, several trick taking euchre strategies are given. A simple rule base consisting of Random, High and Low build
+up into more complex and more powerful agents. Counter intuitively, a relatively simple strategy proves to be the best trick taker
+out of those studied. Though it is not a perfect strategy, it can serve as an excellent foundation for future trick taking strategies.
+This result leads to the conclusion that trick taking is euchre is not as difficult as the decision to call trump, when very little
+about the state of the game is known.
+
+All of the source code for this project is freely available at\\https://github.com/twentylemon/euchre

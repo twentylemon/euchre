@@ -1,13 +1,54 @@
 
 \section{Discussion}
 
+Euchre is a game where the goal is to maximize the number of tricks your team takes. With this in mind, it is not
+totally surprising that such a simple strategy such as CoopHighLow performs so well. This strategy aims, in a very simple way,
+to maximize the number of tricks the team takes. When it is possible to win a trick, try as much as possible to win, otherwise
+playing the lowest card saves your better cards in hopes they can win later tricks. The CardCounting and Hybrid strategies also
+perform very well in this regard, but do not prove to be any better than the simplistic CoopHighLow. This section discusses
+strengths and weaknesses of particular agents, and what could be done better in the future.
+
 
 \subsection{Strengths of Particular Agents}
+
+First of all, praise needs to be given to an underrated agent: Low. Low by itself performed worse than every other agent, however
+this agent is a key ingredient when creating powerful agents. The Low strategy can be summed up as ``I'll save this for later!''
+This isn't necessarily a strength of the Low agent, but it's value should not be taken for granted.
+
+It's the passive value of Low combined with the aggressive value of High, along with some team play, that makes CoopHighLow such
+a good strategy. As mentioned, CoopHighLow strives to win tricks were it can as long as it's not hindering the team. This idea
+can prove a great foundation for any euchre playing agent.
+
+The CardCounting agent shows more promise compared to other agents -- it is a strategy that actually uses all available information
+to it's advantage. The particular rules followed could be improved upon to create a more useful and intelligent agent.
+
+MonteCarlo obviously has the most potential for perfect play. In fact, nearing the end of the game, MonteCarlo10 should be close to perfect play,
+if not perfect already. This is because as the game is played, more and more information becomes known. As mentioned, there are about 600million
+branches in the game tree at the beginning of the game. When leading a trick with only three cards left, the tree size is reduced drastically to
+${12 \choose 3}{9 \choose 3}{6 \choose 3} \approx 370,000$. This tree size becomes easily traversable, all games can be played out before
+making a decision.
 
 
 \subsection{Weaknesses of Particular Agents}
 
-cardcounting fails to check for enemies missing suits
+For the praise of Low, there's also an inherent flaw. When playing Low, you save good cards for later but you are unlikely to lead a trick.
+If you do not lead a trick, high non-trump suit cards can potentially be worthless. This is why Low by itself performs so poorly. Pairing
+Low with High removes the flaws of Low.
 
-montecarlo sucks at beginning which leads to a bad ending
+CoopHighLow, even being the best agent overall, plays very poorly sometimes. Particularly, it is very when leading a trick. Blindly following
+the rules, CoopHighLow will lead with it's highest card. This means leading trump frequently, which most human players will tell you is a bad play.
+For example, CoopHighLow will happily lead it's $9\spadesuit$ as it's highest card, but this is the lowest trump -- this type of play is essentially
+asking other plays to freely take his trump away.
+
+It's for this reason CardCounting as a high potential. It can avoid those type of mistakes using it's more complex rule set. The proposed rule set
+however, seems to not be perfect. Additional rules may need to be added, or some rules may require changes. Perhaps the largest flaw with the
+CardCounting agent is that it fails to ever check if opponents are missing a suit. For example, when leading CardCounting checks if their partner
+is out of a suit and tries to lead that suit hoping the partner can trump it -- but perhaps this rule should not be followed if the opponents are also
+out of the suit and are stronger in trump than my partner. A more complex rule set may lead to a more well rounded agent.
+
+The Markov agents, and by extension the Hybrid agents suffer from one major flaw: they are parametrized. The values of each card and for $\tau$
+need to be assigned. In our experiments, somewhat natural values were assigned, however a natural value may not lead to the best performing agent.
+
+The MonteCarlo agents, as discussed previously, cannot search enough of the game tree in the early game. This may lead to poor decisions early
+which snowball into an unwinnable late game.
 
