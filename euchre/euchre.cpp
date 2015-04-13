@@ -40,7 +40,8 @@ void play(Player* up, Player* down, Player* left, Player* right) {
     game.setPlayers(up, down, left, right);
 #ifdef MONTE_CARLO
     game.setDisplay(true);
-    game.play(31);
+    //game.play(31);
+    game.play(5);
 #else
     game.play(NUM_GAMES);
 #endif
@@ -130,10 +131,6 @@ int main(int argc, char** argv) {
     game.displayStats();
     std::cout << "took " << GetTickCount64() - start << "ms" << std::endl;
     */
-    play(new CardCountingPlayer("up"), new CardCountingPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
-    play(new HybridPlayer("up"), new HybridPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
-    play(new Hybrid2Player("up"), new Hybrid2Player("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
-
 #ifdef MONTE_CARLO
     play(new MonteCarloPlayer("up"), new MonteCarloPlayer("down"), new PartnerHLPlayer("left"), new PartnerHLPlayer("right"));
 #else

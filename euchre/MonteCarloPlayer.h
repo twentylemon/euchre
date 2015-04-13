@@ -19,7 +19,7 @@ public:
     MonteCarloPlayer(std::string name);
     MonteCarloPlayer(int timeout, std::string name);
 
-    static const int DEFAULT_TIMEOUT = 10000;
+    static const int DEFAULT_TIMEOUT = 60000;
 
     std::vector<Hand> getPossibleHands(int playerIDX, int numCards) const;
     void setTimeout(int timeout);

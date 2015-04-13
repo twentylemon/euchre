@@ -1,0 +1,77 @@
+overall results
+time taken per player
+up	(class HighPlayer)	613
+down	(class LowPlayer)	642
+left	(class RandomPlayer)	634
+right	(class RandomPlayer)	541
+gameWins( UP_TEAM => 5654, LEFT_TEAM => 4347)
+trickWins( UP_TEAM => 267365, LEFT_TEAM => 249600)
+totalScores( UP_TEAM => 84774, LEFT_TEAM => 77090)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	2369
+down	(class PartnerHLPlayer)	1894
+left	(class PartnerHLPlayer)	1788
+right	(class PartnerHLPlayer)	2149
+gameWins( UP_TEAM => 4940, LEFT_TEAM => 5061)
+trickWins( UP_TEAM => 254376, LEFT_TEAM => 255299)
+totalScores( UP_TEAM => 80360, LEFT_TEAM => 81034)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	1732
+down	(class PartnerHLPlayer)	1133
+left	(class PartnerHLPlayer)	1268
+right	(class PartnerHLPlayer)	1353
+gameWins( UP_TEAM => 4996, LEFT_TEAM => 5005)
+trickWins( UP_TEAM => 255409, LEFT_TEAM => 254276)
+totalScores( UP_TEAM => 80714, LEFT_TEAM => 80515)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	5120
+down	(class PartnerHLPlayer)	4330
+left	(class HybridPlayer)	5333
+right	(class HybridPlayer)	4936
+gameWins( UP_TEAM => 5050, LEFT_TEAM => 4951)
+trickWins( UP_TEAM => 254529, LEFT_TEAM => 253631)
+totalScores( UP_TEAM => 80839, LEFT_TEAM => 80320)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	5277
+down	(class PartnerHLPlayer)	4182
+left	(class HybridPlayer)	5044
+right	(class HybridPlayer)	5447
+gameWins( UP_TEAM => 4972, LEFT_TEAM => 5029)
+trickWins( UP_TEAM => 253556, LEFT_TEAM => 254104)
+totalScores( UP_TEAM => 80253, LEFT_TEAM => 80650)
+
+
+overall results
+time taken per player
+up	(class HybridPlayer)	4704
+down	(class PartnerHLPlayer)	4283
+left	(class Hybrid2Player)	5173
+right	(class Hybrid2Player)	4549
+gameWins( UP_TEAM => 5085, LEFT_TEAM => 4916)
+trickWins( UP_TEAM => 253473, LEFT_TEAM => 252932)
+totalScores( UP_TEAM => 80557, LEFT_TEAM => 79992)
+
+
+overall results
+time taken per player
+up	(class Hybrid2Player)	5150
+down	(class PartnerHLPlayer)	3944
+left	(class Hybrid2Player)	5191
+right	(class Hybrid2Player)	4734
+gameWins( UP_TEAM => 5021, LEFT_TEAM => 4980)
+trickWins( UP_TEAM => 254877, LEFT_TEAM => 253603)
+totalScores( UP_TEAM => 80871, LEFT_TEAM => 80123)
+
+

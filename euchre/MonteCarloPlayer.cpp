@@ -154,7 +154,6 @@ Card MonteCarloPlayer::playOutGame(const Trick& actualTrick) {
         runs++;
         //do about timeout/2000=30default iterations per run
         concurrency::parallel_for(0, getTimeout() / 2000, [&](int useless) {
-
     std::array<Hand, Trick::NUM_CARDS> hands = makeHands();
 
     //finish this trick first

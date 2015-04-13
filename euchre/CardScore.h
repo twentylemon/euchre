@@ -60,6 +60,5 @@ private:
     static std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> rankings;
     static std::array<std::array<int, Card::MAX_CARD>, Card::NUM_SUITS> trickWins;
     static std::array<std::array<int, Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD*Card::MAX_CARD>, Card::NUM_SUITS> partialWins;
-    
     CardScore();
 };

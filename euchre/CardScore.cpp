@@ -263,8 +263,10 @@ const Card& CardScore::getWorstWinCard(std::vector<Card> cards, const Trick& tri
  */
 void CardScore::init() {
     rankings = calcRankings();
+#ifndef MONTE_CARLO
     trickWins = calcTrickWins();
     partialWins = calcPartialWins();
+#endif
 }
 
 
