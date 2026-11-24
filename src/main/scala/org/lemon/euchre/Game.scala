@@ -3,9 +3,12 @@ package org.lemon.euchre
 import scala.annotation.tailrec
 import scala.util.Random
 
-/** @param round 1 if the up card's suit was ordered up, 2 if trump was called after it was turned down */
+/** @param dealt each seat's hand as dealt, before the dealer picks up
+  * @param round 1 if the up card's suit was ordered up, 2 if trump was called after it was turned down
+  */
 final case class HandResult(
     dealer: Seat,
+    dealt: Map[Seat, Cards],
     upCard: Card,
     caller: Seat,
     call: Call,
@@ -14,7 +17,14 @@ final case class HandResult(
     scoringTeam: Team,
     points: Int,
     playNanos: Map[Seat, Long],
-)
+):
+  /** @return the caller's seat counting from the dealer's left, so the first bidder is 1 and the dealer is 4 */
+  def callerPosition: Int = Math.floorMod(caller.ordinal - dealer.ordinal - 1, Seat.values.size) + 1
+  def stuck: Boolean = round == 2 && caller == dealer
+  def callerTricks: Int = tricks(caller.team)
+
+  /** @return the points the calling team won, negative if they were euchred */
+  def callerPoints: Int = if scoringTeam == caller.team then points else -points
 
 final case class GameResult(hands: Seq[HandResult], score: Map[Team, Int]):
   def winner: Team = score.maxBy(_._2)._1
@@ -122,4 +132,4 @@ final class Game(strategies: Map[Seat, Strategy], rng: Random):
     val callerPoints = points(tricks(callingTeam), call.alone)
     val (scoringTeam, scored) =
       if callerPoints > 0 then (callingTeam, callerPoints) else (callingTeam.other, euchrePoints)
-    HandResult(dealer, upCard, caller, call, round, tricks, scoringTeam, scored, playNanos.toMap)
+    HandResult(dealer, dealt, upCard, caller, call, round, tricks, scoringTeam, scored, playNanos.toMap)

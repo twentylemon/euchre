@@ -27,18 +27,7 @@ final case class MatchupResult(matchup: Matchup, games: Seq[GameResult]):
 object Tournament:
   /** The matchups from the paper, each strategy against every simpler one. */
   def matchups(games: Int, monteCarloGames: Int): Seq[Matchup] =
-    val ladder = Seq(
-      RandomStrategy,
-      Low,
-      High,
-      HighLow,
-      PartnerHighLow,
-      Markov(),
-      Markov(partial = true),
-      CardCounting,
-      Hybrid(),
-      Hybrid(partial = true),
-    )
+    val ladder = Strategies.all
     val simple = Seq(
       Matchup(RandomStrategy, Low, games),
       Matchup(RandomStrategy, High, games),

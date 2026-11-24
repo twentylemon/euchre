@@ -62,20 +62,7 @@ object Generators:
   def spyHand(player: Player, seed: Long, dealer: Seat): (HandResult, Seq[PlayView]) =
     val views = mutable.Buffer.empty[PlayView]
     val spy = Spy(player, views)
-    val result = Game(Seat.values.map(_ -> spy).toMap, Random(seed)).playHand(dealer, spyDeck(seed))
+    val result = Game(Seat.values.map(_ -> spy).toMap, Random(seed)).playHand(dealer, Random(~seed).shuffle(Card.all))
     (result, views.toSeq)
 
-  def spyDeck(seed: Long): Seq[Card] = Random(~seed).shuffle(Card.all)
-
-  val allPlayers: Seq[Player] = Seq(
-    RandomStrategy,
-    Low,
-    High,
-    HighLow,
-    PartnerHighLow,
-    Markov(),
-    Markov(partial = true),
-    CardCounting,
-    Hybrid(),
-    Hybrid(partial = true),
-  )
+  val allPlayers: Seq[Player] = Strategies.all
