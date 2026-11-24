@@ -39,15 +39,32 @@ class GameTest extends UnitTest:
     check(forAll(hands)((result, _) => (result.call.trump == result.upCard.suit) == (result.round == 1)))
   }
 
+  test("dealt holds four disjoint hands of five, without the up card") {
+    check(forAll(hands) { (result, _) =>
+      val dealt = result.dealt.values
+      dealt.size == 4 && dealt.forall(_.size == Game.handSize) &&
+      dealt.reduce(_ ++ _).size == 4 * Game.handSize && !dealt.exists(_.contains(result.upCard))
+    })
+  }
+
   test("the dealer picks up the up card and discards, unless sitting out") {
-    check(forAll(seeds) { (seed, dealer) =>
-      val (result, views) = spyHand(RandomStrategy, seed, dealer)
-      val dealt = Cards.from(spyDeck(seed).slice(15, 20))
-      val pickedUp = result.round == 1 && !(result.call.alone && result.caller == dealer.partner)
-      views.find(_.seat == dealer).map(_.hand).forall(hand =>
+    check(forAll(hands) { (result, views) =>
+      val dealt = result.dealt(result.dealer)
+      val pickedUp = result.round == 1 && !(result.call.alone && result.caller == result.dealer.partner)
+      views.find(_.seat == result.dealer).map(_.hand).forall(hand =>
         if pickedUp then hand.size == 5 && hand.subsetOf(dealt + result.upCard) else hand == dealt
       )
     })
+  }
+
+  test("callerPosition counts seats from the dealer's left") {
+    check(forAll(hands, Gen.choose(1, 4)) { case ((result, _), n) =>
+      result.copy(caller = result.dealer.offset(n)).callerPosition == n
+    })
+  }
+
+  test("the calling team's points are positive exactly when they take three tricks") {
+    check(forAll(hands)((result, _) => (result.callerPoints > 0) == (result.callerTricks >= 3)))
   }
 
   test("the calling team scores by tricks taken, or is euchred") {
