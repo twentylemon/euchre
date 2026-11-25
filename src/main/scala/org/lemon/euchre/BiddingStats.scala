@@ -39,7 +39,7 @@ object BiddingStats:
     val dealt = order.flatMap(hand.dealt(_).toSeq) :+ hand.upCard
     dealt ++ Card.all.filterNot(dealt.contains)
 
-  /** Replays a stuck hand with the dealer naming each legal suit, everyone playing `player`.
+  /** Replays a stuck hand with the dealer naming each legal suit without going alone, everyone playing `player`.
     *
     * @return the calling team's points for each suit
     */
@@ -104,20 +104,24 @@ object BiddingStats:
     Seq(
       row("stuck dealer names", "points per call"),
       row("---", "---:"),
-      row("the first legal suit, as played", points(summary.asPlayed)),
-      row("the first legal suit, replayed", points(summary.replayed)),
+      row("the named suit, as played", points(summary.asPlayed)),
+      row("the named suit, replayed without going alone", points(summary.replayed)),
       row("an average legal suit", points(summary.average)),
       row("the best legal suit in hindsight", points(summary.best)),
     ).mkString("\n")
 
-/** Reports on every call made with `player`'s bidding and play at all four seats:
-  * `runBiddingStats [games=10000] [seed=1] [player=PartnerHighLow]`.
+/** Reports on every call made with `player`'s trick play at all four seats, bidding as the stuck dealer or with
+  * `RuleBidder.tuned`: `runBiddingStats [games=10000] [seed=1] [player=PartnerHighLow] [bidder=stuck|rule]`.
   */
 @main
 def runBiddingStats(args: String*): Unit =
   val games = args.lift(0).fold(10000)(_.toInt)
   val seed = args.lift(1).fold(1L)(_.toLong)
-  val player = Strategies.named(args.lift(2).getOrElse(PartnerHighLow.name))
+  val trickPlayer = Strategies.named(args.lift(2).getOrElse(PartnerHighLow.name))
+  val player = args.lift(3).getOrElse("stuck") match
+    case "stuck" => trickPlayer
+    case "rule" => Composite(s"${trickPlayer.name} with RuleBidder", RuleBidder.tuned, trickPlayer)
+    case other => throw IllegalArgumentException(s"unknown bidder $other, expected stuck or rule")
   val game = Game(Seat.values.map(_ -> player).toMap, Random(seed))
   val hands = Seq.fill(games)(game.playGame()).flatMap(_.hands)
   println(s"${player.name} at every seat, $games games, seed $seed\n")

@@ -133,6 +133,19 @@ class BiddingStatsTest extends UnitTest:
     )
   }
 
+  test("a stuck hand that didn't go alone replays as played with rule bidding") {
+    val strategy = Composite("rules", RuleBidder.tuned, PartnerHighLow)
+    check(
+      forAll(arbitrary[Long]) { seed =>
+        val hands = Game(Seat.values.map(_ -> strategy).toMap, Random(seed)).playGame().hands
+        hands.filter(hand => hand.stuck && !hand.call.alone).forall(hand =>
+          BiddingStats.stuckAlternatives(hand, strategy)(hand.call.trump) == hand.callerPoints
+        )
+      },
+      minSuccessful(100)
+    )
+  }
+
   test("named finds every strategy by name") {
     (Strategies.all :+ MonteCarlo()).foreach(strategy => Strategies.named(strategy.name) shouldBe strategy)
     an[IllegalArgumentException] should be thrownBy Strategies.named("Clairvoyant")

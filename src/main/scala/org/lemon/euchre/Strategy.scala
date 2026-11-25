@@ -6,6 +6,7 @@ final case class Call(trump: Suit, alone: Boolean = false)
 
 final case class BidView(seat: Seat, dealer: Seat, hand: Cards, upCard: Card, rng: Random):
   def isDealer: Boolean = seat == dealer
+  def position: Int = seat.position(dealer)
 
 final case class PlayView(
     seat: Seat,
@@ -41,7 +42,17 @@ trait Player:
 trait Strategy extends Bidder, Player:
   def name: String
 
+/** Bids with `bidder` and plays tricks with `player`. */
+final case class Composite(name: String, bidder: Bidder, player: Player) extends Strategy:
+  def orderUp(view: BidView): Option[Call] = bidder.orderUp(view)
+  def callTrump(view: BidView): Option[Call] = bidder.callTrump(view)
+  def stickTrump(view: BidView): Call = bidder.stickTrump(view)
+  def discard(view: BidView, trump: Suit): Card = bidder.discard(view, trump)
+  def play(view: PlayView): Card = player.play(view)
+
 /** Bidding as in the paper: everyone passes, and the stuck dealer names the first legal suit. */
+object StuckDealer extends StuckDealer
+
 trait StuckDealer extends Bidder:
   def orderUp(view: BidView): Option[Call] = None
   def callTrump(view: BidView): Option[Call] = None

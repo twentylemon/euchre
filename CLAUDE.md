@@ -9,10 +9,12 @@ Euchre strategy simulations in Scala 3 (sbt 2). The 2015 paper is in `paper/` an
   - `Suit`/`Rank`, `Seat`/`Team`, `Trick`
   - `Ranking`, the card scores and the trick-win tables
   - `Knowledge`, what a seat can infer from public play
-  - `Strategy`, which is a `Bidder` and a `Player`. `StuckDealer` is the paper's bidding.
+  - `Strategy`, which is a `Bidder` and a `Player`. `StuckDealer` is the paper's bidding. `Composite` pairs any bidder with any trick player.
   - `Game`, the engine, which validates every call and play
   - `Tournament`, the paper's matchups
-- `strategies/` holds the paper's agents. Bidding is mixed in (`extends Strategy, StuckDealer`) and trick play composes other strategies (`PartnerHighLow.play(view)`), not inheritance.
+  - `BiddingStats`, which reports on how calls turn out and replays stuck deals with each legal suit
+  - `RuleSweep`, self-play tuning of `RuleBidder`'s thresholds
+- `strategies/` holds the paper's agents, plus `RuleBidder` (rule-based bidding on `HandStrength`). `Strategies.all` lists the paper's agents. Bidding is mixed in (`extends Strategy, StuckDealer`) and trick play composes other strategies (`PartnerHighLow.play(view)`), not inheritance.
 - Tests in `src/test/scala/...` extend `UnitTest` (`AnyFunSuite` with `Matchers` and `Checkers`, 1000 successful property cases). `Generators` has the `Arbitrary` instances, `parse("A♥")`, and `spyHand`, which plays a hand with random bidding and records every `PlayView`.
 
 ## Commands
@@ -21,7 +23,10 @@ Euchre strategy simulations in Scala 3 (sbt 2). The 2015 paper is in `paper/` an
 - `sbt a b` only runs `a`, so write `sbt "a; b"`.
 - Format: `sbt "scalafmtAll; scalafmtSbt"`. CI runs `scalafmtCheckAll; scalafmtSbtCheck`.
 - Tournament: `sbt "runMain org.lemon.euchre.runTournament 10001 1 5"`. MonteCarlo takes about 30 s a game.
+- Bidding report: `sbt "runMain org.lemon.euchre.runBiddingStats 10000 1 PartnerHighLow rule"` (the last argument is `stuck` or `rule`). Rule bidding against the stuck dealer: `runRuleCallers 10000 1`.
+- Sweep: `runRuleSweep 4000 2 1 0.01` takes over an hour. Run long jobs outside sbt, with `sbt package` and then `java -cp <the coursier jars>:<the package jar> org.lemon.euchre.runRuleSweep ...`, so the sbt server stays free.
 - A running `runMain` holds the sbt server, so other sbt commands queue behind it.
+- Keep long-running output out of `/tmp`, which gets purged.
 
 ## Workflow
 

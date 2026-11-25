@@ -18,8 +18,7 @@ final case class HandResult(
     points: Int,
     playNanos: Map[Seat, Long],
 ):
-  /** @return the caller's seat counting from the dealer's left, so the first bidder is 1 and the dealer is 4 */
-  def callerPosition: Int = Math.floorMod(caller.ordinal - dealer.ordinal - 1, Seat.values.size) + 1
+  def callerPosition: Int = caller.position(dealer)
   def stuck: Boolean = round == 2 && caller == dealer
   def callerTricks: Int = tricks(caller.team)
 
