@@ -5,10 +5,12 @@ import org.lemon.euchre.strategies.*
 import scala.collection.parallel.CollectionConverters.*
 
 object RuleSweep:
-  /** A starting point from the bidding baseline, where three trumps (about 1.9 strength) were worth calling. */
+  /** A starting point from the bidding baseline, where three trumps (about 1.9 strength) were worth calling. The
+    * dealer's partner can only order up alone, so they start at the alone threshold.
+    */
   val initial: RuleBidder = RuleBidder(
     HandStrength(offAce = 0.5, void = 0.2),
-    orderUp = Seq(2.25, 1.75, 2.25, 2.0),
+    orderUp = Seq(2.25, 4.0, 2.25, 2.0),
     call = Seq(2.0, 2.0, 2.0),
     next = 0.25,
     alone = 4.0,
@@ -23,15 +25,17 @@ object RuleSweep:
 
   private def steps(from: Double, to: Double, step: Double) = BigDecimal(from).to(to, step).map(_.toDouble)
   private val thresholds = steps(1.0, 3.5, 0.25)
+  private val aloneThresholds = steps(2.5, 5.0, 0.25) :+ Double.PositiveInfinity
 
   val params: Seq[Param] =
     (0 until 4).map(i =>
-      Param(s"orderUp(${i + 1})", _.orderUp(i), (b, v) => b.copy(orderUp = b.orderUp.updated(i, v)), thresholds)
+      val grid = if i == 1 then aloneThresholds else thresholds
+      Param(s"orderUp(${i + 1})", _.orderUp(i), (b, v) => b.copy(orderUp = b.orderUp.updated(i, v)), grid)
     ) ++ (0 until 3).map(i =>
       Param(s"call(${i + 1})", _.call(i), (b, v) => b.copy(call = b.call.updated(i, v)), thresholds)
     ) ++ Seq(
       Param("next", _.next, (b, v) => b.copy(next = v), steps(-0.25, 0.75, 0.25)),
-      Param("alone", _.alone, (b, v) => b.copy(alone = v), steps(3.0, 5.0, 0.25) :+ Double.PositiveInfinity),
+      Param("alone", _.alone, (b, v) => b.copy(alone = v), aloneThresholds),
       Param("offAce", _.strength.offAce, (b, v) => b.copy(strength = b.strength.copy(offAce = v)), steps(0, 0.8, 0.1)),
       Param("void", _.strength.void, (b, v) => b.copy(strength = b.strength.copy(void = v)), steps(0, 0.5, 0.1)),
     )

@@ -23,7 +23,9 @@ final case class PlayView(
   def sittingOut: Option[Seat] = Option.when(alone)(caller.partner)
 
 trait Bidder:
-  /** Round one: order up the up card, or pick it up as the dealer. The call must be in the up card's suit. */
+  /** Round one: order up the up card, or pick it up as the dealer. The call must be in the up card's suit. The
+    * dealer's partner always goes alone, and the dealer sits out without picking up.
+    */
   def orderUp(view: BidView): Option[Call]
 
   /** Round two: name any suit except the turned down `view.upCard`'s. */

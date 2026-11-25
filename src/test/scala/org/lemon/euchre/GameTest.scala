@@ -35,6 +35,25 @@ class GameTest extends UnitTest:
     check(forAll(hands)((result, views) => !result.call.alone || !views.exists(_.seat == result.caller.partner)))
   }
 
+  test("the dealer's partner ordering up goes alone, and the dealer sits out") {
+    check(forAll(hands) { (result, views) =>
+      result.round != 1 || result.caller != result.dealer.partner ||
+      (result.call.alone && !views.exists(_.seat == result.dealer))
+    })
+  }
+
+  test("ordering up the dealer's partner goes alone even if the bid didn't say so") {
+    object PartnerOrdersUp extends StuckDealer:
+      override def orderUp(view: BidView): Option[Call] =
+        Option.when(view.seat == view.dealer.partner)(Call(view.upCard.suit))
+    val strategy = Composite("partner orders up", PartnerOrdersUp, Low)
+    val game = Game(Seat.values.map(_ -> strategy).toMap, Random(0))
+    val result = game.playHand(Seat.Down, Random(0).shuffle(Card.all))
+    result.caller shouldBe Seat.Up
+    result.call shouldBe Call(result.upCard.suit, alone = true)
+    result.round shouldBe 1
+  }
+
   test("round one calls the up card's suit, round two never does") {
     check(forAll(hands)((result, _) => (result.call.trump == result.upCard.suit) == (result.round == 1)))
   }

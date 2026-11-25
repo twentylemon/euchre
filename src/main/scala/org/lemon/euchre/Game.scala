@@ -68,7 +68,7 @@ final class Game(strategies: Map[Seat, Strategy], rng: Random):
     firstCall(order, _.orderUp(_)) match
       case Some((seat, call)) =>
         require(call.trump == upCard.suit, s"$seat ordered up ${call.trump} but the up card is $upCard")
-        (seat, call, 1)
+        (seat, if seat == dealer.partner then call.copy(alone = true) else call, 1)
       case None =>
         val (seat, call) = firstCall(order.init, _.callTrump(_))
           .getOrElse(dealer -> strategies(dealer).stickTrump(view(dealer)))

@@ -22,12 +22,14 @@ object HandStrength:
 
 /** Bids when `strength` reaches the threshold for the bidder's seat.
   *
-  * In round one the up card counts for the dealer's team and against the other. The dealer counts the hand they'd
-  * keep after picking up. In round two the bidder considers their strongest legal suit, with `next` added to the
+  * In round one the dealer counts the hand they'd keep after picking up. The dealer's partner counts only their hand,
+  * since ordering up makes them go alone and the up card sits out with the dealer. The opponents count the up card
+  * against them. In round two the bidder considers their strongest legal suit, with `next` added to the
   * strength of the turned down suit's colour. A stuck dealer names their strongest legal suit. Any call goes alone at
   * `alone` strength. The dealer discards to make a void if they can, keeping off-suit aces.
   *
-  * @param orderUp the strength to order up from positions 1 to 3, then for the dealer to pick up
+  * @param orderUp the strength to order up from positions 1 to 3, then for the dealer to pick up. Position 2, the
+  *   dealer's partner, always orders up alone.
   * @param call the strength to call in round two from positions 1 to 3
   */
 final case class RuleBidder(
@@ -37,17 +39,15 @@ final case class RuleBidder(
     next: Double,
     alone: Double,
 ) extends Bidder:
-  private def bid(view: BidView, trump: Suit, value: Double, threshold: Double): Option[Call] =
-    Option.when(value >= threshold)(Call(trump, alone = value >= alone))
+  private def bid(trump: Suit, value: Double, threshold: Double, alone: Boolean = false): Option[Call] =
+    Option.when(value >= threshold)(Call(trump, alone = alone || value >= this.alone))
 
   def orderUp(view: BidView): Option[Call] =
     val trump = view.upCard.suit
-    val value =
-      if view.isDealer then strength(RuleBidder.pickUp(view.hand, view.upCard), trump)
-      else
-        val upCard = HandStrength.winChance(trump, view.upCard)
-        strength(view.hand, trump) + (if view.dealer.team == view.seat.team then upCard else -upCard)
-    bid(view, trump, value, orderUp(view.position - 1))
+    val threshold = orderUp(view.position - 1)
+    if view.isDealer then bid(trump, strength(RuleBidder.pickUp(view.hand, view.upCard), trump), threshold)
+    else if view.seat == view.dealer.partner then bid(trump, strength(view.hand, trump), threshold, alone = true)
+    else bid(trump, strength(view.hand, trump) - HandStrength.winChance(trump, view.upCard), threshold)
 
   private def strongest(view: BidView): (Suit, Double) =
     val turnedDown = view.upCard.suit
@@ -58,7 +58,7 @@ final case class RuleBidder(
 
   def callTrump(view: BidView): Option[Call] =
     val (trump, value) = strongest(view)
-    bid(view, trump, value, call(view.position - 1))
+    bid(trump, value, call(view.position - 1))
 
   def stickTrump(view: BidView): Call =
     val (trump, value) = strongest(view)

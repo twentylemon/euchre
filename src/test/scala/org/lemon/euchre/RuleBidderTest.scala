@@ -99,12 +99,19 @@ class RuleBidderTest extends UnitTest:
     ))
   }
 
-  test("the up card counts for the dealer's team and against the other") {
+  test("the up card counts against the opponents") {
     val hand = "A♠ K♠ A♥ 9♦ T♣"
     val strength = weights(cards(hand), Suit.Spades)
-    val rules = bidder(orderUp = strength + 0.5)
-    rules.orderUp(view(Seat.Up, Seat.Down, hand, "J♠")) shouldBe Some(Call(Suit.Spades))
-    rules.orderUp(view(Seat.Left, Seat.Down, hand, "J♠")) shouldBe None
+    val upCard = HandStrength.winChance(Suit.Spades, parse("J♠"))
+    bidder(orderUp = strength - upCard).orderUp(view(Seat.Left, Seat.Down, hand, "J♠")) shouldBe Some(Call(Suit.Spades))
+    bidder(orderUp = strength - upCard + 0.01).orderUp(view(Seat.Left, Seat.Down, hand, "J♠")) shouldBe None
+  }
+
+  test("the dealer's partner counts only their hand, and goes alone") {
+    val hand = "A♠ K♠ A♥ 9♦ T♣"
+    val strength = weights(cards(hand), Suit.Spades)
+    bidder(orderUp = strength).orderUp(view(Seat.Up, Seat.Down, hand, "J♠")) shouldBe Some(Call(Suit.Spades, true))
+    bidder(orderUp = strength + 0.01).orderUp(view(Seat.Up, Seat.Down, hand, "J♠")) shouldBe None
   }
 
   test("the dealer counts the hand they'd keep") {
@@ -138,7 +145,8 @@ class RuleBidderTest extends UnitTest:
     bidder(alone = strength).stickTrump(view(Seat.Down, Seat.Down, hand, "9♥")) shouldBe Call(Suit.Spades, alone = true)
     bidder(alone = strength + 0.01).stickTrump(view(Seat.Down, Seat.Down, hand, "9♥")) shouldBe Call(Suit.Spades)
     bidder(alone = strength).callTrump(view(Seat.Left, Seat.Down, hand, "9♥")) shouldBe Some(Call(Suit.Spades, true))
-    bidder(alone = strength - 1).orderUp(view(Seat.Up, Seat.Down, hand, "9♠")) shouldBe Some(Call(Suit.Spades, true))
+    bidder(alone = strength - 1).orderUp(view(Seat.Left, Seat.Down, hand, "9♠")) shouldBe Some(Call(Suit.Spades, true))
+    bidder(alone = strength + 1).orderUp(view(Seat.Left, Seat.Down, hand, "9♠")) shouldBe Some(Call(Suit.Spades))
   }
 
   test("rule bidders always bid legally") {
