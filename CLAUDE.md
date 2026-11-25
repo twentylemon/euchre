@@ -46,5 +46,5 @@ Euchre strategy simulations in Scala 3 (sbt 2). The 2015 paper is in `paper/` an
 - Properties state real properties (legality, soundness, invariants). They don't re-implement the function.
 - Use the most generic generator that fits. Avoid `==>` and `suchThat`, and generate the shape you need instead (`trickAndRest`).
 - Rule details (scoring, the left bower) also get example tests.
-- Mutation-check every change. Inject several targeted mutants into each changed source file (off-by-one, a flipped condition, a dropped branch, a wrong constant), run the tests, and restore the code. Every mutant must fail a test, unless it's equivalent. Add tests for any that survive. List the mutants and the tests that caught them in the PR body. Full stryker isn't needed.
+- Mutation-check every change. Inject several targeted mutants into each changed source file (off-by-one, a flipped condition, a dropped branch, a wrong constant), run the tests, and restore the code. Every mutant must fail a test, unless it's equivalent. Add tests for any that survive. The mutants are a testing tool only, so leave them out of commits and PR bodies. Full stryker isn't needed.
 - Bug fixes: write the tests first. They must fail on the unfixed code.
