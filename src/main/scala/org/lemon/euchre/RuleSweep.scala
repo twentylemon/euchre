@@ -25,7 +25,7 @@ object RuleSweep:
 
   private def steps(from: Double, to: Double, step: Double) = BigDecimal(from).to(to, step).map(_.toDouble)
   private val thresholds = steps(1.0, 3.5, 0.25)
-  private val aloneThresholds = steps(2.5, 5.0, 0.25) :+ Double.PositiveInfinity
+  private val aloneThresholds = steps(1.5, 5.0, 0.25) :+ Double.PositiveInfinity
 
   val params: Seq[Param] =
     (0 until 4).map(i =>

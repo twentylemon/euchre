@@ -69,11 +69,11 @@ final case class RuleBidder(
 object RuleBidder:
   /** From `runRuleSweep 4000 2 1 0.01`. */
   val tuned: RuleBidder = RuleBidder(
-    HandStrength(offAce = 0.5, void = 0.3),
+    HandStrength(offAce = 0.6, void = 0.2),
     orderUp = Seq(2.25, 2.5, 2.25, 2.0),
     call = Seq(2.0, 2.0, 2.0),
     next = 0.25,
-    alone = 3.0,
+    alone = 2.75,
   )
 
   /** @return the card to discard: the lowest off-suit singleton that isn't an ace, which makes a void, else the
