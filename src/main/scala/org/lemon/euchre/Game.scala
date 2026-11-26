@@ -41,6 +41,12 @@ object Game:
 
   val euchrePoints = 2
 
+  /** @return a deck that deals `dealt` from `dealer`'s left and turns up `upCard` */
+  def deck(dealer: Seat, dealt: Map[Seat, Cards], upCard: Card): Seq[Card] =
+    val order = (1 to Seat.values.size).map(dealer.offset)
+    val cards = order.flatMap(dealt(_).toSeq) :+ upCard
+    cards ++ Card.all.filterNot(cards.contains)
+
 /** Plays euchre with the given strategies, checking that every call and play is legal. */
 final class Game(strategies: Map[Seat, Strategy], rng: Random):
   import Game.*
