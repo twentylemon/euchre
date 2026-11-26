@@ -34,10 +34,7 @@ object BiddingStats:
   def trumps(hand: HandResult, seat: Seat): Int = hand.dealt(seat).filter(_.isTrump(hand.call.trump)).size
 
   /** @return a deck that deals `hand` again */
-  def deck(hand: HandResult): Seq[Card] =
-    val order = (1 to Seat.values.size).map(hand.dealer.offset)
-    val dealt = order.flatMap(hand.dealt(_).toSeq) :+ hand.upCard
-    dealt ++ Card.all.filterNot(dealt.contains)
+  def deck(hand: HandResult): Seq[Card] = Game.deck(hand.dealer, hand.dealt, hand.upCard)
 
   /** Replays a stuck hand with the dealer naming each legal suit without going alone, everyone playing `player`.
     *
