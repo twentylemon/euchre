@@ -18,8 +18,7 @@ final case class HandResult(
     points: Int,
     playNanos: Map[Seat, Long],
 ):
-  /** @return the caller's seat counting from the dealer's left, so the first bidder is 1 and the dealer is 4 */
-  def callerPosition: Int = Math.floorMod(caller.ordinal - dealer.ordinal - 1, Seat.values.size) + 1
+  def callerPosition: Int = caller.position(dealer)
   def stuck: Boolean = round == 2 && caller == dealer
   def callerTricks: Int = tricks(caller.team)
 
@@ -69,7 +68,7 @@ final class Game(strategies: Map[Seat, Strategy], rng: Random):
     firstCall(order, _.orderUp(_)) match
       case Some((seat, call)) =>
         require(call.trump == upCard.suit, s"$seat ordered up ${call.trump} but the up card is $upCard")
-        (seat, call, 1)
+        (seat, if seat == dealer.partner then call.copy(alone = true) else call, 1)
       case None =>
         val (seat, call) = firstCall(order.init, _.callTrump(_))
           .getOrElse(dealer -> strategies(dealer).stickTrump(view(dealer)))
